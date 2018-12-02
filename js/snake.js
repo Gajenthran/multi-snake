@@ -12,6 +12,11 @@ class Snake {
       {backgroundColor : this.color});
   }
 
+  /** 
+   * Move the snake.
+   * @param x coordinate x
+   * @param y coordinate y
+   */
   move(x, y) {
     this.x += x;
     this.y += y;
