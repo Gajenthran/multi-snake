@@ -10,7 +10,8 @@ class Player extends Snake {
   /** 
    * @return count the number of players in the game
    */
-  static countPlayer() {
+  static countPlayers() {
+    console.log("Number of players : " + Player.nbPlayer);
     return Player.nbPlayer;
   }
 }
