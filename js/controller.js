@@ -7,11 +7,11 @@ function handleSnakeMovement(snake) {
     const touche = event.key;
     switch(touche) {
       case "ArrowLeft":
-        snake.move(-0.1, 0);
+        snake.move(directions["left"]);
         console.log("left");
         break;
       case "ArrowRight":
-        snake.move(0.1, 0);
+        snake.move(directions["right"]);
         console.log("right");
         break;
     }

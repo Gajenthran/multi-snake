@@ -13,11 +13,13 @@ function frameloop(time){
   if(_snake[0].collision(_snake[1], _snake[1]))
     console.log("COLLISION !");
   drawSnake(_snake[0]);
+  // console.log("LES DIRECTIONS : " + _snake[0].dir["x"]);
+  // scroll(_snake[0].dir["x"], _snake[0].dir["y"]);
 }
 
 function main(){
-  _snake.push(new Snake(10, 10, 20, 20, "red"));
-  _snake.push(new Snake(300, 10, 100, 100, "green"));
+  _snake.push(new Snake(_wW/2, _wH/2, 20, 20, "red"));
+  _snake.push(new Snake(12, 10, 100, 100, "green"));
 
   _players.push(new Player("toto", _snake[0], 10));
   _players.push(new Player("Gajen", _snake[1], 18));

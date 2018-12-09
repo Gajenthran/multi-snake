@@ -1,3 +1,10 @@
+var directions = {
+  "left"  : {"x" : -1, "y" :  0},
+  "up"    : {"x" :  0, "y" :  1},
+  "right" : {"x" :  1, "y" :  0},
+  "down"  : {"x" : -1, "y" : -1},
+};
+
 /** Class representing a snake. */
 class Snake {
   constructor(x, y, w, h, color) {
@@ -6,6 +13,7 @@ class Snake {
     this.w = w;
     this.h = h;
     this.color = color;
+    this.dir = directions["left"];
     this.alive = true;
     this.image = newElement("div", 
       document.body, 
@@ -18,9 +26,10 @@ class Snake {
    * @param x coordinate x
    * @param y coordinate y
    */
-  move(x, y) {
-    this.x += x;
-    this.y += y;
+  move(dir) {
+    this.dir = dir;
+    this.x += dir["x"];
+    this.y += dir["y"];
   }
 
   /**
