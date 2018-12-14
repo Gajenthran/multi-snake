@@ -15,10 +15,6 @@ class Snake {
     this.color = color;
     this.dir = directions["left"];
     this.alive = true;
-    this.image = newElement("div", 
-      document.body, 
-      this.x, this.y, this.w, this.h, 
-      {backgroundColor : this.color});
   }
 
   /** 

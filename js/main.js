@@ -7,27 +7,24 @@ var _game = null;
 var _wW = window.innerWidth;
 var _wH = window.innerHeight;
 
-function frameloop(time){
-  requestAnimationFrame(frameloop);
-  handleSnakeMovement(_snake[0]);
+function frameLoop(time){
+  // handleSnakeMovement(_snake[0]);
   if(_snake[0].collision(_snake[1], _snake[1]))
     console.log("COLLISION !");
-  drawSnake(_snake[0]);
-  // console.log("LES DIRECTIONS : " + _snake[0].dir["x"]);
-  // scroll(_snake[0].dir["x"], _snake[0].dir["y"]);
+  // drawSnake(_snake[0]);
+  window.requestAnimationFrame(frameLoop);
 }
 
 function main(){
-  _snake.push(new Snake(_wW/2, _wH/2, 20, 20, "red"));
-  _snake.push(new Snake(12, 10, 100, 100, "green"));
-
-  _players.push(new Player("toto", _snake[0], 10));
-  _players.push(new Player("Gajen", _snake[1], 18));
-
-  _game = new Game(_wW, _wH, _players); // TODO : background
-
+  var i;
+  for(i = 0; i < 10; i++) {
+    _snake.push(new Snake(Math.random() * _wW, Math.random() * _wH, 20, 20, "#"+((1<<24)*Math.random()|0).toString(16)));
+    _players.push(new Player("Gajen", _snake[i], 18));
+  } 
+  
+  _game = new Game(_wW, _wH, _players);
   console.log(_game);
   Player.countPlayers();
-  window.requestAnimationFrame(frameloop);
-  window.cancelAnimationFrame(frameloop); 
+  window.requestAnimationFrame(frameLoop);
+  window.cancelAnimationFrame(frameLoop); 
 }

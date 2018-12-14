@@ -4,21 +4,30 @@ class Game {
     this.w = w;
     this.h = h;
     this.players = players;
-    this.background = background;
+    this.canvas = document.createElement("canvas");
+    this.context = this.canvas.getContext("2d");
+  }
+
+  /**
+   * @method Initialize values for the background
+   */
+  init() {
+    this.canvas.width = this.w;
+    this.canvas.height = this.h;
   }
 
   /** 
-   * Resize the dimension of the game.
+   * @method Resize the dimension of the game.
    * @param w width
    * @param h height
    */
   resize(w, h) {
-    this.w = w;
-    this.h = h;
+    this.canvas.width = this.w = w;
+    this.canvas.height = this.h = h;
   }
 
   /**
-   * Set a new background.
+   * @method Set a new background.
    * @param background new background
    */
   setBackground(background) {
