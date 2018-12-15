@@ -4,7 +4,9 @@ class Game {
     this.w = w;
     this.h = h;
     this.players = players;
-    this.canvas = document.createElement("canvas");
+    this.canvas = document.createElement("canvas"); // TODO: Find a better way to create canvas
+    this.canvas.id = "game_canvas";     
+    document.body.appendChild(this.canvas);
     this.context = this.canvas.getContext("2d");
   }
 
@@ -24,6 +26,12 @@ class Game {
   resize(w, h) {
     this.canvas.width = this.w = w;
     this.canvas.height = this.h = h;
+  }
+
+  update() {
+    this.players.forEach(function(p) {
+      p.move(20);
+    }); 
   }
 
   /**

@@ -13,6 +13,8 @@ class Snake {
     this.w = w;
     this.h = h;
     this.color = color;
+    this.angle = Math.floor(Math.random()*360 + 1);
+    this.speed = 2;
     this.dir = directions["left"];
     this.alive = true;
   }
@@ -22,10 +24,15 @@ class Snake {
    * @param x coordinate x
    * @param y coordinate y
    */
-  move(dir) {
-    this.dir = dir;
-    this.x += dir["x"];
-    this.y += dir["y"];
+  move(angle) {
+    console.log(this.dir);
+    if(this.dir == directions["left"])
+      this.angle -= angle;
+    else if(this.dir == directions["right"])
+      this.angle += angle;
+    this.dir = null;
+    this.x += this.speed * Math.cos(Math.PI * this.angle/180);
+    this.y += this.speed * Math.sin(Math.PI * this.angle/180);
   }
 
   /**
