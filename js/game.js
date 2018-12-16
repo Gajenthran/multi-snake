@@ -33,9 +33,7 @@ class Game {
    */
   update() {
     this.players.map(snake => {
-      snake.move(20);
-      // console.log(this.context.getImageData(snake.x, snake.y, 1, 1).data);
-      snake.collision(this.players);
+      snake.move(20, this);
     });
   }
 

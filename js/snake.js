@@ -1,22 +1,21 @@
 const directions = {
-  "left" : -1,
-  "right" : 1
+  "left" : -10,
+  "right" : 10
 };
 
 /** Class representing a snake. */
 class Snake {
   constructor(x, y, w, h, color) {
-    this.x     = x;
-    this.y     = y;
+    this.x     = Math.floor(x);
+    this.y     = Math.floor(y);
     this.w     = w;
     this.h     = h;
     this.color = color;
-    this.angle = Math.floor(Math.random()*360 + 1);
-    this.speed = 2;
+    this.angle = 1.5; 
+    this.rad   = 2.5; 
+    this.speed = 1.5;
     this.dir   = directions["left"];
     this.alive = true;
-    // this.body = new Array();
-    // this.body.push({"x" : this.x, "y" : this.y, "w" : this.w, "h" : this.h });
   }
 
   /** 
@@ -24,27 +23,27 @@ class Snake {
    * @param x coordinate x
    * @param y coordinate y
    */
-  move(angle) {  // TODO : Argument of the function move
+  move(angle, game) {  // TODO : Argument of the function move
     if(!this.alive) 
       return;
-    this.angle += this.dir * angle;
+
+    this.x += Math.cos(this.angle) * this.speed;
+    this.y += Math.sin(this.angle) * this.speed;
+    this.angle += this.dir * (Math.PI / 180);
+    let nextx = this.x + Math.cos(this.angle) * this.rad;
+    let nexty = this.y + Math.sin(this.angle) * this.rad;
     this.dir = null;
-    this.x += this.speed * Math.cos(Math.PI * this.angle/180);
-    this.y += this.speed * Math.sin(Math.PI * this.angle/180);
+    this.collision(nextx, nexty, game);
   }
 
   /**
    * @method Check if there is a collision between snakes.
    * @param snake
    */
-  collision(snakes) {
-    snakes.forEach(snake => {
-      if(snake != this) {
-        
-      }
-    });
-    /*if(this.x >= snake.x && this.y >= snake.y &&
-       this.x <= snake.x + snake.w && this.y <= snake.y + snake.h)
-      this.alive = false; */
+  collision(nextx, nexty, game) {
+    var color = game.context.getImageData(nextx, nexty, 1, 1).data[3];
+    if(color)
+      this.alive = false;
+
   }
 }

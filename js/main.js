@@ -19,10 +19,10 @@ function gameLoop(timestamp){
 
 function main(){
   var i;
-  for(i = 0; i < 3; i++) {
-    _snake = new Snake(Math.random() * _wW, Math.random() * _wH, 5, 5, "#"+((1<<24)*Math.random()|0).toString(16));
-    _players.push(new Player("Gajen", _snake, 18));
-  } 
+  for(i = 0; i < 3; i++)
+    _players.push(new Player("Gajen", 18, 
+                             Math.random() * _wW, Math.random() * _wH, 5, 5, 
+                             "#"+((1<<24)*Math.random()|0).toString(16))); // TODO : Instanciation
 
   _game = new Game(_wW, _wH, _players);
   _game.init();

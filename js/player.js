@@ -1,7 +1,7 @@
 /** Class representing a player. */
 class Player extends Snake {
-  constructor(name, snake, level) {
-    super(snake.x, snake.y, snake.w, snake.h, snake.color);
+  constructor(name, level, x, y, w, h, color) {
+    super(x, y, w, h, color);
     Player.nbPlayer = Player.nbPlayer + 1 || 1;
     this.name  = name;
     this.level = level;

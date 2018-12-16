@@ -2,7 +2,7 @@ function on(element, ev, func) {
   element.addEventListener(ev, func);
 }
 
-function handleSnakeMovement(snake) {
+function handleSnakeMovement(snake) { // TODO: add a better handle snake movement function
   on(document, 'keydown', (event) => {
     const key = event.key;
     switch(key) {
