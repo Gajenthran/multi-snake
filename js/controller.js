@@ -4,8 +4,8 @@ function on(element, ev, func) {
 
 function handleSnakeMovement(snake) {
   on(document, 'keydown', (event) => {
-    const touche = event.key;
-    switch(touche) {
+    const key = event.key;
+    switch(key) {
       case "ArrowLeft":
         snake.dir = directions["left"];
         console.log("left");

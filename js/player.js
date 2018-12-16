@@ -3,7 +3,7 @@ class Player extends Snake {
   constructor(name, snake, level) {
     super(snake.x, snake.y, snake.w, snake.h, snake.color);
     Player.nbPlayer = Player.nbPlayer + 1 || 1;
-    this.name = name;
+    this.name  = name;
     this.level = level;
   }
 
