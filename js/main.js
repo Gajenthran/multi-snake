@@ -10,7 +10,6 @@ var _snake   = new Array(),
 
 
 function gameLoop(timestamp){
-  handleSnakeMovement(_game.players[0]);
   _game.update();
   _game.render();
   window.requestAnimationFrame(gameLoop);
@@ -28,5 +27,6 @@ function main(){
   _game.init();
   console.log("Gamestate :" + _game);
   Player.countPlayers();
+  handleSnakeMovement(_game.players[0]);
   window.requestAnimationFrame(gameLoop);
 }
