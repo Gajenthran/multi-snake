@@ -18,6 +18,8 @@ function gameLoop(timestamp){
 
 function main(){
   var i;
+
+  var socket = io.connect("http://localhost:8080/");
   for(i = 0; i < 3; i++)
     _players.push(new Player("Gajen", 18, 
                              Math.random() * _wW, Math.random() * _wH, 5, 5, 
