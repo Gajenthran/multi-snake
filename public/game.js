@@ -1,21 +1,28 @@
+
 /** Class representing the game and their elements. */
 class Game {
-  constructor(w, h, players, background) {
+  constructor(w, h, background) {
     this.w         = w;
     this.h         = h;
-    this.players   = players;
-    this.canvas    = document.createElement("canvas"); // TODO: Find a better way to create canvas
-    this.canvas.id = "game_canvas";     
-    document.body.appendChild(this.canvas);
-    this.context   = this.canvas.getContext("2d");
+    this.players   = new Array();
+    this.canvas    = null;
+    this.context   = null;
   }
 
   /**
    * @method Initialize values for the background
    */
   init() {
+    this.canvas        = document.createElement("canvas"); // TODO: Find a better way to create canvas
+    this.canvas.id     = "game_canvas";     
+    this.context       = this.canvas.getContext("2d");
     this.canvas.width  = this.w;
     this.canvas.height = this.h;
+    document.body.appendChild(this.canvas);
+  }
+
+  addNewPlayer(id, name, level, x, y, w, h, color) {
+    this.players.push(new Player(id, name, level, x, y, w, h, color));
   }
 
   /** 
@@ -33,7 +40,7 @@ class Game {
    */
   update() {
     this.players.map(snake => {
-      snake.move(20, this);
+      snake.move();
     });
   }
 

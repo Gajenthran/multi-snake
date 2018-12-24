@@ -1,8 +1,3 @@
-const directions = {
-  "left" : -10,
-  "right" : 10
-};
-
 /** Class representing a snake. */
 class Snake {
   constructor(x, y, w, h, color) {
@@ -14,7 +9,7 @@ class Snake {
     this.angle = 1.5; 
     this.rad   = 2.5; 
     this.speed = 1.5;
-    this.dir   = directions["left"];
+    this.dir   = null;
     this.alive = true;
   }
 
@@ -23,9 +18,14 @@ class Snake {
    * @param x coordinate x
    * @param y coordinate y
    */
-  move(angle, game) {  // TODO : Argument of the function move
+  move(dir, game) {  // TODO : Argument of the function move
     if(!this.alive) 
       return;
+
+    if(dir["left"] == true)
+      this.dir = 2;
+    else if(dir["right"] == true)
+      this.dir = -2;
 
     this.x += Math.cos(this.angle) * this.speed;
     this.y += Math.sin(this.angle) * this.speed;
@@ -33,7 +33,7 @@ class Snake {
     let nextx = this.x + Math.cos(this.angle) * this.rad;
     let nexty = this.y + Math.sin(this.angle) * this.rad;
     this.dir = null;
-    this.collision(nextx, nexty, game);
+    // this.collision(nextx, nexty, game);
   }
 
   /**
@@ -47,3 +47,5 @@ class Snake {
 
   }
 }
+
+module.exports = Snake;
