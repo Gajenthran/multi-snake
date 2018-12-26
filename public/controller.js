@@ -2,7 +2,7 @@ function on(element, ev, func) {
   element.addEventListener(ev, func);
 }
 
-var directions = {
+var keyboardState = {
   "left"  : false,
   "right" : false 
 };
@@ -12,11 +12,11 @@ function onKeyDown() { // TODO: add a better handle snake movement function
     const key = event.key;
     switch(key) {
       case "ArrowLeft":
-        directions["left"] = true
+        keyboardState["left"] = true
         console.log("left");
         break;
       case "ArrowRight":
-        directions["right"] = true
+        keyboardState["right"] = true
         console.log("right");
         break;
     }
@@ -29,10 +29,10 @@ function onKeyUp() { // TODO: add a better handle snake movement function
     const key = event.key;
     switch(key) {
       case "ArrowLeft":
-        directions["left"] = false
+        keyboardState["left"] = false
         break;
       case "ArrowRight":
-        directions["right"] = false
+        keyboardState["right"] = false
         break;
     }
   }, false);

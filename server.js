@@ -6,58 +6,40 @@ var app      = express();
 var server   = http.Server(app);
 var io       = socketIO(server);
 
+
 app.set('port', 8080);
 app.use(express.static('public'));
-var Player = require('./public/Player');
-var Snake  = require('./public/Snake');
 
-var players = [];
+var Game = require('./lib/Game');
 
-// Routing
+var game = new Game();
+
 app.get('/', function(request, response) {
-  response.render('public/index.html', null);
+  response.render('public/index.html');
 });
 
-io.on('connection',
-  function(socket) {
-    console.log("New player: " + socket.id);
+io.on('connection', (socket) => {
+  // listen(socket, 'new-player',    game.addNewPlayer);
+  // listen(socket, 'player-action', game.update);
+  // listen(socket, 'disconnect',    game.removePlayer);
+  socket.on('new-player', () => {
+    game.addNewPlayer(socket);
+  });
 
-    socket.on('new-player',
-      function(data) {
-        var player = new Player(socket.id, data.name, data.level, 
-                                data.x, data.y, data.w, data.h, data.color);
-        console.log(player);
-        players.push(player);
-        // game.addNewPlayer(player);
-      }
-    );
+  socket.on('player-action', (data) => {
+    game.update(socket, data);
+  });
 
-  	socket.on('update',
-      function(data) {
-        var player = null;
-        for (var i = 0; i < players.length; i++) {
-          if (players[i].id == socket.id) {
-            player = players[i];
-          }
-        }
+  socket.on('disconnect', () => {
+    game.removePlayer(socket);
+  })
+});
 
-        //console.log("game : " + data["game"]);
-        if(player)
-          player.move(data["directions"]);
-      }
-    );
-
-    socket.on('disconnect', function() {
-      players.pop();
-      console.log("Client has disconnected");
-    });
-  }
-); 
-
-setInterval(function() {
-  io.sockets.emit("draw", players);
-}, 1000 / 60);
-
+function listen(socket, type, callback) {
+  socket.on(type, function(data) {
+    callback(socket, data)
+  });
+}
 server.listen(8080, function() {
   console.log('Starting server on port ' + 8080);
 });

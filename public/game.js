@@ -1,55 +1,46 @@
-
 /** Class representing the game and their elements. */
 class Game {
-  constructor(w, h, background) {
-    this.w         = w;
-    this.h         = h;
-    this.players   = new Array();
-    this.canvas    = null;
-    this.context   = null;
+  constructor(socket, display) {
+    this.socket   = socket;
+    this.player   = 0;
+    this.ennemies = new Array();
+    this.display  = display;
+    this.frameID  = null; 
   }
 
-  /**
-   * @method Initialize values for the background
-   */
   init() {
-    this.canvas        = document.createElement("canvas"); // TODO: Find a better way to create canvas
-    this.canvas.id     = "game_canvas";     
-    this.context       = this.canvas.getContext("2d");
-    this.canvas.width  = this.w;
-    this.canvas.height = this.h;
-    document.body.appendChild(this.canvas);
+    this.socket.on("generate-players", this.setPlayersValues);
+    this.socket.emit("new-player");
+    console.log(this.player);
+  } 
+
+  setPlayersValues(data) {
+    this.player = data["player"];
+    this.ennemies = data["ennemies"];
+    console.log(this.player);
   }
 
-  addNewPlayer(id, name, level, x, y, w, h, color) {
-    this.players.push(new Player(id, name, level, x, y, w, h, color));
+  run() {
+    console.log("running...");
+    this.socket.emit("player-action", keyboardState);
+    this.render();
+    window.requestAnimationFrame(this.run);
   }
 
-  /** 
-   * @method Resize the dimension of the game.
-   * @param w width
-   * @param h height
-   */
-  resize(w, h) {
-    this.canvas.width  = this.w = w;
-    this.canvas.height = this.h = h;
-  }
 
-  /*
-   * @method Update all the event of the game
-   */
-  update() {
-    this.players.map(snake => {
-      snake.move();
-    });
+  end() {
+    window.cancelAnimationFrame(this.frameID);
   }
 
   /*
    * @method Display all the elements of the game 
    */
   render() {
-    drawSnake(this);
+    this.display.snake(this.player);
+    this.ennemies.forEach(this.display.snake); // Not sure
   }
+
+
   /**
    * @method Set a new background.
    * @param background new background

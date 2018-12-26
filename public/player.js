@@ -26,5 +26,4 @@ module.exports = Player;
  * relation client serveur + deux fichiers : pour client et serveur
  * plutôt game que je dois prendre pour les changements de décor
  * l'initialisation des coordonnées du joueur au début
- * 
  */
