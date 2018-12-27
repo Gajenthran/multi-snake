@@ -9,24 +9,27 @@ class Game {
   }
 
   init() {
-    this.socket.on("generate-players", this.setPlayersValues);
+    var setPlayersValues = this.setPlayersValues.bind(this);
+    this.socket.on("generate-players", setPlayersValues);
     this.socket.emit("new-player");
-    console.log(this.player);
+    // console.log(this.player);
   } 
 
   setPlayersValues(data) {
     this.player = data["player"];
-    this.ennemies = data["ennemies"];
-    console.log(this.player);
+    if(data["ennemies"] !== undefined)
+      this.ennemies = data["ennemies"];
   }
 
   run() {
-    console.log("running...");
+    // console.log("running...");
     this.socket.emit("player-action", keyboardState);
+    var setPlayersValues = this.setPlayersValues.bind(this);
+    this.socket.on("update-players", setPlayersValues);
     this.render();
-    window.requestAnimationFrame(this.run);
+    var run = this.run.bind(this);
+    window.requestAnimationFrame(run);
   }
-
 
   end() {
     window.cancelAnimationFrame(this.frameID);
@@ -37,6 +40,7 @@ class Game {
    */
   render() {
     this.display.snake(this.player);
+    console.log(this.ennemies);
     this.ennemies.forEach(this.display.snake); // Not sure
   }
 

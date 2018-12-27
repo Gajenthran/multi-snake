@@ -15,8 +15,7 @@ function main() {
   display.init();
   var game = new Game(socket, display);
 
-  onKeyDown();
-  onKeyUp();
+  handleEvents();
 
   game.init();
   game.run();

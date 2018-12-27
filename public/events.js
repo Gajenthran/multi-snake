@@ -7,6 +7,11 @@ var keyboardState = {
   "right" : false 
 };
 
+function handleEvents() {
+  onKeyDown();
+  onKeyUp();
+}
+
 function onKeyDown() { // TODO: add a better handle snake movement function
   on(document, 'keydown', (event) => {
     const key = event.key;
