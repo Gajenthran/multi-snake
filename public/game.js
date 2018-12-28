@@ -2,9 +2,10 @@
 class Game {
   constructor(socket, display) {
     this.socket   = socket;
-    this.player   = 0;
-    this.ennemies = new Array();
     this.display  = display;
+    this.world    = null;
+    this.player   = null;
+    this.ennemies = null;
     this.frameID  = null; 
   }
 
@@ -12,7 +13,6 @@ class Game {
     var setPlayersValues = this.setPlayersValues.bind(this);
     this.socket.on("generate-players", setPlayersValues);
     this.socket.emit("new-player");
-    // console.log(this.player);
   } 
 
   setPlayersValues(data) {
@@ -22,7 +22,6 @@ class Game {
   }
 
   run() {
-    // console.log("running...");
     this.socket.emit("player-action", keyboardState);
     var setPlayersValues = this.setPlayersValues.bind(this);
     this.socket.on("update-players", setPlayersValues);
@@ -39,9 +38,12 @@ class Game {
    * @method Display all the elements of the game 
    */
   render() {
-    this.display.snake(this.player);
-    console.log(this.ennemies);
-    this.ennemies.forEach(this.display.snake); // Not sure
+    this.display.clear();
+    if(this.player)
+      this.display.snake(this.player);
+    if(this.ennemies) {
+      this.ennemies.forEach(enemy => this.display.snake(enemy)); // Not sure
+    }
   }
 
 

@@ -11,12 +11,11 @@ var _wH = window.innerHeight;
 function main() {
   var socket = io.connect('http://localhost:8080');
 
-  var display = new Display(_wW, _wH);
+  var display = new Display(800, 600);
   display.init();
+
   var game = new Game(socket, display);
-
   handleEvents();
-
   game.init();
   game.run();
 }

@@ -11,8 +11,11 @@ app.set('port', 8080);
 app.use(express.static('public'));
 
 var Game = require('./lib/Game');
+var World = require('./lib/World');
 
-var game = new Game();
+var world = new World(8, 100, 75);
+world.init();
+var game = new Game(world);
 
 app.get('/', function(request, response) {
   response.render('public/index.html');
