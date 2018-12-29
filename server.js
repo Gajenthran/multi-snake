@@ -14,7 +14,7 @@ app.use('/public', express.static(__dirname + '/public'));
 var Game = require('./lib/Game');
 var World = require('./lib/World');
 
-var world = new World(8, 200, 150);
+var world = new World(16, 200, 150);
 world.init();
 var game = new Game(world);
 

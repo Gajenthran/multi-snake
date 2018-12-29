@@ -7,6 +7,12 @@ var tilesFile = {
   "ennemies"       : "/public/img/ennemies.png"
 };
 
+var tilesValue = {
+  "empty_tile"  : 0,
+  "item_tile"   : 1,
+  "player_tile" : 2
+};
+
 class Display {
   constructor(canvasWidth, canvasHeight) {
     // this.wW = worldWidth;
@@ -40,11 +46,11 @@ class Display {
     document.body.appendChild(this.canvas);
     this.loadImages();
   }
-
+  
   item(items) {
     this.context.beginPath();
     for(let i = 0; i < items.length; i++) {
-      this.context.drawImage(this.images[items[i].name], items[i].x, items[i].y, items[i].w, items[i].h);
+      this.context.drawImage(this.images[items[i].name], items[i].x, items[i].y, 16, 16);
       this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
     this.context.closePath();
@@ -54,7 +60,7 @@ class Display {
     var image = this.images[imageName];
     this.context.beginPath();
     for(let cell = 0; cell < body.length; cell++) {
-      this.context.drawImage(image, body[cell]["x"], body[cell]["y"], 10, 10);
+      this.context.drawImage(image, body[cell]["x"], body[cell]["y"], 16, 16);
       this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
     this.context.closePath();
