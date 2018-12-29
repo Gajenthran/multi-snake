@@ -9,11 +9,12 @@ var io       = socketIO(server);
 
 app.set('port', 8080);
 app.use(express.static('public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 var Game = require('./lib/Game');
 var World = require('./lib/World');
 
-var world = new World(8, 100, 75);
+var world = new World(8, 200, 150);
 world.init();
 var game = new Game(world);
 
@@ -25,17 +26,9 @@ io.on('connection', (socket) => {
   // listen(socket, 'new-player',    game.addNewPlayer);
   // listen(socket, 'player-action', game.update);
   // listen(socket, 'disconnect',    game.removePlayer);
-  socket.on('new-player', () => {
-    game.addNewPlayer(socket);
-  });
-
-  socket.on('player-action', (data) => {
-    game.update(socket, data);
-  });
-
-  socket.on('disconnect', () => {
-    game.removePlayer(socket);
-  })
+  socket.on('new-player', () => { game.addNewPlayer(socket); });
+  socket.on('player-action', (data) => { game.update(socket, data); });
+  socket.on('disconnect', () => { game.removePlayer(socket); })
 });
 
 function listen(socket, type, callback) {

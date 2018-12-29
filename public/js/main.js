@@ -17,5 +17,5 @@ function main() {
   var game = new Game(socket, display);
   handleEvents();
   game.init();
-  game.run();
+  game.start();
 }
