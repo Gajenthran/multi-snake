@@ -1,7 +1,3 @@
-/*
- * Variable undefined lors des sockets.on (pb de binding?) => rAF
- * Probleme avec les listen
- */
 "use strict"
 window.onload = main;
 

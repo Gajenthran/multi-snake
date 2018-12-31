@@ -23,12 +23,12 @@ app.get('/', function(request, response) {
 });
 
 io.on('connection', (socket) => {
-  // listen(socket, 'new-player',    game.addNewPlayer);
-  // listen(socket, 'player-action', game.update);
-  // listen(socket, 'disconnect',    game.removePlayer);
-  socket.on('new-player', () => { game.addNewPlayer(socket); });
-  socket.on('player-action', (data) => { game.update(socket, data); });
-  socket.on('disconnect', () => { game.removePlayer(socket); })
+  listen(socket, 'new-player',    game.addNewPlayer.bind(game));
+  listen(socket, 'player-action', game.updatePlayerInput.bind(game));
+  listen(socket, 'disconnect',    game.removePlayer.bind(game));
+  // socket.on('new-player', () => { game.addNewPlayer(socket); });
+  // socket.on('player-action', (data) => { game.updatePlayerInput(socket, data); });
+  // socket.on('disconnect', () => { game.removePlayer(socket); })
 });
 
 function listen(socket, type, callback) {
@@ -36,6 +36,11 @@ function listen(socket, type, callback) {
     callback(socket, data)
   });
 }
+
+setInterval(function() {
+  game.update();
+}, 1000 / 60);
+
 server.listen(8080, function() {
   console.log('Starting server on port ' + 8080);
 });
