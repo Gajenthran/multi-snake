@@ -1,3 +1,4 @@
+// TODO: put in Utility
 function on(element, ev, func) {
   element.addEventListener(ev, func);
 }
@@ -10,53 +11,53 @@ var keyboardState = {
 };
 
 function handleEvents() {
-  onKeyDown();
-  onKeyUp();
+  on(document, "keydown", onKeydown);
+  on(document, "keyup", onKeyup);
 }
 
-function onKeyDown() { // TODO: add a better handle snake movement function
-  on(document, 'keydown', (event) => {
-    const key = event.key;
-    switch(key) {
-      case "ArrowDown":
-        keyboardState["down"] = true;
-        console.log("down"); 
-        break;
-      case "ArrowUp":
-        keyboardState["up"] = true;
-        console.log("up"); 
-        break;       
-      case "ArrowLeft":
-        keyboardState["left"] = true;
-        console.log("left");
-        break;
-      case "ArrowRight":
-        keyboardState["right"] = true;
-        console.log("right");
-        break;
-    }
-  }, false);
+function onKeydown(event) { // TODO: add a better handle snake movement function
+  switch(event.key) {
+    case "ArrowDown":
+    case "x":
+      keyboardState["down"] = true;
+      console.log("down"); 
+      break;
+    case "ArrowUp":
+    case "z":
+      keyboardState["up"] = true;
+      console.log("up"); 
+      break;       
+    case "ArrowLeft":
+    case "q":
+      keyboardState["left"] = true;
+     console.log("left");
+      break;
+    case "ArrowRight":
+    case "d":
+      keyboardState["right"] = true;
+      console.log("right");
+      break;
+  }
 }
 
 
-function onKeyUp() { // TODO: add a better handle snake movement function
-  on(document, 'keyup', (event) => {
-    const key = event.key;
-    switch(key) {
-      case "ArrowDown":
-        keyboardState["down"] = false;
-        console.log("down"); 
-        break;
-      case "ArrowUp":
-        keyboardState["up"] = false;
-        console.log("up"); 
-        break;    
-      case "ArrowLeft":
-        keyboardState["left"] = false;
-        break;
-      case "ArrowRight":
-        keyboardState["right"] = false;
-        break;
-    }
-  }, false);
+function onKeyup(event) { 
+  switch(event.key) {
+    case "ArrowDown":
+    case "x":
+      keyboardState["down"] = false;
+      break;
+    case "ArrowUp":
+    case "z":
+      keyboardState["up"] = false;
+      break;    
+    case "ArrowLeft":
+    case "q":
+      keyboardState["left"] = false;
+      break;
+    case "ArrowRight":
+    case "d":
+      keyboardState["right"] = false;
+      break;
+  }
 }

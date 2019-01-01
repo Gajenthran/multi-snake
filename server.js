@@ -14,9 +14,8 @@ app.use('/public', express.static(__dirname + '/public'));
 var Game = require('./lib/Game');
 var World = require('./lib/World');
 
-var world = new World(16, 200, 150);
-world.init();
-var game = new Game(world);
+var game = new Game();
+game.init();
 
 app.get('/', function(request, response) {
   response.render('public/index.html');
@@ -39,7 +38,7 @@ function listen(socket, type, callback) {
 
 setInterval(function() {
   game.update();
-}, 1000 / 60);
+}, 1000 / 15);
 
 server.listen(8080, function() {
   console.log('Starting server on port ' + 8080);

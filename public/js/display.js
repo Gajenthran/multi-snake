@@ -1,22 +1,14 @@
 var tilesFile = {
-  //"player" : "../img/player.js"
   "world"          : "/public/img/world.png",
   "increase_speed" : "/public/img/increase_speed.png", 
   "decrease_speed" : "/public/img/decrease_speed.png", 
   "player"         : "/public/img/player.png",
-  "ennemies"       : "/public/img/ennemies.png"
+  "enemies"        : "/public/img/enemies.png"
 };
 
-var tilesValue = {
-  "empty_tile"  : 0,
-  "item_tile"   : 1,
-  "player_tile" : 2
-};
 
 class Display {
   constructor(canvasWidth, canvasHeight) {
-    // this.wW = worldWidth;
-    // this.wH = worldHeight;
     this.cW = canvasWidth;
     this.cH = canvasHeight;
     this.canvas = null;
@@ -31,8 +23,10 @@ class Display {
 
   loadImages() {
     for(let tile in tilesFile) {
-      this.images[tile] = new Image();
-      this.images[tile].src = tilesFile[tile];
+      if(tilesFile.hasOwnProperty(tile)) {
+        this.images[tile] = new Image();
+        this.images[tile].src = tilesFile[tile];
+      }
     }
   }
 
@@ -50,8 +44,7 @@ class Display {
   item(items) {
     this.context.beginPath();
     for(let i = 0; i < items.length; i++) {
-      this.context.drawImage(this.images[items[i].name], items[i].x, items[i].y, 16, 16);
-      this.context.setTransform(1, 0, 0, 1, 0, 0);
+      this.context.drawImage(this.images[items[i].name], items[i].x * 40, items[i].y * 40, 40, 40);
     }
     this.context.closePath();
   }
@@ -60,8 +53,7 @@ class Display {
     var image = this.images[imageName];
     this.context.beginPath();
     for(let cell = 0; cell < body.length; cell++) {
-      this.context.drawImage(image, body[cell]["x"], body[cell]["y"], 16, 16);
-      this.context.setTransform(1, 0, 0, 1, 0, 0);
+      this.context.drawImage(image, body[cell].x * 40, body[cell].y * 40, 40, 40);
     }
     this.context.closePath();
   }

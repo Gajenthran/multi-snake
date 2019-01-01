@@ -5,9 +5,10 @@ class Game {
     this.display  = display;
     this.world    = null;
     this.player   = null;
-    this.ennemies = null;
-    this.items    = {};
-    this.frameID  = null; 
+    this.enemies = new Array();
+    this.items    = new Array();
+    this.frameId  = null; 
+    this.play = true;
   }
 
   init() {
@@ -15,12 +16,22 @@ class Game {
     this.socket.emit("new-player");
   } 
 
+  isEmpty(array) { // TODO: Put in utility
+    if(array.length === 0)
+      return true;
+    return false;
+  }
   setPlayersValues(data) {
     this.player = data["player"];
-    if(data["ennemies"] !== undefined)
-      this.ennemies = data["ennemies"];
-    if(data["items"] !== undefined)
-       this.items = data["items"];
+
+    if(data["enemies"] !== undefined &&
+       Array.isArray(data["enemies"]) &&
+       data["enemies"].length !== 0)
+      this.enemies = data["enemies"];
+
+    if(data["items"] !== undefined &&
+       Array.isArray(data["items"]))
+      this.items = data["items"];
   }
 
   start() {
@@ -35,7 +46,7 @@ class Game {
   }
 
   end() {
-    window.cancelAnimationFrame(this.frameID);
+    window.cancelAnimationFrame(this.frameId);
   }
 
   /*
@@ -45,9 +56,9 @@ class Game {
     this.display.clear();
     if(this.player)
       this.display.snake("player", this.player);
-    if(this.ennemies)
-      this.ennemies.forEach(enemy => this.display.snake("ennemies", enemy)); // Not sure
-    if(this.items)
+    if(this.enemies.length != 0)
+      this.enemies.forEach(enemy => this.display.snake("enemies", enemy)); // Not sure
+    if(this.items.length != 0) 
       this.display.item(this.items);
   }
 
