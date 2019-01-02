@@ -1,8 +1,3 @@
-// TODO: put in Utility
-function on(element, ev, func) {
-  element.addEventListener(ev, func);
-}
-
 var keyboardState = {
   "up"    : false,
   "left"  : false,
@@ -12,7 +7,7 @@ var keyboardState = {
 
 function handleEvents() {
   on(document, "keydown", onKeydown);
-  on(document, "keyup", onKeyup);
+  on(document, "keyup",   onKeyup);
 }
 
 function onKeydown(event) { // TODO: add a better handle snake movement function

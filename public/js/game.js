@@ -1,32 +1,29 @@
+
 /** Class representing the game and their elements. */
 class Game {
-  constructor(socket, display) {
-    this.socket   = socket;
-    this.display  = display;
-    this.world    = null;
-    this.player   = null;
+  constructor(socket) {
+    this.socket  = socket;
+    this.display = null;
+    this.world   = null;
+    this.player  = null;
     this.enemies = new Array();
-    this.items    = new Array();
-    this.frameId  = null; 
-    this.play = true;
+    this.items   = new Array();
+    this.frameId = null; 
+    this.play    = true;
   }
 
   init() {
+    this.display = new Display();
+    this.display.init(CANVAS_WIDTH, CANVAS_HEIGHT);
     this.socket.on("generate-players", this.setPlayersValues.bind(this));
     this.socket.emit("new-player");
   } 
 
-  isEmpty(array) { // TODO: Put in utility
-    if(array.length === 0)
-      return true;
-    return false;
-  }
+
   setPlayersValues(data) {
     this.player = data["player"];
-
     if(data["enemies"] !== undefined &&
-       Array.isArray(data["enemies"]) &&
-       data["enemies"].length !== 0)
+       Array.isArray(data["enemies"]))
       this.enemies = data["enemies"];
 
     if(data["items"] !== undefined &&
@@ -39,9 +36,12 @@ class Game {
   }
 
   run() {
-    this.socket.emit("player-action", keyboardState);
-    this.socket.on("update-players", this.setPlayersValues.bind(this));
-    this.render();
+    if(this.play) {
+      this.socket.emit("player-action", keyboardState);
+      this.socket.on("update-players", this.setPlayersValues.bind(this));
+      this.render();
+    } 
+    this.play = !this.play;
     window.requestAnimationFrame(this.run.bind(this));
   }
 
@@ -53,13 +53,13 @@ class Game {
    * @method Display all the elements of the game 
    */
   render() {
-    this.display.clear();
+    this.display.clearScreen();
     if(this.player)
-      this.display.snake("player", this.player);
+      this.display.snakeOnScreen("player", this.player);
     if(this.enemies.length != 0)
-      this.enemies.forEach(enemy => this.display.snake("enemies", enemy)); // Not sure
+      this.enemies.forEach(enemy => this.display.snakeOnScreen("enemies", enemy));
     if(this.items.length != 0) 
-      this.display.item(this.items);
+      this.display.itemOnScreen(this.items);
   }
 
   /**
