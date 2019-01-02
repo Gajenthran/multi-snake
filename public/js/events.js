@@ -5,12 +5,21 @@ var keyboardState = {
   "down"  : false 
 };
 
-function handleEvents() {
+/**
+ * @method Handle all events.
+ */
+function handleEvents() { // TODO: maybe canvas instead of document
   on(document, "keydown", onKeydown);
   on(document, "keyup",   onKeyup);
 }
 
-function onKeydown(event) { // TODO: add a better handle snake movement function
+/**
+ * @method Handle all keyboard inputs and update the keyboard state when 
+ * a key is pressed down. Called when the "keydown" event fires.
+ *
+ * @param event the triggered event ("keydown" normally)
+ */
+function onKeydown(event) {
   switch(event.key) {
     case "ArrowDown":
     case "x":
@@ -35,7 +44,12 @@ function onKeydown(event) { // TODO: add a better handle snake movement function
   }
 }
 
-
+/**
+ * @method Handle all keyboard inputs and update the keyboard state when 
+ * a key is released. Called when the "keyup" event fires.
+ *
+ * @param event the triggered event ("keyup" normally)
+ */
 function onKeyup(event) { 
   switch(event.key) {
     case "ArrowDown":

@@ -6,7 +6,7 @@ var app      = express();
 var server   = http.Server(app);
 var io       = socketIO(server);
 
-var FPS  = 1000 / 30;
+var FPS  = 1000 / 15;
 var PORT = 8080; 
 
 app.set('port', PORT);
@@ -34,6 +34,7 @@ function listen(socket, type, callback) {
 
 setInterval(function() {
   game.update();
+  game.emitValuesToClient();
 }, FPS);
 
 server.listen(PORT, function() {

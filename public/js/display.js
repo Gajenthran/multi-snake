@@ -5,6 +5,9 @@ var tilesFile = {
   "enemies"        : "/public/img/enemies.png"
 };
 
+/**
+ * Draw all the images of the game and also the scoreboard on the canvas 
+ */
 class Display {
   constructor() {
     this.canvas  = null;
@@ -12,6 +15,12 @@ class Display {
     this.images  = {};
   }
 
+  /**
+   * @method Initialize the canvas and load all the images.
+   *
+   * @param canvasWidth {number} width of the canvas
+   * @param canvasHeight {number} height of the canvas
+   */
   init(canvasWidth, canvasHeight) {
     this.canvas = createElement("canvas", document, { "borderStyle" : "solid"});
     this.canvas.id = CANVAS_ID;     
@@ -21,6 +30,9 @@ class Display {
     this.loadImages();
   }
   
+  /**
+   * @method Load all images and put them in a list.
+   */
   loadImages() {
     for(let tile in tilesFile) {
       if(tilesFile.hasOwnProperty(tile)) {
@@ -30,10 +42,18 @@ class Display {
     }
   }
 
+  /**
+   * @method Clear the canvas.
+   */
   clearScreen() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  /**
+   * @method Draw all the items on the canvas.
+   *
+   * @param items {Array.<Item>} the items of the game 
+   */
   itemOnScreen(items) {
     this.context.beginPath();
     for(let i = 0; i < items.length; i++)
@@ -41,6 +61,12 @@ class Display {
     this.context.closePath();
   }
 
+  /**
+   * @method Draw a snake on the canvas.
+   *
+   * @param imageName {String} name of the image, to know if it is the player or the enemies
+   * @param body {Array.<Object>} the body of the snake
+   */
   snakeOnScreen(imageName, body) {
     var image = this.images[imageName];
     this.context.beginPath();
