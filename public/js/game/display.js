@@ -1,5 +1,6 @@
 var TILES_FILE = {
   "apple"          : "/public/img/apple.png", 
+  "poison"          : "/public/img/poison.png", 
   "decrease_speed" : "/public/img/decrease_speed.png", 
   "player"         : "/public/img/player.png",
   "enemies"        : "/public/img/enemies.png"
