@@ -124,7 +124,7 @@ class Display {
     for(var i = enemies.length-1, j = 1; i >= 0 && j <= TOP_SCORERS; j++) {
       element = createElement("li", this.scoreboard, ENEMY_TEXT_STYLE, 
                               SCORE_X, SCORE_Y * j + 50);
-      text = "" + enemies[i]["body"].length + " : " + enemies[i]["score"] + " points."
+      text = "#" + j + " Enemy: " + enemies[i]["score"] + " points."
       score = createText(text, element);
       i--;
     } 
