@@ -21,7 +21,7 @@ class Game {
    */
   init() {
     this.display = new Display();
-    this.display.init(CANVAS_WIDTH, CANVAS_HEIGHT);
+    this.display.init();
     this.socket.on("generate-players", this.setGameValues.bind(this));
     this.socket.emit("new-player");
   } 
@@ -35,8 +35,9 @@ class Game {
   setGameValues(data) {
     this.player = data["player"];
     if(data["enemies"] !== undefined &&
-       Array.isArray(data["enemies"]))
+       Array.isArray(data["enemies"])) {
       this.enemies = data["enemies"];
+    }
 
     if(data["items"] !== undefined &&
        Array.isArray(data["items"]))
@@ -78,10 +79,13 @@ class Game {
    */
   render() {
     this.display.clearScreen();
-    if(this.player)
-      this.display.snakeOnScreen("player", this.player);
-    if(this.enemies.length != 0)
-      this.enemies.forEach(enemy => this.display.snakeOnScreen("enemies", enemy));
+    if(this.player && this.player["body"] !== undefined) {
+      this.display.snakeOnScreen("player", this.player["body"]);
+      this.display.playersOnScoreboard(this.player, this.enemies);
+    }
+    for(var i = 0; i < this.enemies.length; i++)
+      this.display.snakeOnScreen("enemies", this.enemies[i]["body"]);
+    // this.enemies.forEach(enemy => this.display.snakeOnScreen("enemies", enemy["body"]));
     if(this.items.length != 0) 
       this.display.itemOnScreen(this.items);
   }
