@@ -33,16 +33,19 @@ class Game {
    */
   initGameValues(data) {
     if(this.player == null)
-      this.player = new Player(data["player"].x, data["player"].y, 0);
+      this.player = new Player(data["player"].x, data["player"].y, 
+                               data["player"].dir, 0, data["player"].size);
     this.enemies = data["enemies"];
     this.items = data["items"];
   }
 
   setGameValues(data) {
     if(this.player.body[0].x != data["player"].body.x ||
-       this.player.body[0].y != data["player"].body.y)
-      this.player.update(data["player"].body.x, data["player"].body.y, 
-                         data["player"].score);
+       this.player.body[0].y != data["player"].body.y) {
+      this.player.update(data["player"].body.x, data["player"].body.y,
+                         data["player"].dir, data["player"].score, 
+                         data["player"].size);
+  }
     this.enemies = data["enemies"];
     this.items = data["items"];
   }
@@ -81,14 +84,13 @@ class Game {
    */
   render() {
     this.display.clearScreen();
-    // if(this.player != null) console.log(this.player.body, this.enemies, this.items);
     if(this.player && this.player.body.length != 0) {
-      this.display.snakeOnScreen("player", this.player.body);
+      this.display.snakeOnScreen("player", this.player);
       this.display.playersOnScoreboard(this.player, this.enemies);
     }
 
     for(var i = 0; i < this.enemies.length; i++)
-      this.display.snakeOnScreen("enemies", this.enemies[i]["body"]);
+      this.display.snakeOnScreen("enemies", this.enemies[i]);
 
     if(this.items.length != 0) 
       this.display.itemOnScreen(this.items);

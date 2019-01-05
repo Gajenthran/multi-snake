@@ -1,13 +1,29 @@
 /*
- * @const {Object} TILES_FILE: All useful files for the sprites
+ * @const {Object} TILES_FILE: all useful files for the sprites
  */
 var TILES_FILE = {
   "apple"          : "/public/img/apple.png", 
   "poison"         : "/public/img/poison.png", 
-  "player"         : "/public/img/player.png",
-  "enemies"        : "/public/img/enemies.png"
+  "snakes"         : "/public/img/snakes.png"
 };
 
+/*
+ * @const {Object} SNAKES_IMG_SRC: details of the source image (/public/img/snakes.png
+ * to draw the snake for the player and the enemies
+ */
+var SNAKES_IMG_SRC = {
+  "image" : "snakes",
+  "player" : 0,
+  "enemies" : 1,
+  "up" : 0,
+  "left" : 1,
+  "right" : 2,
+  "down" : 3,
+  "ndir" : 4,
+  "w"  : 50, 
+  "h"  : 50
+};
+  
 /*
  * @const {number} CANVAS_WIDTH: the width of the canvas
  */
@@ -146,11 +162,18 @@ class Display {
    * @param {String} imageName: name of the image, to know if it is the player or the enemies
    * @param {Array.<Object>} body: the body of the snake
    */
-  snakeOnScreen(imageName, body) {
-    var image = this.images[imageName];
+  snakeOnScreen(imageName, player) {
+    var image = this.images[SNAKES_IMG_SRC["image"]];
+    var sw = SNAKES_IMG_SRC["w"];
+    var sh = SNAKES_IMG_SRC["h"];
+    var sy = SNAKES_IMG_SRC[imageName] * sh;
+    var sx = SNAKES_IMG_SRC[player.dir];
     this.context.beginPath();
-    for(let cell = 0; cell < body.length; cell++)
-      this.context.drawImage(image, body[cell].x * 40, body[cell].y * 40, 40, 40);
+    for(let cell = 0; cell < player.body.length; cell++)
+      if(cell == 0)
+        this.context.drawImage(image, sx * sw, sy, sw, sh, player.body[cell].x * 40, player.body[cell].y * 40, 40, 40);
+      else
+        this.context.drawImage(image, SNAKES_IMG_SRC["ndir"] * sw, sy, sw, sh, player.body[cell].x * 40, player.body[cell].y * 40, 40, 40);
     this.context.closePath();
   }
 
