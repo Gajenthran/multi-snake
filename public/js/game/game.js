@@ -1,7 +1,8 @@
 
 /** 
  * Class representing the game and their elements (Players, Items)
- * on the client side.
+ * on the client side. The game (client side) will take care of the
+ * display et send the keyboard inputs.
  */
 class Game {
   constructor(socket) {
@@ -11,7 +12,6 @@ class Game {
     this.enemies = new Array();
     this.items   = new Array();
     this.frameId = null; 
-    this.play    = true;
   }
 
   /**
@@ -22,28 +22,30 @@ class Game {
   init() {
     this.display = new Display();
     this.display.init();
-    this.socket.on("generate-players", this.setGameValues.bind(this));
+    this.socket.on("generate-players", this.initGameValues.bind(this));
     this.socket.emit("new-player");
   } 
-
 
   /**
    * @method Set the data (Players, Items) of the game given by the server.
    *
-   * @param data {Object} data given by the server
+   * @param {Object} data: data given by the server
    */
-  setGameValues(data) {
-    this.player = data["player"];
-    if(data["enemies"] !== undefined &&
-       Array.isArray(data["enemies"])) {
-      this.enemies = data["enemies"];
-    }
-
-    if(data["items"] !== undefined &&
-       Array.isArray(data["items"]))
-      this.items = data["items"];
+  initGameValues(data) {
+    if(this.player == null)
+      this.player = new Player(data["player"].x, data["player"].y, 0);
+    this.enemies = data["enemies"];
+    this.items = data["items"];
   }
 
+  setGameValues(data) {
+    if(this.player.body[0].x != data["player"].body.x ||
+       this.player.body[0].y != data["player"].body.y)
+      this.player.update(data["player"].body.x, data["player"].body.y, 
+                         data["player"].score);
+    this.enemies = data["enemies"];
+    this.items = data["items"];
+  }
   /**
    * @method Start the game loop.
    */
@@ -79,13 +81,15 @@ class Game {
    */
   render() {
     this.display.clearScreen();
-    if(this.player && this.player["body"] !== undefined) {
-      this.display.snakeOnScreen("player", this.player["body"]);
+    // if(this.player != null) console.log(this.player.body, this.enemies, this.items);
+    if(this.player && this.player.body.length != 0) {
+      this.display.snakeOnScreen("player", this.player.body);
       this.display.playersOnScoreboard(this.player, this.enemies);
     }
+
     for(var i = 0; i < this.enemies.length; i++)
       this.display.snakeOnScreen("enemies", this.enemies[i]["body"]);
-    // this.enemies.forEach(enemy => this.display.snakeOnScreen("enemies", enemy["body"]));
+
     if(this.items.length != 0) 
       this.display.itemOnScreen(this.items);
   }

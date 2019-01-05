@@ -1,3 +1,7 @@
+/*
+ * @global {Object} keyboardState: All keyboard inputs. The value of an input is 
+ * false when a key is released and true when a key is pressed. 
+ */
 var keyboardState = {
   "up"    : false,
   "left"  : false,
@@ -17,7 +21,7 @@ function handleEvents() { // TODO: maybe canvas instead of document
  * @method Handle all keyboard inputs and update the keyboard state when 
  * a key is pressed down. Called when the "keydown" event fires.
  *
- * @param event the triggered event ("keydown" normally)
+ * @param {Event} event: the triggered event ("keydown" normally)
  */
 function onKeydown(event) {
   switch(event.key) {
@@ -48,7 +52,7 @@ function onKeydown(event) {
  * @method Handle all keyboard inputs and update the keyboard state when 
  * a key is released. Called when the "keyup" event fires.
  *
- * @param event the triggered event ("keyup" normally)
+ * @param {Event} event: the triggered event ("keyup" normally)
  */
 function onKeyup(event) { 
   switch(event.key) {

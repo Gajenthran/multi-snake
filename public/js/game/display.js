@@ -1,25 +1,67 @@
+/*
+ * @const {Object} TILES_FILE: All useful files for the sprites
+ */
 var TILES_FILE = {
   "apple"          : "/public/img/apple.png", 
-  "poison"          : "/public/img/poison.png", 
-  "decrease_speed" : "/public/img/decrease_speed.png", 
+  "poison"         : "/public/img/poison.png", 
   "player"         : "/public/img/player.png",
   "enemies"        : "/public/img/enemies.png"
 };
 
+/*
+ * @const {number} CANVAS_WIDTH: the width of the canvas
+ */
 var CANVAS_WIDTH = 800;
+
+/*
+ * @const {number} CANVAS_HEIGHT: the height of the canvas
+ */
 var CANVAS_HEIGHT = 600;
+
+/*
+ * @const {number} CANVAS_ID: the id of the canvas (important to create a canvas)
+ */
 var CANVAS_ID = "Canvas_Curve-Fever";
 
+/*
+ * @const {number} SCOREBOARD_X: the coordinate x of the scoreboard
+ */
 var SCOREBOARD_X = CANVAS_WIDTH + 10
+
+/*
+ * @const {number} SCOREBOARD_Y: the coordinate y of the scoreboard
+ */
 var SCOREBOARD_Y = 0;
+
+/*
+ * @const {number} SCOREBOARD_WIDTH: the width of the scoreboard
+ */
 var SCOREBOARD_WIDTH = 400;
+
+/*
+ * @const {number} SCOREBOARD_HEIGHT: the height of the scoreboard
+ */
 var SCOREBOARD_HEIGHT = 300;
 
+/*
+ * @const {number} SCORE_X: the coordinate x of the score
+ */
 var SCORE_X = 50;
+
+/*
+ * @const {number} SCORE_Y: the coordinate y of the score
+ */
 var SCORE_Y = 50;
 
+/*
+ * @const {number} TOP_SCORERS: the number of players (best scores) to show
+ */
 var TOP_SCORERS = 2;
 
+/*
+ * @const {number} PLAYER_TEXT_STYLE: style for the element <li> representing
+ * the player's score). We do that using a css file but we choose this method
+ */
 var PLAYER_TEXT_STYLE = {
   "fontSize"      : "20px",
   "fontFamily"    : "Gill Sans",
@@ -28,6 +70,10 @@ var PLAYER_TEXT_STYLE = {
   "listStyleType" : "none"
 };
 
+/*
+ * @const {number} ENEMY_TEXT_STYLE: style for the element <li> representing 
+ * the enemies' score
+ */
 var ENEMY_TEXT_STYLE = {
   "fontSize"      : "20px",
   "fontFamily"    : "Gill Sans",
@@ -48,8 +94,8 @@ class Display {
   /**
    * @method Initialize the canvas and load all the images.
    *
-   * @param canvasWidth {number} width of the canvas
-   * @param canvasHeight {number} height of the canvas
+   * @param {number} canvasWidth: width of the canvas
+   * @param {number} canvasHeight: height of the canvas
    */
   init() {
     this.canvas = createElement("canvas", null, { "borderStyle" : "solid"});
@@ -85,7 +131,7 @@ class Display {
   /**
    * @method Draw all the items on the canvas.
    *
-   * @param items {Array.<Item>} the items of the game 
+   * @param {Array.<Item>} items: the items of the game 
    */
   itemOnScreen(items) {
     this.context.beginPath();
@@ -97,8 +143,8 @@ class Display {
   /**
    * @method Draw a snake on the canvas.
    *
-   * @param imageName {String} name of the image, to know if it is the player or the enemies
-   * @param body {Array.<Object>} the body of the snake
+   * @param {String} imageName: name of the image, to know if it is the player or the enemies
+   * @param {Array.<Object>} body: the body of the snake
    */
   snakeOnScreen(imageName, body) {
     var image = this.images[imageName];
@@ -108,6 +154,13 @@ class Display {
     this.context.closePath();
   }
 
+  /**
+   * @method Drawn the score of the player (client) and the highest scores
+   * of the ennemies in the scoreboard (<ul>).
+   *
+   * @method {Player} player: the player (client)
+   * @method {Object} enemies: the ennemies (other players) 
+   */
   playersOnScoreboard(player, enemies) {
     while (this.scoreboard.firstChild)
       this.scoreboard.removeChild(this.scoreboard.firstChild);
@@ -121,7 +174,7 @@ class Display {
     text = "Your snake : " + player["score"] + " points."
     score = createText(text, element);  
 
-    // Show the top 3 score of the game (enemies)
+    // Show the highest scores of the game (enemies)
     for(var i = enemies.length-1, j = 1; i >= 0 && j <= TOP_SCORERS; j++) {
       element = createElement("li", this.scoreboard, ENEMY_TEXT_STYLE, 
                               SCORE_X, SCORE_Y * j + 50);
