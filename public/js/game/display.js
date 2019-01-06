@@ -4,11 +4,12 @@
 var TILES_FILE = {
   "apple"  : "/public/img/apple.png", 
   "poison" : "/public/img/poison.png", 
-  "snakes" : "/public/img/snakes.png"
+  "snakes" : "/public/img/snakes.png",
+  "items"   : "/public/img/items.png"
 };
 
 /*
- * @const {Object} SNAKES_IMG_SRC: details of the source image (/public/img/snakes.png
+ * @const {Object} SNAKES_IMG_SRC: details of the source image (/public/img/snakes.png)
  * to draw the snake for the player and the enemies
  */
 var SNAKES_IMG_SRC = {
@@ -24,12 +25,17 @@ var SNAKES_IMG_SRC = {
   "h"       : 50
 };
   
+/*
+ * @const {Object} ITEMS_IMG_SRC: details of the source image (/public/img/items.png)
+ * to draw the items.
+ */
 var ITEMS_IMG_SRC = {
-  "coin"   : {"id" : 0, "actualSrc" : 0, "fullSrc" : 6},
-  "apple"  : 1,
-  "poison" : 2,
-  "w"      : 60,
-  "h"      : 60
+  "image"   : "items",
+  "coin"    : { "id" : 0, "actualSrc" : 0, "fullSrc" : 10},
+  "apple"   : { "id" : 1, "actualSrc" : 0, "fullSrc" : 1},
+  "poison"  : { "id" : 2, "actualSrc" : 0, "fullSrc" : 1},
+  "w"       : 60,
+  "h"       : 60
 };
 
 /*
@@ -158,9 +164,19 @@ class Display {
    * @param {Array.<Item>} items: the items of the game 
    */
   itemOnScreen(items) {
+    var image = this.images[ITEMS_IMG_SRC["image"]]
+    var sw = ITEMS_IMG_SRC["w"];
+    var sh = ITEMS_IMG_SRC["h"];
+    var sy, sx;
     this.context.beginPath();
-    for(let i = 0; i < items.length; i++)
-      this.context.drawImage(this.images[items[i].name], items[i].x * 20, items[i].y * 20, 20, 20);
+    for(let i = 0; i < items.length; i++) {
+      sy = ITEMS_IMG_SRC[items[i].name].id * sh;
+      ITEMS_IMG_SRC[items[i].name].actualSrc = (ITEMS_IMG_SRC[items[i].name].actualSrc + 1) % ITEMS_IMG_SRC[items[i].name].fullSrc;
+      sx = ITEMS_IMG_SRC[items[i].name].actualSrc;
+      this.context.drawImage(image, 
+                             sx, sy, sw, sh,
+                             items[i].x * 20, items[i].y * 20, 20, 20);
+    }
     this.context.closePath();
   }
 
@@ -178,10 +194,16 @@ class Display {
     var sx = SNAKES_IMG_SRC[player.dir];
     this.context.beginPath();
     for(let cell = 0; cell < player.body.length; cell++)
+      // Draw the head
       if(cell == 0)
-        this.context.drawImage(image, sx * sw, sy, sw, sh, player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
+        this.context.drawImage(image, 
+                               sx * sw, sy, sw, sh, 
+                               player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
+      // Draw the tail/body
       else
-        this.context.drawImage(image, SNAKES_IMG_SRC["ndir"] * sw, sy, sw, sh, player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
+        this.context.drawImage(image, 
+                               SNAKES_IMG_SRC["ndir"] * sw, sy, sw, sh, 
+                               player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
     this.context.closePath();
   }
 

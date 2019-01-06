@@ -12,6 +12,14 @@ class Player {
     this.size = size;
   }
 
+  /**
+   * @method Update the snake with the values given by the server.
+   *
+   * @param {number} x: coordinate x
+   * @param {number} y: coordinate y
+   * @param {number} score: score of the snake
+   * @param {number} size: the size of the snake
+   */
   update(x, y, dir, score, size) {
     this.size = size || this.size;
     if(this.body.length == this.size)

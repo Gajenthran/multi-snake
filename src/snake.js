@@ -17,11 +17,9 @@ class Snake {
    * @param {number} size: the size of the snake, the number of body 
    * @param {Array.<Object>} body: snake's body storing all the coordinates
    */
-  constructor(x, y, w, h, direction) {
+  constructor(x, y, direction) {
     this.x     = x;
     this.y     = y;
-    this.w     = 40;
-    this.h     = 40;
     this.dir   = direction;
 
     // this.color = color;
@@ -43,7 +41,7 @@ class Snake {
     // Not useful but to be sure that the player does not move
     if(!this.alive)
       return;
-    
+
     this.x += this.dir.x //Math.floor((this.x + this.dir.x) * 0.2);
     this.y += this.dir.y //Math.floor((this.y + this.dir.y) * 0.2);
 
@@ -84,7 +82,7 @@ class Snake {
   }
 }
 
-/*
+/**
  * @const {number} SNAKE_SIZE: the size of the snake at the beginning
  */
 Snake.SNAKE_SIZE = 3;

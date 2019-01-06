@@ -14,12 +14,10 @@ class Item {
    * @param {number} w: width of the item
    * @param {number} h: height of the item
    */
-  constructor(name, x, y, w, h) {
+  constructor(name, x, y) {
     this.name = name;
     this.x    = x;
     this.y    = y;
-    this.w    = w;
-    this.h    = h;
     this.use  = false;
   }
 
@@ -34,12 +32,23 @@ class Item {
     this.use = true;
     switch(this.name) {
       case Item.APPLE_ITEM:
-        this.growSnake(snake, 5);
+        this.growSnake(snake);
         break;
       case Item.POISON_ITEM:
         this.killSnake(snake);
+      case Item.COIN_ITEM:
+        this.increaseScore(snake);
         break;
     }
+  }
+
+  /**
+   * @method Increase the score of the snake.
+   *
+   * @param {Snake} snake: snake
+   */
+  increaseScore(snake) {
+    snake.score += Item.COIN_VALUE;
   }
 
   /**
@@ -61,19 +70,34 @@ class Item {
     player.alive = false;
   }
 
-  static endOfSpawnTime() {
-    if((new Date()).getTime() > Item.SPAWN_ITEM_DURATION + Item.SPAWN_ITEM_TIME_REM) {
+  /**
+   * @method Check if it is time to spawn a new item.
+   *
+   * @return {boolean} true if we exceed the respawn time and false otherwise.
+   */
+  static endOfSpawnTime(itemsLength) {
+    if(itemsLength < Item.MAX_ITEM_ON_SCREEN && 
+       (new Date()).getTime() > Item.SPAWN_ITEM_DURATION + Item.SPAWN_ITEM_TIME_REM) {
       Item.SPAWN_ITEM_TIME_REM = (new Date()).getTime();
       return true;
     }
     return false;
   }
 
+  /** 
+   * @method Choose a random item from the list of items ITEMS_NAME.
+   *
+   * @return {String} the name of an item
+   */
   static chooseRandomItem() {
     return Item.ITEMS_NAME[Util.getRandomFloor(Item.ITEMS_NAME.length)];
-    // for(let i = 0; i < ITEMS_NAME.length; i++)
   }
 }
+
+/**
+ * @const {String} COIN_ITEM: the name given for the coin item
+ */
+Item.COIN_ITEM = "coin";
 
 /**
  * @const {String} APPLE_ITEM: the name given for the apple item
@@ -86,20 +110,32 @@ Item.APPLE_ITEM = "apple";
 Item.POISON_ITEM  = "poison";
 
 /**
+ * @const {String} COIN_VALUE: the value of the coin (the number of points given to the snake)
+ */
+Item.COIN_VALUE = 5;
+
+/**
  * @const {String} SPAWN_ITEM_DURATION: spawn time of an object
  */
-Item.SPAWN_ITEM_DURATION = 5000;
+Item.SPAWN_ITEM_DURATION = 2000;
 
 /**
  * @const {String} SPAWN_ITEM_TIME_REM: remaining time for the spawn of an object
  */
 Item.SPAWN_ITEM_TIME_REM = 0;
+
+/**
+ * @const {String} MAX_ITEM_ON_SCREEN: the maximum number of items on the screen
+ */
+Item.MAX_ITEM_ON_SCREEN = 10;
+
 /**
  * @const {Array.<String>} ITEMS_NAME: the list of all items
  */
 Item.ITEMS_NAME = [
   Item.APPLE_ITEM,
-  Item.POISON_ITEM
+  Item.POISON_ITEM,
+  Item.COIN_ITEM
 ];
 
 module.exports = Item;

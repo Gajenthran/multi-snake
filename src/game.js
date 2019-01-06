@@ -25,7 +25,7 @@ class Game {
    * @constructor
    *
    * @param {World} world: the location of all objects
-   * @param {Map} player: key = the socket ID of the player and value = player details
+   * @param {Map} players: key = the socket ID of the player and value = player details
    * @param {Array.<Item>} item: all items in the game
    */
   constructor() {
@@ -52,7 +52,7 @@ class Game {
    */
   addNewItem(name) {
     var position = this.world.spawnItem();
-    var item = new Item(name, position.x, position.y, 8, 8);
+    var item = new Item(name, position.x, position.y);
     this.items.push(item);
     this.world.insertItem(item);
   }
@@ -64,23 +64,19 @@ class Game {
    * @param {Object} socket: the socket of the player
    */
   addNewPlayer(socket) {
-    this.addNewItem(Item.APPLE_ITEM);  // TODO: put elsewhere (just to test)
-    this.addNewItem(Item.POISON_ITEM); // TODO: put elsewhere (just to test)
-
     var data = {
       "player"  : this.world.spawnSnake(),
       "enemies" : this.getEnemies(socket),
       "items"   : this.items
     };
     socket.emit("generate-players", data)
-    this.players.set(socket.id, new Player(data["player"].x, data["player"].y, 
-                                           data["player"].w, data["player"],
+    this.players.set(socket.id, new Player(data["player"].x, data["player"].y,
                                            data["player"].dir, socket)); // Add for the color: Util.getRandomColor()
   }
 
 
   /**
-   * @method Update all the objects (Players and Items) in the game.
+   * @method Update all the objects (players and items) in the game.
    */
   update() {
     this.updatePlayers();
@@ -88,7 +84,7 @@ class Game {
   }
 
   /**
-   * @method Update (move, collision and remove) all the Players
+   * @method Update (move, collision and remove) all players
    * in the game. 
    */
   updatePlayers() {
@@ -96,7 +92,7 @@ class Game {
       this.world.insertSnake(player);
       player.move(this.world);
       player.collision(this.world);
-      this.world.tiles[player.y * this.world.w + player.x] = World.tilesId["player"];
+      this.world.tiles[player.y * this.world.w + player.x] = World.TILES_ID["player"];
       if(!player.alive) {
         this.removePlayer(player.socket);
       }
@@ -104,11 +100,11 @@ class Game {
   }
 
   /**
-   * @method Update all the Items (check if an Item has been
+   * @method Update all items (check if an item has been
    * consumed. If that's the case, we remove it from the game).
    */
   updateItems() {
-    if(Item.endOfSpawnTime())
+    if(Item.endOfSpawnTime(this.items.length))
       this.addNewItem(Item.chooseRandomItem());
     for(let i = 0; i < this.items.length; i++) {
       if(this.items[i].use) {
@@ -143,14 +139,14 @@ class Game {
   }
 
   /**
-   * @method Remove all the Players in the game.
+   * @method Remove all players from the game.
    */
   removeAllPlayer() {
     this.players.clear();
   }
 
   /**
-   * @method Get all the Players in the game except the
+   * @method Get all players in the game except the
    * player given as parameters.
    * 
    * @param {Object} playerSocket: the socket of the Player

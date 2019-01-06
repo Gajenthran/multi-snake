@@ -1,23 +1,13 @@
 var Snake = require("./Snake");
 var Util = require("./global/Util");
 
-/**
- * @const {Object} directions: coordinates for each direction
- */
-var directions = {
-  "left"  : {"x" : -1, "y" :  0},
-  "right" : {"x" :  1, "y" :  0},
-  "up"    : {"x" :  0, "y" : -1},
-  "down"  : {"x" :  0, "y" :  1}
-};
-
 /** 
  * Class representing a player on the server. A player is a snake 
  * with some other details like name and socket.
  */
 class Player extends Snake {
-  constructor(x, y, w, h, direction, socket) {
-    super(x, y, w, h, direction);
+  constructor(x, y, direction, socket) {
+    super(x, y, direction);
     // this.name = name;
     this.socket = socket;
   }
@@ -34,8 +24,8 @@ class Player extends Snake {
       return;
 
     for(var key in keyboardState) {
-      if(keyboardState[key] && directions.hasOwnProperty(key))
-        this.dir = directions[key];
+      if(keyboardState[key] && Player.DIRECTIONS.hasOwnProperty(key))
+        this.dir = Player.DIRECTIONS[key];
     }
   }
 
@@ -44,22 +34,38 @@ class Player extends Snake {
    * inputs.
    *
    * @param {Object} keyboardState: the inputs obtained on the client side
+   * @return {boolean} True if there is no possibility to move, false otherwise.
    */
   possibleMove(keyboardState) {
     return ((keyboardState["left"] && keyboardState["right"]) ||
            (keyboardState["up"] && keyboardState["down"]) ||
-           (this.dir == directions["right"] && keyboardState["left"]) ||
-           (this.dir == directions["left"] && keyboardState["right"]) ||
-           (this.dir == directions["up"] && keyboardState["down"]) ||
-           (this.dir == directions["down"] && keyboardState["up"]));
+           (this.dir == Player.DIRECTIONS["right"] && keyboardState["left"]) ||
+           (this.dir == Player.DIRECTIONS["left"] && keyboardState["right"]) ||
+           (this.dir == Player.DIRECTIONS["up"] && keyboardState["down"]) ||
+           (this.dir == Player.DIRECTIONS["down"] && keyboardState["up"]));
   }
 
+  /**
+   * @method Get the name of the direction knowing the value of the direction.
+   *
+   * @return {String} The name of the direction.
+   */ 
   getDir() {
-    for(var dir in directions) {
-      if(Util.isSameObjects(directions[dir], this.dir))
+    for(var dir in Player.DIRECTIONS) {
+      if(Util.isSameObjects(Player.DIRECTIONS[dir], this.dir))
         return dir;
     }
   }
 }
+
+/**
+ * @const {Object} Player.DIRECTIONS: Coordinates for each direction
+ */
+Player.DIRECTIONS = {
+  "left"  : {"x" : -1, "y" :  0},
+  "right" : {"x" :  1, "y" :  0},
+  "up"    : {"x" :  0, "y" : -1},
+  "down"  : {"x" :  0, "y" :  1}
+};
 
 module.exports = Player;
