@@ -67,6 +67,7 @@ class World {
     return y * this.w + x;
   }
 
+  // Put in snake.js with static
   spawnSnake() {
     var tile = this.getRandomTile();
     return { "x"     : Math.floor(tile%this.w),

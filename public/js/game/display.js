@@ -2,9 +2,9 @@
  * @const {Object} TILES_FILE: all useful files for the sprites
  */
 var TILES_FILE = {
-  "apple"          : "/public/img/apple.png", 
-  "poison"         : "/public/img/poison.png", 
-  "snakes"         : "/public/img/snakes.png"
+  "apple"  : "/public/img/apple.png", 
+  "poison" : "/public/img/poison.png", 
+  "snakes" : "/public/img/snakes.png"
 };
 
 /*
@@ -12,18 +12,26 @@ var TILES_FILE = {
  * to draw the snake for the player and the enemies
  */
 var SNAKES_IMG_SRC = {
-  "image" : "snakes",
-  "player" : 0,
+  "image"   : "snakes",
+  "player"  : 0,
   "enemies" : 1,
-  "up" : 0,
-  "left" : 1,
-  "right" : 2,
-  "down" : 3,
-  "ndir" : 4,
-  "w"  : 50, 
-  "h"  : 50
+  "up"      : 0,
+  "left"    : 1,
+  "right"   : 2,
+  "down"    : 3,
+  "ndir"    : 4,
+  "w"       : 50, 
+  "h"       : 50
 };
   
+var ITEMS_IMG_SRC = {
+  "coin"   : {"id" : 0, "actualSrc" : 0, "fullSrc" : 6},
+  "apple"  : 1,
+  "poison" : 2,
+  "w"      : 60,
+  "h"      : 60
+};
+
 /*
  * @const {number} CANVAS_WIDTH: the width of the canvas
  */
@@ -152,7 +160,7 @@ class Display {
   itemOnScreen(items) {
     this.context.beginPath();
     for(let i = 0; i < items.length; i++)
-      this.context.drawImage(this.images[items[i].name], items[i].x * 40, items[i].y * 40, 40, 40);
+      this.context.drawImage(this.images[items[i].name], items[i].x * 20, items[i].y * 20, 20, 20);
     this.context.closePath();
   }
 
@@ -171,9 +179,9 @@ class Display {
     this.context.beginPath();
     for(let cell = 0; cell < player.body.length; cell++)
       if(cell == 0)
-        this.context.drawImage(image, sx * sw, sy, sw, sh, player.body[cell].x * 40, player.body[cell].y * 40, 40, 40);
+        this.context.drawImage(image, sx * sw, sy, sw, sh, player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
       else
-        this.context.drawImage(image, SNAKES_IMG_SRC["ndir"] * sw, sy, sw, sh, player.body[cell].x * 40, player.body[cell].y * 40, 40, 40);
+        this.context.drawImage(image, SNAKES_IMG_SRC["ndir"] * sw, sy, sw, sh, player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
     this.context.closePath();
   }
 

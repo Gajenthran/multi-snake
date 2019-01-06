@@ -43,9 +43,9 @@ class Snake {
     // Not useful but to be sure that the player does not move
     if(!this.alive)
       return;
-
-    this.x += this.dir.x;
-    this.y += this.dir.y;
+    
+    this.x += this.dir.x //Math.floor((this.x + this.dir.x) * 0.2);
+    this.y += this.dir.y //Math.floor((this.y + this.dir.y) * 0.2);
 
     // Check if the snake goes of the board
     if(this.x >= world.w)
@@ -60,7 +60,7 @@ class Snake {
     // Manage the body of the snake
     if(this.body.length == this.size)
       this.body.pop();
-    this.body.unshift({"x" : this.x, "y" : this.y, "dir" : this.dir});
+    this.body.unshift({"x" : this.x, "y" : this.y});
   }
 
   /**

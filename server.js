@@ -16,7 +16,7 @@ app.get('/', function(request, response) {
   response.render('public/index.html');
 });
 
-var Game = require('./lib/Game');
+var Game = require('./src/Game');
 var game = new Game();
 game.init();
 

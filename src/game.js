@@ -2,7 +2,7 @@
  * Fonction getter et setter
  * Scoreboard
  * World, TILES
- * Constante + Util dans client+serveur
+ * Constante + Util dans client+serveur ???
  * bonus, points
  * Tickers
  * node_module, package.json, readme
@@ -39,9 +39,11 @@ class Game {
    * items.
    */
   init() {
-    this.world = new World(20, 15); // 800/8 & 600/8;
+    this.world = new World(40, 30); // 800/8 & 600/8;
     this.world.init();
+    Item.SPAWN_ITEM_TIME_REM = (new Date).getTime();
   }
+
 
   /**
    * @method Add a new Item in the game.
@@ -106,6 +108,8 @@ class Game {
    * consumed. If that's the case, we remove it from the game).
    */
   updateItems() {
+    if(Item.endOfSpawnTime())
+      this.addNewItem(Item.chooseRandomItem());
     for(let i = 0; i < this.items.length; i++) {
       if(this.items[i].use) {
         this.items.splice(i, 1);

@@ -1,3 +1,5 @@
+Util = require('./global/Util');
+
 /**
  * Class representing an item in the game. An item can be
  * eaten by a snake. It can be a bonus or a malus.
@@ -32,7 +34,7 @@ class Item {
     this.use = true;
     switch(this.name) {
       case Item.APPLE_ITEM:
-        this.growSnake(snake);
+        this.growSnake(snake, 5);
         break;
       case Item.POISON_ITEM:
         this.killSnake(snake);
@@ -45,9 +47,9 @@ class Item {
    *
    * @param {Snake} snake: snake
    */
-  growSnake(snake) {
-    snake.size++;
-    snake.score++;
+  growSnake(snake, size) {
+    snake.size += size || 1;
+    snake.score += Math.floor(size/2) || 1;
   }
 
   /**
@@ -57,6 +59,19 @@ class Item {
    */
   killSnake(player) {
     player.alive = false;
+  }
+
+  static endOfSpawnTime() {
+    if((new Date()).getTime() > Item.SPAWN_ITEM_DURATION + Item.SPAWN_ITEM_TIME_REM) {
+      Item.SPAWN_ITEM_TIME_REM = (new Date()).getTime();
+      return true;
+    }
+    return false;
+  }
+
+  static chooseRandomItem() {
+    return Item.ITEMS_NAME[Util.getRandomFloor(Item.ITEMS_NAME.length)];
+    // for(let i = 0; i < ITEMS_NAME.length; i++)
   }
 }
 
@@ -70,6 +85,15 @@ Item.APPLE_ITEM = "apple";
  */
 Item.POISON_ITEM  = "poison";
 
+/**
+ * @const {String} SPAWN_ITEM_DURATION: spawn time of an object
+ */
+Item.SPAWN_ITEM_DURATION = 5000;
+
+/**
+ * @const {String} SPAWN_ITEM_TIME_REM: remaining time for the spawn of an object
+ */
+Item.SPAWN_ITEM_TIME_REM = 0;
 /**
  * @const {Array.<String>} ITEMS_NAME: the list of all items
  */

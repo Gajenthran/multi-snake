@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/Gajenthran/CurveFever-DWA"
   },
-  "author": "Panchalingamoorthy Gajenthran (Gajenthran)",
+  "author": "Panchalingamoorthy Gajenthran (Gajenthran), Motamed Amin",
   "homepage": "https://github.com/Gajenthran/CurveFever-DWA#readme",
   "dependencies": {
     "express": "^4.14.0",
