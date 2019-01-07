@@ -27,7 +27,7 @@ class Game {
   } 
 
   /**
-   * @method Set the data (Players, Items) of the game given by the server.
+   * @method Init the data (Players, Items) of the game given by the server.
    *
    * @param {Object} data: data given by the server
    */
@@ -39,6 +39,11 @@ class Game {
     this.items = data["items"];
   }
 
+  /**
+   * @method Set the data (Players, Items) of the game given by the server.
+   *
+   * @param {Object} data: data given by the server
+   */
   setGameValues(data) {
     if(this.player.body[0].x != data["player"].body.x ||
        this.player.body[0].y != data["player"].body.y) {

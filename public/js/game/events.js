@@ -28,22 +28,18 @@ function onKeydown(event) {
     case "ArrowDown":
     case "x":
       KEYBOARD_STATE["down"] = true;
-      console.log("down"); 
       break;
     case "ArrowUp":
     case "z":
       KEYBOARD_STATE["up"] = true;
-      console.log("up"); 
       break;       
     case "ArrowLeft":
     case "q":
       KEYBOARD_STATE["left"] = true;
-     console.log("left");
       break;
     case "ArrowRight":
     case "d":
       KEYBOARD_STATE["right"] = true;
-      console.log("right");
       break;
   }
 }
