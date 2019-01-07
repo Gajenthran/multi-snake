@@ -22,7 +22,7 @@ class Snake {
     this.y     = y;
     this.dir   = direction;
 
-    // this.color = color;
+    // this.color = color; // To add in the future
     this.alive = true;
     this.score = 0;
 
@@ -42,9 +42,9 @@ class Snake {
     if(!this.alive)
       return;
 
-    this.x += this.dir.x //Math.floor((this.x + this.dir.x) * 0.2);
-    this.y += this.dir.y //Math.floor((this.y + this.dir.y) * 0.2);
-
+    this.x += this.dir.x;
+    this.y += this.dir.y;
+    
     // Check if the snake goes of the board
     if(this.x >= world.w)
       this.x = 0;

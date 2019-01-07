@@ -117,7 +117,7 @@ Item.COIN_VALUE = 5;
 /**
  * @const {String} SPAWN_ITEM_DURATION: spawn time of an object
  */
-Item.SPAWN_ITEM_DURATION = 2000;
+Item.SPAWN_ITEM_DURATION = 3000;
 
 /**
  * @const {String} SPAWN_ITEM_TIME_REM: remaining time for the spawn of an object

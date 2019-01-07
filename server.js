@@ -8,7 +8,7 @@ var app      = express();
 var server   = http.Server(app);
 var io       = socketIO(server);
 
-var FPS  = 1000 / 15;
+var DELAY = 1000/12;
 var PORT = 8080; 
 
 app.set('port', PORT);
@@ -42,7 +42,7 @@ function listen(socket, type, callback) {
 setInterval(function() {
   game.update();
   game.emitValuesToClient();
-}, FPS);
+}, DELAY);
 
 server.listen(PORT, function() {
   console.log('Starting server on port ' + PORT);

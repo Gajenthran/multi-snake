@@ -53,7 +53,7 @@ class World {
   checkSnakeTile(snake) {
     var x = snake.x; 
     var y = snake.y;
-    if(Util.isBound(snake.x, snake.y, 0, 0, this.w, this.h) &&
+    if(Util.isBound(x, y, 0, 0, this.w, this.h) &&
        this.tiles[y * this.w + x] != World.TILES_ID["empty"] && 
        this.tiles[y * this.w + x] == World.TILES_ID["player"])
       return true;
@@ -64,12 +64,12 @@ class World {
    * @method Check if the tile is already taken by an item.
    *
    * @param snake: snake
-   * @return {Item|boolean} the Item if the tile is already take by an item and false otherwise.
+   * @return {Item|boolean} the Item if the tile is taken by an item and false otherwise.
    */
   checkItemTile(snake) {
     var x = snake.x;
     var y = snake.y;
-    if(Util.isBound(snake.x, snake.y, 0, 0, this.w, this.h) &&
+    if(Util.isBound(x, y, 0, 0, this.w, this.h) &&
        this.tiles[y * this.w + x] != World.TILES_ID["empty"] &&
        this.tiles[y * this.w + x].hasOwnProperty("id") && 
        this.tiles[y * this.w + x]["id"] == World.TILES_ID["item"]) {
@@ -113,10 +113,10 @@ class World {
    */
   spawnSnake() {
     var tile = this.getRandomTile();
-    return { "x"     : Math.floor(tile%this.w),
-             "y"     : Math.floor(tile/this.w),
-             "dir"   : {"x": 0, "y": 1},
-             "size"  : Snake.SNAKE_SIZE };
+    return { "x"    : Math.floor(tile%this.w),
+             "y"    : Math.floor(tile/this.w),
+             "dir"  : {"x": 0, "y": 1},
+             "size" : Snake.SNAKE_SIZE };
             // "color" : Util.getRandomColor() };
   }
 
@@ -127,8 +127,8 @@ class World {
    */
   spawnItem() {
     var tile = this.getRandomTile();
-    return { "x"    : Math.floor(tile%this.w),
-             "y"    : Math.floor(tile/this.w) };
+    return { "x" : Math.floor(tile%this.w),
+             "y" : Math.floor(tile/this.w) };
   }
 }
 
@@ -140,5 +140,16 @@ World.TILES_ID = {
   "item"   : 1,
   "player" : 2
 };
+
+/**
+ * @const {number} WORLD_WIDTH: the width of the world
+ */
+World.WORLD_WIDTH = 40;
+
+
+/**
+ * @const {number} WORLD_HEIGHT: the height of the world
+ */
+World.WORLD_HEIGHT = 30;
 
 module.exports = World;

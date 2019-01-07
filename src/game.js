@@ -39,7 +39,7 @@ class Game {
    * items.
    */
   init() {
-    this.world = new World(40, 30); // 800/8 & 600/8;
+    this.world = new World(World.WORLD_WIDTH, World.WORLD_HEIGHT);
     this.world.init();
     Item.SPAWN_ITEM_TIME_REM = (new Date).getTime();
   }

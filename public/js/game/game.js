@@ -62,12 +62,9 @@ class Game {
    * we will render all the elements of the game.
    */
   run() {
-    if(this.play) {
-      this.socket.emit("player-action", keyboardState);
-      this.socket.on("update-players", this.setGameValues.bind(this));
-      this.render();
-    }
-    this.play = !this.play;
+    this.socket.emit("player-action", keyboardState);
+    this.socket.on("update-players", this.setGameValues.bind(this));
+    this.render();
     window.requestAnimationFrame(this.run.bind(this));
   }
 

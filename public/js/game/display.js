@@ -2,8 +2,6 @@
  * @const {Object} TILES_FILE: all useful files for the sprites
  */
 var TILES_FILE = {
-  "apple"  : "/public/img/apple.png", 
-  "poison" : "/public/img/poison.png", 
   "snakes" : "/public/img/snakes.png",
   "items"   : "/public/img/items.png"
 };
@@ -54,6 +52,11 @@ var CANVAS_HEIGHT = 600;
 var CANVAS_ID = "Canvas_Curve-Fever";
 
 /*
+ * @const {number} CELL_SIZE: the size of a cell (a cell is an item or a player)
+ */
+var CELL_SIZE = 20;
+
+/*
  * @const {number} SCOREBOARD_X: the coordinate x of the scoreboard
  */
 var SCOREBOARD_X = CANVAS_WIDTH + 10
@@ -86,7 +89,7 @@ var SCORE_Y = 50;
 /*
  * @const {number} TOP_SCORERS: the number of players (best scores) to show
  */
-var TOP_SCORERS = 2;
+var TOP_SCORERS = 3;
 
 /*
  * @const {number} PLAYER_TEXT_STYLE: style for the element <li> representing
@@ -174,8 +177,10 @@ class Display {
       ITEMS_IMG_SRC[items[i].name].actualSrc = (ITEMS_IMG_SRC[items[i].name].actualSrc + 1) % ITEMS_IMG_SRC[items[i].name].fullSrc;
       sx = ITEMS_IMG_SRC[items[i].name].actualSrc;
       this.context.drawImage(image, 
-                             sx, sy, sw, sh,
-                             items[i].x * 20, items[i].y * 20, 20, 20);
+                             sx, sy, 
+                             sw, sh,
+                             items[i].x * CELL_SIZE, items[i].y * CELL_SIZE, 
+                             CELL_SIZE, CELL_SIZE);
     }
     this.context.closePath();
   }
@@ -197,13 +202,17 @@ class Display {
       // Draw the head
       if(cell == 0)
         this.context.drawImage(image, 
-                               sx * sw, sy, sw, sh, 
-                               player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
+                               sx * sw, sy, 
+                               sw, sh, 
+                               player.body[cell].x * CELL_SIZE, player.body[cell].y * CELL_SIZE, 
+                               CELL_SIZE, CELL_SIZE);
       // Draw the tail/body
       else
         this.context.drawImage(image, 
-                               SNAKES_IMG_SRC["ndir"] * sw, sy, sw, sh, 
-                               player.body[cell].x * 20, player.body[cell].y * 20, 20, 20);
+                               SNAKES_IMG_SRC["ndir"] * sw, sy, 
+                               sw, sh, 
+                               player.body[cell].x * CELL_SIZE, player.body[cell].y * CELL_SIZE, 
+                               CELL_SIZE, CELL_SIZE);
     this.context.closePath();
   }
 

@@ -8,7 +8,7 @@ var Util = require("./global/Util");
 class Player extends Snake {
   constructor(x, y, direction, socket) {
     super(x, y, direction);
-    // this.name = name;
+    // this.name = name; // To add in the future
     this.socket = socket;
   }
 
@@ -38,11 +38,11 @@ class Player extends Snake {
    */
   possibleMove(keyboardState) {
     return ((keyboardState["left"] && keyboardState["right"]) ||
-           (keyboardState["up"] && keyboardState["down"]) ||
-           (this.dir == Player.DIRECTIONS["right"] && keyboardState["left"]) ||
-           (this.dir == Player.DIRECTIONS["left"] && keyboardState["right"]) ||
-           (this.dir == Player.DIRECTIONS["up"] && keyboardState["down"]) ||
-           (this.dir == Player.DIRECTIONS["down"] && keyboardState["up"]));
+            (keyboardState["up"] && keyboardState["down"]) ||
+            (this.dir == Player.DIRECTIONS["right"] && keyboardState["left"]) ||
+            (this.dir == Player.DIRECTIONS["left"] && keyboardState["right"]) ||
+            (this.dir == Player.DIRECTIONS["up"] && keyboardState["down"]) ||
+            (this.dir == Player.DIRECTIONS["down"] && keyboardState["up"]));
   }
 
   /**
