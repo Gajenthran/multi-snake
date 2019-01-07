@@ -1,8 +1,8 @@
 /*
- * @global {Object} keyboardState: All keyboard inputs. The value of an input is 
+ * @global {Object} KEYBOARD_STATE: All keyboard inputs. The value of an input is 
  * false when a key is released and true when a key is pressed. 
  */
-var keyboardState = {
+var KEYBOARD_STATE = {
   "up"    : false,
   "left"  : false,
   "right" : false,
@@ -27,22 +27,22 @@ function onKeydown(event) {
   switch(event.key) {
     case "ArrowDown":
     case "x":
-      keyboardState["down"] = true;
+      KEYBOARD_STATE["down"] = true;
       console.log("down"); 
       break;
     case "ArrowUp":
     case "z":
-      keyboardState["up"] = true;
+      KEYBOARD_STATE["up"] = true;
       console.log("up"); 
       break;       
     case "ArrowLeft":
     case "q":
-      keyboardState["left"] = true;
+      KEYBOARD_STATE["left"] = true;
      console.log("left");
       break;
     case "ArrowRight":
     case "d":
-      keyboardState["right"] = true;
+      KEYBOARD_STATE["right"] = true;
       console.log("right");
       break;
   }
@@ -58,19 +58,19 @@ function onKeyup(event) {
   switch(event.key) {
     case "ArrowDown":
     case "x":
-      keyboardState["down"] = false;
+      KEYBOARD_STATE["down"] = false;
       break;
     case "ArrowUp":
     case "z":
-      keyboardState["up"] = false;
+      KEYBOARD_STATE["up"] = false;
       break;    
     case "ArrowLeft":
     case "q":
-      keyboardState["left"] = false;
+      KEYBOARD_STATE["left"] = false;
       break;
     case "ArrowRight":
     case "d":
-      keyboardState["right"] = false;
+      KEYBOARD_STATE["right"] = false;
       break;
   }
 }

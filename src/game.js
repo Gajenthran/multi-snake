@@ -1,16 +1,3 @@
-/*
- * Fonction getter et setter
- * Scoreboard
- * World, TILES
- * Constante + Util dans client+serveur ???
- * bonus, points
- * Tickers
- * node_module, package.json, readme
- * Commentaire + {Object}
- * README: TODO
- * width of the player and width of the game
- */
-
 var Player = require('./Player');
 var Item   = require('./Item');
 var World  = require('./World');
@@ -123,7 +110,7 @@ class Game {
    */
   updatePlayerInput(socket, input) {
     if(this.players.has(socket.id)) {
-      this.players.get(socket.id).updateInput(input);
+      this.players.get(socket.id).update(input);
     }
   }
 

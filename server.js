@@ -12,9 +12,11 @@ var DELAY = 1000/12;
 var PORT = 8080; 
 
 app.set('port', PORT);
+// Serving static files
 app.use(express.static('public'));
 app.use('/public', express.static(__dirname + '/public'));
 
+// Routing
 app.get('/', function(request, response) {
   response.render('public/index.html');
 });
@@ -25,7 +27,9 @@ var game = new Game();
 game.init();
  
 /**
- * 
+ * When a player connects to the server, the server listens to the player's requests
+ * Here, when a player connects to the server, we had a new player to the game,
+ * we update the movement of the snake and we remove the player if he disconnects.
  */
 io.on('connection', (socket) => {
   listen(socket, 'new-player',    game.addNewPlayer.bind(game));
@@ -39,11 +43,19 @@ function listen(socket, type, callback) {
   });
 }
 
+/**
+ * Call repeatedly game.update (to update the game) and 
+ * game.emitValuesToClient (to send data to the client), with
+ * a fixed time delay between each call.
+ */
 setInterval(function() {
   game.update();
   game.emitValuesToClient();
 }, DELAY);
 
+/**
+ * The server listens on port 8080.
+ */
 server.listen(PORT, function() {
   console.log('Starting server on port ' + PORT);
 });

@@ -62,7 +62,7 @@ class Game {
    * we will render all the elements of the game.
    */
   run() {
-    this.socket.emit("player-action", keyboardState);
+    this.socket.emit("player-action", KEYBOARD_STATE);
     this.socket.on("update-players", this.setGameValues.bind(this));
     this.render();
     window.requestAnimationFrame(this.run.bind(this));
@@ -81,6 +81,7 @@ class Game {
    */
   render() {
     this.display.clearScreen();
+    this.display.background();
     if(this.player && this.player.body.length != 0) {
       this.display.snakeOnScreen("player", this.player);
       this.display.playersOnScoreboard(this.player, this.enemies);

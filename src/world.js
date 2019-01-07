@@ -27,9 +27,11 @@ class World {
    */
   insertSnake(snake) {
     this.tiles[snake.y * this.w + snake.x] = World.TILES_ID["player"];
-    var x = snake.body[snake.body.length-1].x;
-    var y = snake.body[snake.body.length-1].y;
-    this.tiles[y * this.w + x] = World.TILES_ID["empty"];
+    if(snake.body.length == snake.size) {
+      var x = snake.body[snake.body.length-1].x;
+      var y = snake.body[snake.body.length-1].y;
+      this.tiles[y * this.w + x] = World.TILES_ID["empty"];
+    }
   }
 
   /**
@@ -54,7 +56,6 @@ class World {
     var x = snake.x; 
     var y = snake.y;
     if(Util.isBound(x, y, 0, 0, this.w, this.h) &&
-       this.tiles[y * this.w + x] != World.TILES_ID["empty"] && 
        this.tiles[y * this.w + x] == World.TILES_ID["player"])
       return true;
     return false;
@@ -70,12 +71,9 @@ class World {
     var x = snake.x;
     var y = snake.y;
     if(Util.isBound(x, y, 0, 0, this.w, this.h) &&
-       this.tiles[y * this.w + x] != World.TILES_ID["empty"] &&
        this.tiles[y * this.w + x].hasOwnProperty("id") && 
        this.tiles[y * this.w + x]["id"] == World.TILES_ID["item"]) {
-      var item = this.tiles[y * this.w + x]["value"];
-      this.tiles[y * this.w + x] = World.TILES_ID["player"];
-      return item;
+      return this.tiles[y * this.w + x]["value"];
     }
     return false;
   }

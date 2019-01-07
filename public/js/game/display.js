@@ -2,8 +2,9 @@
  * @const {Object} TILES_FILE: all useful files for the sprites
  */
 var TILES_FILE = {
-  "snakes" : "/public/img/snakes.png",
-  "items"   : "/public/img/items.png"
+  "snakes"     : "/public/img/snakes.png",
+  "items"      : "/public/img/items.png",
+  "background" : "/public/img/background.png"
 };
 
 /*
@@ -91,6 +92,14 @@ var SCORE_Y = 50;
  */
 var TOP_SCORERS = 3;
 
+var CANVAS_STYLE = {
+  "border" : "solid #d3d3d3"
+};
+
+var SCOREBOARD_STYLE = {
+  "border" : "solid #d3d3d3"
+};
+
 /*
  * @const {number} PLAYER_TEXT_STYLE: style for the element <li> representing
  * the player's score). We do that using a css file but we choose this method
@@ -131,12 +140,12 @@ class Display {
    * @param {number} canvasHeight: height of the canvas
    */
   init() {
-    this.canvas = createElement("canvas", null, { "borderStyle" : "solid"});
+    this.canvas = createElement("canvas", null, CANVAS_STYLE);
     this.canvas.id = CANVAS_ID;     
     this.canvas.width = CANVAS_WIDTH;
     this.canvas.height = CANVAS_HEIGHT;
     this.context = this.canvas.getContext("2d");
-    this.scoreboard = createElement("ul", null, { "borderStyle" : "solid" }, 
+    this.scoreboard = createElement("ul", null, SCOREBOARD_STYLE, 
                                     SCOREBOARD_X, SCOREBOARD_Y,
                                     SCOREBOARD_WIDTH, SCOREBOARD_HEIGHT);
     this.loadImages();
@@ -161,6 +170,18 @@ class Display {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  background() {
+    var image = this.images["background"];
+    this.context.beginPath();
+    for(let r = 0; r < Math.floor(CANVAS_WIDTH/CELL_SIZE); r++) {
+      for(let c = 0; c < Math.floor(CANVAS_HEIGHT/CELL_SIZE); c++) {
+        this.context.drawImage(image,
+                               r * CELL_SIZE, c * CELL_SIZE, 
+                               CELL_SIZE, CELL_SIZE);
+      }
+    }
+    this.context.closePath();
+  }
   /**
    * @method Draw all the items on the canvas.
    *

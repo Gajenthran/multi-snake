@@ -3,7 +3,7 @@ var Util = require("./global/Util");
 
 /** 
  * Class representing a player on the server. A player is a snake 
- * with some other details like name and socket.
+ * with some other details like name (have to do) and socket.
  */
 class Player extends Snake {
   constructor(x, y, direction, socket) {
@@ -18,9 +18,8 @@ class Player extends Snake {
    *
    * @param {Object} keyboardState: the inputs obtained on the client side
    */
-  updateInput(keyboardState) {
-    this.getDir();
-    if(this.possibleMove(keyboardState))
+  update(keyboardState) {
+    if(this.impossibleMove(keyboardState))
       return;
 
     for(var key in keyboardState) {
@@ -36,7 +35,7 @@ class Player extends Snake {
    * @param {Object} keyboardState: the inputs obtained on the client side
    * @return {boolean} True if there is no possibility to move, false otherwise.
    */
-  possibleMove(keyboardState) {
+  impossibleMove(keyboardState) {
     return ((keyboardState["left"] && keyboardState["right"]) ||
             (keyboardState["up"] && keyboardState["down"]) ||
             (this.dir == Player.DIRECTIONS["right"] && keyboardState["left"]) ||

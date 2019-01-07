@@ -1,19 +1,25 @@
 {
-  "name": "CurveFever",
-  "version": "3.0.0",
+  "name": "curvefever-dwa",
+  "version": "1.0.0",
   "description": "A multiplayer snake game inspired by the game Curve Fever",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gajenthran/CurveFever-DWA"
+    "url": "git+https://github.com/Gajenthran/Curve-Fever-DWA.git"
   },
-  "author": "Panchalingamoorthy Gajenthran (Gajenthran), Motamed Amin",
-  "homepage": "https://github.com/Gajenthran/CurveFever-DWA#readme",
+  "author": "Panchalingamoorthy Gajenthran (Gajenthran)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gajenthran/Curve-Fever-DWA/issues"
+  },
+  "homepage": "https://github.com/Gajenthran/Curve-Fever-DWA#readme",
   "dependencies": {
-    "express": "^4.14.0",
-    "socket.io": "^1.7.2",
+    "express": "^4.16.4",
+    "module": "^1.2.5",
+    "socket.io": "^2.2.0"
   }
 }

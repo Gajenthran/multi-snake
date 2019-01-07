@@ -42,6 +42,9 @@ class Snake {
     if(!this.alive)
       return;
 
+    if(Snake.UNLIMITED_BODY)
+      this.size++;
+
     this.x += this.dir.x;
     this.y += this.dir.y;
     
@@ -86,5 +89,7 @@ class Snake {
  * @const {number} SNAKE_SIZE: the size of the snake at the beginning
  */
 Snake.SNAKE_SIZE = 3;
+
+Snake.UNLIMITED_BODY = false;
 
 module.exports = Snake;
