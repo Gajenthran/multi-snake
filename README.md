@@ -17,3 +17,9 @@ peut se déplacer qu’à gauche ou à droite : il ne peut pas reculer (et il av
 continuellement).
 Le but du jeu est de rester en vie (et d’être le seul à rester en vie). Pour cela,
 il ne faut pas entrer en collision avec un autre serpent.
+
+## Installation
+```
+npm install
+node server.js
+```
