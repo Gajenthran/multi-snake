@@ -55,7 +55,7 @@ var CANVAS_ID = "Canvas_Curve-Fever";
 /*
  * @const {number} CELL_SIZE: the size of a cell (a cell is an item or a player)
  */
-var CELL_SIZE = 20;
+var CELL_SIZE = 40;
 
 /*
  * @const {number} SCOREBOARD_X: the coordinate x of the scoreboard

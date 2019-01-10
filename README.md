@@ -23,3 +23,11 @@ il ne faut pas entrer en collision avec un autre serpent.
 npm install
 node server.js
 ```
+
+## TODO list
+Voici la liste des ajouts possibles pour notre projet:
+- Nom des joueurs à afficher
+- Création d'une base de données pour stocker les meilleurs scores
+- Couleurs pour les serpents
+- Nouveaux items
+- Map de plus grande taille

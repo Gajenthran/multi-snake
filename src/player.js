@@ -1,5 +1,5 @@
-var Snake = require("./Snake");
-var Util = require("./global/Util");
+var Snake = require("./snake");
+var Util = require("./global/util");
 
 /** 
  * Class representing a player on the server. A player is a snake 
@@ -38,10 +38,10 @@ class Player extends Snake {
   impossibleMove(keyboardState) {
     return ((keyboardState["left"] && keyboardState["right"]) ||
             (keyboardState["up"] && keyboardState["down"]) ||
-            (this.dir == Player.DIRECTIONS["right"] && keyboardState["left"]) ||
-            (this.dir == Player.DIRECTIONS["left"] && keyboardState["right"]) ||
-            (this.dir == Player.DIRECTIONS["up"] && keyboardState["down"]) ||
-            (this.dir == Player.DIRECTIONS["down"] && keyboardState["up"]));
+            ((this.dir == Player.DIRECTIONS["right"]) && keyboardState["left"]) ||
+            ((this.dir == Player.DIRECTIONS["left"]) && keyboardState["right"]) ||
+            ((this.dir == Player.DIRECTIONS["up"]) && keyboardState["down"]) ||
+            ((this.dir == Player.DIRECTIONS["down"]) && keyboardState["up"]));
   }
 
   /**

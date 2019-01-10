@@ -22,7 +22,7 @@ app.get('/', function(request, response) {
 });
 
 // Initialize the game
-var Game = require('./src/Game');
+var Game = require('./src/game');
 var game = new Game();
 game.init();
  

@@ -50,7 +50,7 @@ class Game {
       this.player.update(data["player"].body.x, data["player"].body.y,
                          data["player"].dir, data["player"].score, 
                          data["player"].size);
-  }
+    }
     this.enemies = data["enemies"];
     this.items = data["items"];
   }
@@ -67,10 +67,10 @@ class Game {
    * we will render all the elements of the game.
    */
   run() {
+    window.requestAnimationFrame(this.run.bind(this));
     this.socket.emit("player-action", KEYBOARD_STATE);
     this.socket.on("update-players", this.setGameValues.bind(this));
     this.render();
-    window.requestAnimationFrame(this.run.bind(this));
   }
 
   /**

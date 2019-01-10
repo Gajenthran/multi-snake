@@ -1,4 +1,4 @@
-var Item = require('./Item');
+var Item = require('./item');
 
 /**
  * Class representing a snake in the game. A snake can be
@@ -42,6 +42,7 @@ class Snake {
     if(!this.alive)
       return;
 
+    // To play with an unlimited body like Curve Fever
     if(Snake.UNLIMITED_BODY)
       this.size++;
 
@@ -49,14 +50,14 @@ class Snake {
     this.y += this.dir.y;
     
     // Check if the snake goes of the board
-    if(this.x >= world.w)
+    /* if(this.x >= world.w)
       this.x = 0;
     else if(this.y >= world.h)
       this.y = 0;
     else if(this.x < 0)
       this.x = world.w - 1;
     else if(this.y < 0)
-      this.y = world.h - 1;
+      this.y = world.h - 1; */
 
     // Manage the body of the snake
     if(this.body.length == this.size)
@@ -90,6 +91,10 @@ class Snake {
  */
 Snake.SNAKE_SIZE = 3;
 
+/**
+ * @const {boolean} UNLIMITED_BODY: the body of the snake is unlimited.
+ * So, the snake will grow indefinitely.
+ */
 Snake.UNLIMITED_BODY = false;
 
 module.exports = Snake;

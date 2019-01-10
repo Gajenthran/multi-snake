@@ -1,4 +1,4 @@
-Util = require('./global/Util');
+Util = require('./global/util');
 
 /**
  * Class representing an item in the game. An item can be

@@ -1,7 +1,7 @@
-var Player = require('./Player');
-var Item   = require('./Item');
-var World  = require('./World');
-var Util   = require('./global/Util');
+var Player = require('./player');
+var Item   = require('./item');
+var World  = require('./world');
+var Util   = require('./global/util');
 
 /** 
  * Class representing the game and their objects on the server. 
@@ -30,7 +30,6 @@ class Game {
     this.world.init();
     Item.SPAWN_ITEM_TIME_REM = (new Date).getTime();
   }
-
 
   /**
    * @method Add a new Item in the game.
@@ -70,6 +69,7 @@ class Game {
     this.updateItems();
   }
 
+
   /**
    * @method Update (move, collision and remove) all players
    * in the game. 
@@ -79,7 +79,10 @@ class Game {
       this.world.insertSnake(player);
       player.move(this.world);
       player.collision(this.world);
-      this.world.tiles[player.y * this.world.w + player.x] = World.TILES_ID["player"];
+      // To remove and to put in world.js
+      this.world.tiles[(player.y + this.world.offset) * this.world.w + (player.x + this.world.offset)] = World.TILES_ID["player"];
+      this.world.enlargeWorld(player);
+      this.world.DrawWorld();
       if(!player.alive) {
         this.removePlayer(player.socket);
       }
