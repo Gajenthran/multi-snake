@@ -6,6 +6,14 @@ var Util = require("./global/util");
  * with some other details like name (have to do) and socket.
  */
 class Player extends Snake {
+  /**
+   * @constructor
+   *
+   * @param {number} x: coordinate x
+   * @param {number} y: coordinate y
+   * @param {number} direction: direction of the snake
+   * @param {Object} socket: socket associating the player and the client
+   */
   constructor(x, y, direction, socket) {
     super(x, y, direction);
     // this.name = name; // To add in the future

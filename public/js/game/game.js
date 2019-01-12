@@ -20,10 +20,10 @@ class Game {
    * server side.
    */
   init() {
-    this.display = new Display();
-    this.display.init();
-    this.socket.on("generate-players", this.initGameValues.bind(this));
     this.socket.emit("new-player");
+    this.socket.on("generate-players", this.initGameValues.bind(this));
+    this.display = new Display(this.player);
+    this.display.init();
   } 
 
   /**
@@ -34,7 +34,8 @@ class Game {
   initGameValues(data) {
     if(this.player == null)
       this.player = new Player(data["player"].x, data["player"].y, 
-                               data["player"].dir, 0, data["player"].size);
+                               data["player"].dir, 0, data["player"].size,
+                               getRandomColor());
     this.enemies = data["enemies"];
     this.items = data["items"];
   }
@@ -88,6 +89,7 @@ class Game {
     this.display.clearScreen();
     this.display.background();
     if(this.player && this.player.body.length != 0) {
+      this.display.setCamera(this.player.body[0]);
       this.display.snakeOnScreen("player", this.player);
       this.display.playersOnScoreboard(this.player, this.enemies);
     }

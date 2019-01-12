@@ -55,7 +55,7 @@ var CANVAS_ID = "Canvas_Curve-Fever";
 /*
  * @const {number} CELL_SIZE: the size of a cell (a cell is an item or a player)
  */
-var CELL_SIZE = 40;
+var CELL_SIZE = 30;
 
 /*
  * @const {number} SCOREBOARD_X: the coordinate x of the scoreboard
@@ -92,10 +92,16 @@ var SCORE_Y = 50;
  */
 var TOP_SCORERS = 3;
 
+/*
+ * @const {Object} CANVAS_STYLE: the style of the canvas (<canvas>)
+ */
 var CANVAS_STYLE = {
   "border" : "solid #d3d3d3"
 };
 
+/*
+ * @const {Object} SCOREBOARD_STYLE: the style of the scoreboard (<ul>)
+ */
 var SCOREBOARD_STYLE = {
   "border" : "solid #d3d3d3"
 };
@@ -131,6 +137,7 @@ class Display {
     this.context = null;
     this.scoreboard = null;
     this.images  = {};
+    this.camera = {"x" : 0, "y" : 0};
   }
 
   /**
@@ -163,6 +170,17 @@ class Display {
     }
   }
 
+  setCamera(player) {
+    this.camera.x = player.x * CELL_SIZE - CANVAS_WIDTH/2;
+    this.camera.y = player.y * CELL_SIZE - CANVAS_HEIGHT/2;
+    if(this.camera.x < 0)
+      this.camera.x = 0;
+    if(this.camera.y < 0)
+      this.camera.y = 0;
+
+    console.log(this.camera);
+  }
+
   /**
    * @method Clear the canvas.
    */
@@ -170,6 +188,9 @@ class Display {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  /**
+   * @method Draw the background on the canvas.
+   */
   background() {
     var image = this.images["background"];
     this.context.beginPath();
@@ -182,6 +203,7 @@ class Display {
     }
     this.context.closePath();
   }
+
   /**
    * @method Draw all the items on the canvas.
    *
@@ -200,7 +222,7 @@ class Display {
       this.context.drawImage(image, 
                              sx, sy, 
                              sw, sh,
-                             items[i].x * CELL_SIZE, items[i].y * CELL_SIZE, 
+                             items[i].x * CELL_SIZE - this.camera.x, items[i].y * CELL_SIZE - this.camera.y, 
                              CELL_SIZE, CELL_SIZE);
     }
     this.context.closePath();
@@ -219,20 +241,21 @@ class Display {
     var sy = SNAKES_IMG_SRC[imageName] * sh;
     var sx = SNAKES_IMG_SRC[player.dir];
     this.context.beginPath();
+    // console.log((player.body[0].x - this.camera.x) * CELL_SIZE);
     for(let cell = 0; cell < player.body.length; cell++)
       // Draw the head
       if(cell == 0)
         this.context.drawImage(image, 
                                sx * sw, sy, 
                                sw, sh, 
-                               player.body[cell].x * CELL_SIZE, player.body[cell].y * CELL_SIZE, 
+                               player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
                                CELL_SIZE, CELL_SIZE);
       // Draw the tail/body
       else
         this.context.drawImage(image, 
                                SNAKES_IMG_SRC["ndir"] * sw, sy, 
                                sw, sh, 
-                               player.body[cell].x * CELL_SIZE, player.body[cell].y * CELL_SIZE, 
+                               player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
                                CELL_SIZE, CELL_SIZE);
     this.context.closePath();
   }
@@ -245,6 +268,7 @@ class Display {
    * @method {Object} enemies: the ennemies (other players) 
    */
   playersOnScoreboard(player, enemies) {
+    // Remove the scoreboard
     while (this.scoreboard.firstChild)
       this.scoreboard.removeChild(this.scoreboard.firstChild);
     

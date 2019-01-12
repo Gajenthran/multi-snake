@@ -76,13 +76,12 @@ class Game {
    */
   updatePlayers() {
     for(let player of this.players.values()) {
-      this.world.insertSnake(player);
+      this.world.insertSnakeBody(player);
       player.move(this.world);
       player.collision(this.world);
-      // To remove and to put in world.js
-      this.world.tiles[(player.y + this.world.offset) * this.world.w + (player.x + this.world.offset)] = World.TILES_ID["player"];
-      this.world.enlargeWorld(player);
-      this.world.DrawWorld();
+      this.world.insertSnakeHead(player);
+      // this.world.enlargeWorld(player);
+      // this.world.DrawWorld();
       if(!player.alive) {
         this.removePlayer(player.socket);
       }
@@ -141,7 +140,7 @@ class Game {
    * 
    * @param {Object} playerSocket: the socket of the Player
    */
-  getEnemies(playerSocket, isInit) {
+  getEnemies(playerSocket) {
     var enemies = new Array();
     for(let enemy of this.players.values()) {
       if(enemy.socket.id != playerSocket.id)

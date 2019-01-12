@@ -4,12 +4,13 @@
  * the display
  */
 class Player {
-  constructor(x, y, dir, score, size) {
+  constructor(x, y, dir, score, size, color) {
     this.body = new Array();
     this.body.unshift({"x" : x, "y" : y});
     this.dir = dir;
     this.score = score;
     this.size = size;
+    this.color = color;
   }
 
   /**

@@ -10,12 +10,7 @@ class Snake {
    *
    * @param {number} x: coordinate x
    * @param {number} y: coordinate y
-   * @param {number} w: width of the snake (more precisely the width of a body element)
-   * @param {number} h: height of the snake
-   * @param {String} color: color of the snake (not use at the moment)
-   * @param {boolean} alive: check if the snake is still alive
-   * @param {number} size: the size of the snake, the number of body 
-   * @param {Array.<Object>} body: snake's body storing all the coordinates
+   * @param {number} direction: direction of the snake
    */
   constructor(x, y, direction) {
     this.x     = x;
@@ -50,14 +45,14 @@ class Snake {
     this.y += this.dir.y;
     
     // Check if the snake goes of the board
-    /* if(this.x >= world.w)
+    if(this.x >= world.w)
       this.x = 0;
     else if(this.y >= world.h)
       this.y = 0;
     else if(this.x < 0)
       this.x = world.w - 1;
     else if(this.y < 0)
-      this.y = world.h - 1; */
+      this.y = world.h - 1;
 
     // Manage the body of the snake
     if(this.body.length == this.size)

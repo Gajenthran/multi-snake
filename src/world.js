@@ -32,7 +32,6 @@ class World {
    */
   DrawWorld() {
     var r, c, arr = [];
-    console.log(this.h, this.w);
     for(r = 0; r < this.h; r++) {
       for(c = 0; c < this.w; c++) {
         if(this.tiles[r * this.w + c].hasOwnProperty("id") && 
@@ -48,7 +47,9 @@ class World {
   }
 
   /**
-   * @method enlarge the game board.
+   * @method Enlarge the game board (TODO).
+   *
+   * @param {Snake|Player} snake: snake
    */
   enlargeWorld(snake) {
     if(!(snake.x + this.offset == 0 || 
@@ -71,6 +72,7 @@ class World {
     this.w = w;
     this.h = h;
     this.tiles = newW;
+    console.log("Enlarged.")
   }
   
   /**
@@ -78,13 +80,22 @@ class World {
    *
    * @param {Snake|Player} snake: snake
    */
-  insertSnake(snake) {
+  insertSnakeBody(snake) {
     this.tiles[(snake.y + this.offset) * this.w + (snake.x + this.offset)] = World.TILES_ID["player"];
     if(snake.body.length == snake.size) {
       var x = snake.body[snake.body.length-1].x + this.offset;
       var y = snake.body[snake.body.length-1].y + this.offset;
       this.tiles[y * this.w + x] = World.TILES_ID["empty"];
     }
+  }
+
+  /**
+   * @method Put the snake's head in the game board.
+   *
+   * @param {Snake|Player} snake: snake
+   */
+  insertSnakeHead(snake) {
+    this.tiles[(snake.y + this.offset) * this.w + (snake.x + this.offset)] = World.TILES_ID["player"];
   }
 
   /**
@@ -167,8 +178,8 @@ class World {
    */
   spawnSnake() {
     var tile = this.getRandomTile();
-    return { "x"    : Math.floor(tile%this.w),
-             "y"    : Math.floor(tile/this.w),
+    return { "x"    : 10, // Math.floor(tile%this.w),
+             "y"    : 10, // Math.floor(tile/this.w),
              "dir"  : {"x": 0, "y": 1},
              "size" : Snake.SNAKE_SIZE };
             // "color" : Util.getRandomColor() };
@@ -198,11 +209,11 @@ World.TILES_ID = {
 /**
  * @const {number} WORLD_WIDTH: the width of the world
  */
-World.WORLD_WIDTH = 20;
+World.WORLD_WIDTH = 40;
 
 /**
  * @const {number} WORLD_HEIGHT: the height of the world
  */
-World.WORLD_HEIGHT = 15;
+World.WORLD_HEIGHT = 30;
 
 module.exports = World;

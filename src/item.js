@@ -117,7 +117,7 @@ Item.COIN_VALUE = 5;
 /**
  * @const {String} SPAWN_ITEM_DURATION: spawn time of an object
  */
-Item.SPAWN_ITEM_DURATION = 3000;
+Item.SPAWN_ITEM_DURATION = 1500;
 
 /**
  * @const {String} SPAWN_ITEM_TIME_REM: remaining time for the spawn of an object
@@ -127,7 +127,7 @@ Item.SPAWN_ITEM_TIME_REM = 0;
 /**
  * @const {String} MAX_ITEM_ON_SCREEN: the maximum number of items on the screen
  */
-Item.MAX_ITEM_ON_SCREEN = 10;
+Item.MAX_ITEM_ON_SCREEN = 30;
 
 /**
  * @const {Array.<String>} ITEMS_NAME: the list of all items
