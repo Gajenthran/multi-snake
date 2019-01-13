@@ -31,8 +31,8 @@ class Player extends Snake {
       return;
 
     for(var key in keyboardState) {
-      if(keyboardState[key] && Player.DIRECTIONS.hasOwnProperty(key))
-        this.dir = Player.DIRECTIONS[key];
+      if(keyboardState[key] && Snake.DIRECTIONS.hasOwnProperty(key))
+        this.dir = Snake.DIRECTIONS[key];
     }
   }
 
@@ -46,10 +46,10 @@ class Player extends Snake {
   impossibleMove(keyboardState) {
     return ((keyboardState["left"] && keyboardState["right"]) ||
             (keyboardState["up"] && keyboardState["down"]) ||
-            ((this.dir == Player.DIRECTIONS["right"]) && keyboardState["left"]) ||
-            ((this.dir == Player.DIRECTIONS["left"]) && keyboardState["right"]) ||
-            ((this.dir == Player.DIRECTIONS["up"]) && keyboardState["down"]) ||
-            ((this.dir == Player.DIRECTIONS["down"]) && keyboardState["up"]));
+            ((this.dir == Snake.DIRECTIONS["right"]) && keyboardState["left"]) ||
+            ((this.dir == Snake.DIRECTIONS["left"]) && keyboardState["right"]) ||
+            ((this.dir == Snake.DIRECTIONS["up"]) && keyboardState["down"]) ||
+            ((this.dir == Snake.DIRECTIONS["down"]) && keyboardState["up"]));
   }
 
   /**
@@ -58,21 +58,11 @@ class Player extends Snake {
    * @return {String} The name of the direction.
    */ 
   getDir() {
-    for(var dir in Player.DIRECTIONS) {
-      if(Util.isSameObjects(Player.DIRECTIONS[dir], this.dir))
+    for(var dir in Snake.DIRECTIONS) {
+      if(Util.isSameObjects(Snake.DIRECTIONS[dir], this.dir))
         return dir;
     }
   }
 }
-
-/**
- * @const {Object} Player.DIRECTIONS: Coordinates for each direction
- */
-Player.DIRECTIONS = {
-  "left"  : {"x" : -1, "y" :  0},
-  "right" : {"x" :  1, "y" :  0},
-  "up"    : {"x" :  0, "y" : -1},
-  "down"  : {"x" :  0, "y" :  1}
-};
 
 module.exports = Player;

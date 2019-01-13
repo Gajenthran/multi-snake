@@ -1,4 +1,5 @@
 var Item = require('./item');
+var Util = require('./global/util');
 
 /**
  * Class representing a snake in the game. A snake can be
@@ -79,12 +80,26 @@ class Snake {
     if((item = world.checkItemTile(this)))
       item.apply(this);
   }
+
+  static getRandomDirection() {
+    return Util.getRandomPropriety(Snake.DIRECTIONS);
+  }
 }
 
 /**
  * @const {number} SNAKE_SIZE: the size of the snake at the beginning
  */
 Snake.SNAKE_SIZE = 3;
+
+/**
+ * @const {Object} Snake.DIRECTIONS: Coordinates for each direction
+ */
+Snake.DIRECTIONS = {
+  "left"  : {"x" : -1, "y" :  0},
+  "right" : {"x" :  1, "y" :  0},
+  "up"    : {"x" :  0, "y" : -1},
+  "down"  : {"x" :  0, "y" :  1}
+};
 
 /**
  * @const {boolean} UNLIMITED_BODY: the body of the snake is unlimited.

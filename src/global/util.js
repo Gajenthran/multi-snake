@@ -34,6 +34,18 @@ class Util {
   }
 
   /**
+   * @method Get a random propriety from an object (We can surely do that in one line)
+   *
+   * @param {Object} obj: an object
+   * @return {} randomProp: the value of a random propriety
+   */
+  static getRandomPropriety(obj) {
+    var props = Object.keys(obj);
+    var randomProp = obj[props[Util.getRandomFloor(props.length)]]
+    return randomProp;
+  }
+
+  /**
    * @method Check if the two objects are identical.
    *
    * @param {Object} a: the first Object

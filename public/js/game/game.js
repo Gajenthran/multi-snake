@@ -35,7 +35,7 @@ class Game {
     if(this.player == null)
       this.player = new Player(data["player"].x, data["player"].y, 
                                data["player"].dir, 0, data["player"].size,
-                               getRandomColor());
+                               Util.getRandomColor());
     this.enemies = data["enemies"];
     this.items = data["items"];
   }

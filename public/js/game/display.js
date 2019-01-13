@@ -147,12 +147,12 @@ class Display {
    * @param {number} canvasHeight: height of the canvas
    */
   init() {
-    this.canvas = createElement("canvas", null, CANVAS_STYLE);
+    this.canvas = Util.createElement("canvas", null, CANVAS_STYLE);
     this.canvas.id = CANVAS_ID;     
     this.canvas.width = CANVAS_WIDTH;
     this.canvas.height = CANVAS_HEIGHT;
     this.context = this.canvas.getContext("2d");
-    this.scoreboard = createElement("ul", null, SCOREBOARD_STYLE, 
+    this.scoreboard = Util.createElement("ul", null, SCOREBOARD_STYLE, 
                                     SCOREBOARD_X, SCOREBOARD_Y,
                                     SCOREBOARD_WIDTH, SCOREBOARD_HEIGHT);
     this.loadImages();
@@ -272,21 +272,21 @@ class Display {
     while (this.scoreboard.firstChild)
       this.scoreboard.removeChild(this.scoreboard.firstChild);
     
-    enemies.sort(compare);
+    enemies.sort(Util.compare);
     var element, text, score;
 
     // Show the score of the player (client)
-    element = createElement("li", this.scoreboard, PLAYER_TEXT_STYLE, 
+    element = Util.createElement("li", this.scoreboard, PLAYER_TEXT_STYLE, 
                             SCORE_X, SCORE_Y);
     text = "Your snake : " + player["score"] + " points."
-    score = createText(text, element);  
+    score = Util.createText(text, element);  
 
     // Show the highest scores of the game (enemies)
     for(var i = enemies.length-1, j = 1; i >= 0 && j <= TOP_SCORERS; j++) {
-      element = createElement("li", this.scoreboard, ENEMY_TEXT_STYLE, 
+      element = Util.createElement("li", this.scoreboard, ENEMY_TEXT_STYLE, 
                               SCORE_X, SCORE_Y * j + 50);
       text = "#" + j + " Enemy: " + enemies[i]["score"] + " points."
-      score = createText(text, element);
+      score = Util.createText(text, element);
       i--;
     } 
   }

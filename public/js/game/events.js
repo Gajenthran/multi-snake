@@ -13,8 +13,8 @@ var KEYBOARD_STATE = {
  * @method Handle all events.
  */
 function handleEvents() { // TODO: maybe canvas instead of document
-  on(document, "keydown", onKeydown);
-  on(document, "keyup",   onKeyup);
+  Util.on(document, "keydown", onKeydown);
+  Util.on(document, "keyup",   onKeyup);
 }
 
 /**

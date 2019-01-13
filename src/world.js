@@ -178,9 +178,9 @@ class World {
    */
   spawnSnake() {
     var tile = this.getRandomTile();
-    return { "x"    : 10, // Math.floor(tile%this.w),
-             "y"    : 10, // Math.floor(tile/this.w),
-             "dir"  : {"x": 0, "y": 1},
+    return { "x"    : Math.floor(tile%this.w),
+             "y"    : Math.floor(tile/this.w),
+             "dir"  : Snake.getRandomDirection(),
              "size" : Snake.SNAKE_SIZE };
             // "color" : Util.getRandomColor() };
   }
