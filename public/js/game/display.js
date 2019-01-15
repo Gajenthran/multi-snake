@@ -12,16 +12,24 @@ var TILES_FILE = {
  * to draw the snake for the player and the enemies
  */
 var SNAKES_IMG_SRC = {
-  "image"   : "snakes",
-  "player"  : 0,
-  "enemies" : 1,
-  "up"      : 0,
-  "left"    : 1,
-  "right"   : 2,
-  "down"    : 3,
-  "ndir"    : 4,
-  "w"       : 50, 
-  "h"       : 50
+  "image"             : "snakes",
+  "player"            : 0,
+  "enemies"           : 1,
+  "up"                : 0,
+  "left"              : 1,
+  "right"             : 2,
+  "down"              : 3,
+  "ndir"              : 4,
+  "headw"             : 65, 
+  "headh"             : 65,
+  "lr_body"           : 0,
+  "ud_body"           : 1,
+  "ul_body"           : 2,
+  "ur_body"           : 3,
+  "dr_body"           : 4,
+  "dl_body"           : 5,
+  "bodyw"             : 70,
+  "bodyh"             : 70
 };
   
 /*
@@ -136,7 +144,7 @@ class Display {
     this.canvas  = null;
     this.context = null;
     this.scoreboard = null;
-    this.images  = {};
+    this.images  = [];
     this.camera = {"x" : 0, "y" : 0};
   }
 
@@ -171,14 +179,8 @@ class Display {
   }
 
   setCamera(player) {
-    this.camera.x = player.x * CELL_SIZE - CANVAS_WIDTH/2;
-    this.camera.y = player.y * CELL_SIZE - CANVAS_HEIGHT/2;
-    if(this.camera.x < 0)
-      this.camera.x = 0;
-    if(this.camera.y < 0)
-      this.camera.y = 0;
-
-    console.log(this.camera);
+    this.camera.x = Math.max(0, player.x * CELL_SIZE - CANVAS_WIDTH/2);
+    this.camera.y = Math.max(0, player.y * CELL_SIZE - CANVAS_HEIGHT/2);
   }
 
   /**
@@ -236,27 +238,33 @@ class Display {
    */
   snakeOnScreen(imageName, player) {
     var image = this.images[SNAKES_IMG_SRC["image"]];
-    var sw = SNAKES_IMG_SRC["w"];
-    var sh = SNAKES_IMG_SRC["h"];
-    var sy = SNAKES_IMG_SRC[imageName] * sh;
-    var sx = SNAKES_IMG_SRC[player.dir];
+    var sw, sh, sy, sx;
     this.context.beginPath();
-    // console.log((player.body[0].x - this.camera.x) * CELL_SIZE);
     for(let cell = 0; cell < player.body.length; cell++)
       // Draw the head
-      if(cell == 0)
+      if(cell == 0) {
+        sw = SNAKES_IMG_SRC["headw"];
+        sh = SNAKES_IMG_SRC["headh"];
+        sx = SNAKES_IMG_SRC[player.dir[cell]] * sw;
+        sy = 0;
         this.context.drawImage(image, 
-                               sx * sw, sy, 
+                               sx, sy, 
                                sw, sh, 
                                player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
                                CELL_SIZE, CELL_SIZE);
+      }
       // Draw the tail/body
-      else
+      else {
+        sw = SNAKES_IMG_SRC["bodyw"];
+        sh = SNAKES_IMG_SRC["bodyh"];
+        sx = player.dir[cell] * sw;
+        sy = SNAKES_IMG_SRC["headh"];
         this.context.drawImage(image, 
-                               SNAKES_IMG_SRC["ndir"] * sw, sy, 
+                               sx, sy, 
                                sw, sh, 
                                player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
                                CELL_SIZE, CELL_SIZE);
+      }
     this.context.closePath();
   }
 
@@ -264,8 +272,8 @@ class Display {
    * @method Drawn the score of the player (client) and the highest scores
    * of the ennemies in the scoreboard (<ul>).
    *
-   * @method {Player} player: the player (client)
-   * @method {Object} enemies: the ennemies (other players) 
+   * @param {Player} player: the player (client)
+   * @param {Object} enemies: the enemies (other players) 
    */
   playersOnScoreboard(player, enemies) {
     // Remove the scoreboard

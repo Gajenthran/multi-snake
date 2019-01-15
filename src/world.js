@@ -58,7 +58,7 @@ class World {
          snake.y + this.offset == this.h - 1))
       return;
 
-    this.offset += 5;
+    this.offset += 1;
     var w = (this.w + this.offset * 2);
     var h = (this.h + this.offset * 2);
     var newW = new Array(w * h);
@@ -214,6 +214,6 @@ World.WORLD_WIDTH = 40;
 /**
  * @const {number} WORLD_HEIGHT: the height of the world
  */
-World.WORLD_HEIGHT = 30;
+World.WORLD_HEIGHT = 20;
 
 module.exports = World;

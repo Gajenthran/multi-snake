@@ -44,12 +44,12 @@ class Player extends Snake {
    * @return {boolean} True if there is no possibility to move, false otherwise.
    */
   impossibleMove(keyboardState) {
-    return ((keyboardState["left"] && keyboardState["right"]) ||
-            (keyboardState["up"] && keyboardState["down"]) ||
-            ((this.dir == Snake.DIRECTIONS["right"]) && keyboardState["left"]) ||
-            ((this.dir == Snake.DIRECTIONS["left"]) && keyboardState["right"]) ||
-            ((this.dir == Snake.DIRECTIONS["up"]) && keyboardState["down"]) ||
-            ((this.dir == Snake.DIRECTIONS["down"]) && keyboardState["up"]));
+    return ( (keyboardState["left"] && keyboardState["right"]) ||
+             (keyboardState["up"]   && keyboardState["down"])  ||
+             (this.dir == Snake.DIRECTIONS["right"] && keyboardState["left"])  ||
+             (this.dir == Snake.DIRECTIONS["left"]  && keyboardState["right"]) ||
+             (this.dir == Snake.DIRECTIONS["up"]    && keyboardState["down"])  ||
+             (this.dir == Snake.DIRECTIONS["down"]  && keyboardState["up"]) );
   }
 
   /**

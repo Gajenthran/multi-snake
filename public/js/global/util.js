@@ -1,14 +1,24 @@
 class Util {
 
   /**
-   * @method Get a random color.
+   * @method Get a random hexadecimal color.
    */
-  static getRandomColor() {
+  static getRandomColorHex() {
     var letters = "0123456789ABCDEF";
     var color = "#";
     for (var i = 0; i < 6; i++)
       color += letters[Math.floor(Math.random() * 16)];
     return color;
+  }
+
+  /**
+   * @method Get a random RGB color.
+   */
+  static getRandomColorRGB() {
+    var color = new Array(3);
+    for (var i = 0; i < 3; i++)
+      color[i] = Math.floor(Math.random() * 255);
+    return {"r" : color[0], "g" : color[1], "b" : color[2]};
   }
 
   /**

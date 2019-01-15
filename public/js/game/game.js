@@ -1,4 +1,3 @@
-
 /** 
  * Class representing the game and their elements (Players, Items)
  * on the client side. The game (client side) will take care of the
@@ -21,7 +20,7 @@ class Game {
    */
   init() {
     this.socket.emit("new-player");
-    this.socket.on("generate-players", this.initGameValues.bind(this));
+    this.socket.on("generate-game", this.initGameValues.bind(this));
     this.display = new Display(this.player);
     this.display.init();
   } 
@@ -32,10 +31,11 @@ class Game {
    * @param {Object} data: data given by the server
    */
   initGameValues(data) {
-    if(this.player == null)
+    if(this.player == null) {
       this.player = new Player(data["player"].x, data["player"].y, 
                                data["player"].dir, 0, data["player"].size,
-                               Util.getRandomColor());
+                               Util.getRandomColorRGB());
+    }
     this.enemies = data["enemies"];
     this.items = data["items"];
   }
@@ -55,6 +55,7 @@ class Game {
     this.enemies = data["enemies"];
     this.items = data["items"];
   }
+
   /**
    * @method Start the game loop.
    */

@@ -55,7 +55,7 @@ class Game {
       "enemies" : this.getEnemies(socket),
       "items"   : this.items
     };
-    socket.emit("generate-players", data)
+    socket.emit("generate-game", data)
     this.players.set(socket.id, new Player(data["player"].x, data["player"].y,
                                            data["player"].dir, socket)); // Add for the color: Util.getRandomColor()
   }
@@ -80,8 +80,7 @@ class Game {
       player.move(this.world);
       player.collision(this.world);
       this.world.insertSnakeHead(player);
-      // this.world.enlargeWorld(player);
-      // this.world.DrawWorld();
+      // this.world.enlargeWorld(player); 
       if(!player.alive) {
         this.removePlayer(player.socket);
       }

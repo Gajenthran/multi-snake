@@ -11,8 +11,6 @@ class Item {
    * @param {String} name: the name of the item to identify it // TODO: maybe ID instead of name
    * @param {number} x: coordinate x
    * @param {number} y: coordinate y
-   * @param {number} w: width of the item
-   * @param {number} h: height of the item
    */
   constructor(name, x, y) {
     this.name = name;
