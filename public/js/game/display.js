@@ -240,31 +240,29 @@ class Display {
     var image = this.images[SNAKES_IMG_SRC["image"]];
     var sw, sh, sy, sx;
     this.context.beginPath();
-    for(let cell = 0; cell < player.body.length; cell++)
+    for(let cell = 0; cell < player.body.length; cell++) {
       // Draw the head
       if(cell == 0) {
         sw = SNAKES_IMG_SRC["headw"];
         sh = SNAKES_IMG_SRC["headh"];
         sx = SNAKES_IMG_SRC[player.dir[cell]] * sw;
         sy = 0;
-        this.context.drawImage(image, 
-                               sx, sy, 
-                               sw, sh, 
-                               player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
-                               CELL_SIZE, CELL_SIZE);
       }
+      
       // Draw the tail/body
       else {
         sw = SNAKES_IMG_SRC["bodyw"];
         sh = SNAKES_IMG_SRC["bodyh"];
         sx = player.dir[cell] * sw;
         sy = SNAKES_IMG_SRC["headh"];
-        this.context.drawImage(image, 
-                               sx, sy, 
-                               sw, sh, 
-                               player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
-                               CELL_SIZE, CELL_SIZE);
       }
+
+      this.context.drawImage(image, 
+                             sx, sy, 
+                             sw, sh, 
+                             player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
+                             CELL_SIZE, CELL_SIZE);
+    }
     this.context.closePath();
   }
 

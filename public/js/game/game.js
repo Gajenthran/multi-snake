@@ -4,6 +4,11 @@
  * display et send the keyboard inputs.
  */
 class Game {
+  /**
+   * @constructor
+   *
+   * @param {Object} socket: socket associating the player and the client
+   */
   constructor(socket) {
     this.socket  = socket;
     this.display = null;

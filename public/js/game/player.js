@@ -4,6 +4,15 @@
  * the display
  */
 class Player {
+  /**
+   * @constructor
+   *
+   * @param {number} x: coordinate x
+   * @param {number} y: coordinate y
+   * @param {number} dir: direction of the snake
+   * @param {number} size: size of the snake
+   * @param {String} color: color of the snake
+   */
   constructor(x, y, dir, score, size, color) {
     this.body = new Array();
     this.body.unshift({"x" : x, "y" : y});
@@ -36,56 +45,35 @@ class Player {
    *
    * @param {number} dir: the new direction given by the server
    */  
-  updateDirection(dir) {
-    var updatedDir, actualDir = this.dir[0];
-    if(this.dir[0] == dir) {
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["left"] ||
-         SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["right"])
+  updateDirection(nextDir) {
+    var updatedDir, currentDir = this.dir[0], lastDir = this.dir[this.dir.length-1];
+
+    if(this.dir[0] == nextDir) {
+      if(SNAKES_IMG_SRC[currentDir] == SNAKES_IMG_SRC["left"] ||
+         SNAKES_IMG_SRC[currentDir] == SNAKES_IMG_SRC["right"])
         updatedDir = SNAKES_IMG_SRC["lr_body"];
       else
         updatedDir = SNAKES_IMG_SRC["ud_body"];
     }
 
     else {
-      // LEFT
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["left"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["down"]) {
-        updatedDir = SNAKES_IMG_SRC["ul_body"];
-      }
-
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["left"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["up"])
-        updatedDir = SNAKES_IMG_SRC["dr_body"];
-
-      // RIGHT
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["right"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["up"])
-        updatedDir = SNAKES_IMG_SRC["dl_body"];
-
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["right"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["down"])
-        updatedDir = SNAKES_IMG_SRC["ur_body"];
-
-      // UP
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["up"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["right"])
-        updatedDir = SNAKES_IMG_SRC["ul_body"];
-
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["up"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["left"])
-        updatedDir = SNAKES_IMG_SRC["ur_body"];
-
-      // DOWN
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["down"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["right"])
-        updatedDir = SNAKES_IMG_SRC["dr_body"];
-
-      if(SNAKES_IMG_SRC[actualDir] == SNAKES_IMG_SRC["down"] &&
-         SNAKES_IMG_SRC[dir] == SNAKES_IMG_SRC["left"])
-        updatedDir = SNAKES_IMG_SRC["dl_body"];
+      if(this.checkDirections(currentDir, nextDir, "left",  "down"))  updatedDir = SNAKES_IMG_SRC["ul_body"];
+      if(this.checkDirections(currentDir, nextDir, "left",  "up"))    updatedDir = SNAKES_IMG_SRC["dr_body"];
+      if(this.checkDirections(currentDir, nextDir, "right", "up"))    updatedDir = SNAKES_IMG_SRC["dl_body"];
+      if(this.checkDirections(currentDir, nextDir, "right", "down"))  updatedDir = SNAKES_IMG_SRC["ur_body"];
+      if(this.checkDirections(currentDir, nextDir, "up",    "right")) updatedDir = SNAKES_IMG_SRC["ul_body"];
+      if(this.checkDirections(currentDir, nextDir, "up",    "left"))  updatedDir = SNAKES_IMG_SRC["ur_body"];
+      if(this.checkDirections(currentDir, nextDir, "down",  "right")) updatedDir = SNAKES_IMG_SRC["dr_body"];
+      if(this.checkDirections(currentDir, nextDir, "down",  "left"))  updatedDir = SNAKES_IMG_SRC["dl_body"];
     }
-
     this.dir[0] = updatedDir;
-    this.dir.unshift(dir);
+    this.dir.unshift(nextDir);
+  }
+
+  checkDirections(currentDir, nextDir, expectedCurrentDir, expectedNextDir) {
+    if(SNAKES_IMG_SRC[currentDir] == SNAKES_IMG_SRC[expectedCurrentDir] &&
+       SNAKES_IMG_SRC[nextDir] == SNAKES_IMG_SRC[expectedNextDir])
+      return true;
+    return false;
   }
 }
