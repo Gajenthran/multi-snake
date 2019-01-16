@@ -43,7 +43,7 @@ class Player {
   /**
    * @method Update the snake direction with the new value given by the server.
    *
-   * @param {number} dir: the new direction given by the server
+   * @param {number} nextDir: the new direction given by the server
    */  
   updateDirection(nextDir) {
     var updatedDir, currentDir = this.dir[0], lastDir = this.dir[this.dir.length-1];
@@ -70,6 +70,16 @@ class Player {
     this.dir.unshift(nextDir);
   }
 
+  /**
+   * @method Check if the directions of the snake are equal to the expected directions.
+   *
+   * @param {number} currentDir: the current direction of the snake
+   * @param {number} nextDir: the next direction of the snake
+   * @param {number} expectedCurrentDir: the expected current direction of the snake
+   * @param {number} expectedNextDir: the expected next direction of the snake
+   * @return {boolean} True if the expected directions are equal to the directions 
+   * of the snake, else otherwise.
+   */
   checkDirections(currentDir, nextDir, expectedCurrentDir, expectedNextDir) {
     if(SNAKES_IMG_SRC[currentDir] == SNAKES_IMG_SRC[expectedCurrentDir] &&
        SNAKES_IMG_SRC[nextDir] == SNAKES_IMG_SRC[expectedNextDir])

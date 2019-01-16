@@ -81,18 +81,23 @@ class Snake {
       item.apply(this);
   }
 
+  /**
+   * @method getRandomDirection Get a random direction.
+   */
   static getRandomDirection() {
     return Util.getRandomPropriety(Snake.DIRECTIONS);
   }
 }
 
 /**
- * @const {number} SNAKE_SIZE: the size of the snake at the beginning
+ * The size of the snake at the beginning.
+ * @const {number}
  */
 Snake.SNAKE_SIZE = 3;
 
 /**
- * @const {Object} Snake.DIRECTIONS: Coordinates for each direction
+ * Coordinates for each direction.
+ * @const {Object}
  */
 Snake.DIRECTIONS = {
   "left"  : {"x" : -1, "y" :  0},
@@ -102,8 +107,8 @@ Snake.DIRECTIONS = {
 };
 
 /**
- * @const {boolean} UNLIMITED_BODY: the body of the snake is unlimited.
- * So, the snake will grow indefinitely.
+ * The body of the snake is unlimited. So, the snake will grow indefinitely.
+ * @const {boolean}
  */
 Snake.UNLIMITED_BODY = false;
 

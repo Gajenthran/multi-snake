@@ -1,5 +1,6 @@
-/*
- * @const {Object} TILES_FILE: all useful files for the sprites
+/**
+ * All useful files for the sprites.
+ * @const {Object}
  */
 var TILES_FILE = {
   "snakes"     : "/public/img/snakes.png",
@@ -7,9 +8,10 @@ var TILES_FILE = {
   "background" : "/public/img/background.png"
 };
 
-/*
- * @const {Object} SNAKES_IMG_SRC: details of the source image (/public/img/snakes.png)
- * to draw the snake for the player and the enemies
+/**
+ * Details of the source image (/public/img/snakes.png)
+ * to draw the snake for the player and the enemies.
+ * @const {Object}
  */
 var SNAKES_IMG_SRC = {
   "image"             : "snakes",
@@ -32,9 +34,10 @@ var SNAKES_IMG_SRC = {
   "bodyh"             : 70
 };
   
-/*
- * @const {Object} ITEMS_IMG_SRC: details of the source image (/public/img/items.png)
+/**
+ * Details of the source image (/public/img/items.png)
  * to draw the items.
+ * @const {Object}
  */
 var ITEMS_IMG_SRC = {
   "image"   : "items",
@@ -45,78 +48,92 @@ var ITEMS_IMG_SRC = {
   "h"       : 60
 };
 
-/*
- * @const {number} CANVAS_WIDTH: the width of the canvas
+/**
+ * The width of the canvas.
+ * @const {number}
  */
 var CANVAS_WIDTH = 800;
 
-/*
- * @const {number} CANVAS_HEIGHT: the height of the canvas
+/**
+ * The height of the canvas.
+ * @const {number}
  */
 var CANVAS_HEIGHT = 600;
 
-/*
- * @const {number} CANVAS_ID: the id of the canvas (important to create a canvas)
+/**
+ * The id of the canvas (important to create a canvas).
+ * @const {number}
  */
 var CANVAS_ID = "Canvas_Curve-Fever";
 
-/*
- * @const {number} CELL_SIZE: the size of a cell (a cell is an item or a player)
+/**
+ * Tthe size of a cell (a cell is an item or a player).
+ * @const {number}
  */
 var CELL_SIZE = 30;
 
-/*
- * @const {number} SCOREBOARD_X: the coordinate x of the scoreboard
+/**
+ * The coordinate x of the scoreboard.
+ * @const {number}
  */
 var SCOREBOARD_X = CANVAS_WIDTH + 10
 
-/*
- * @const {number} SCOREBOARD_Y: the coordinate y of the scoreboard
+/**
+ * The coordinate y of the scoreboard.
+ * @const {number}
  */
 var SCOREBOARD_Y = 0;
 
-/*
- * @const {number} SCOREBOARD_WIDTH: the width of the scoreboard
+/**
+ * The width of the scoreboard.
+ * @const {number}
  */
 var SCOREBOARD_WIDTH = 400;
 
-/*
- * @const {number} SCOREBOARD_HEIGHT: the height of the scoreboard
+/**
+ * The height of the scoreboard.
+ * @const {number}
  */
 var SCOREBOARD_HEIGHT = 300;
 
-/*
- * @const {number} SCORE_X: the coordinate x of the score
+/**
+ * The coordinate x of the score.
+ * @const {number}
  */
 var SCORE_X = 50;
 
-/*
- * @const {number} SCORE_Y: the coordinate y of the score
+/**
+ * The coordinate y of the score.
+ * @const {number}
  */
 var SCORE_Y = 50;
 
-/*
- * @const {number} TOP_SCORERS: the number of players (best scores) to show
+/**
+ * The number of players (best scores) to show.
+ * @const {number}
  */
 var TOP_SCORERS = 3;
 
-/*
- * @const {Object} CANVAS_STYLE: the style of the canvas (<canvas>)
+/**
+ * The style of the canvas (<canvas>).
+ * @const {Object}
  */
 var CANVAS_STYLE = {
   "border" : "solid #d3d3d3"
 };
 
-/*
- * @const {Object} SCOREBOARD_STYLE: the style of the scoreboard (<ul>)
+/**
+ * The style of the scoreboard (<ul>).
+ * @const {Object}
  */
 var SCOREBOARD_STYLE = {
   "border" : "solid #d3d3d3"
 };
 
-/*
- * @const {number} PLAYER_TEXT_STYLE: style for the element <li> representing
- * the player's score). We do that using a css file but we choose this method
+/**
+ * Style for the element <li> representing the player's score). 
+ * We do that using a css file but we choose this method.
+ * @const {number}
  */
 var PLAYER_TEXT_STYLE = {
   "fontSize"      : "20px",
@@ -126,9 +143,9 @@ var PLAYER_TEXT_STYLE = {
   "listStyleType" : "none"
 };
 
-/*
- * @const {number} ENEMY_TEXT_STYLE: style for the element <li> representing 
- * the enemies' score
+/**
+ * Style for the element <li> representing the enemies' score.
+ * @const {number}
  */
 var ENEMY_TEXT_STYLE = {
   "fontSize"      : "20px",
@@ -178,6 +195,11 @@ class Display {
     }
   }
 
+ /**
+  * @method Set the camera (viewport) on a selected player
+  *
+  * @param {Player} player: player
+  */
   setCamera(player) {
     this.camera.x = Math.max(0, player.x * CELL_SIZE - CANVAS_WIDTH/2);
     this.camera.y = Math.max(0, player.y * CELL_SIZE - CANVAS_HEIGHT/2);

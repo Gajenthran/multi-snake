@@ -1,5 +1,5 @@
 /*
- * @global {Object} KEYBOARD_STATE: All keyboard inputs. The value of an input is 
+ * KEYBOARD_STATE defines all keyboard inputs. The value of an input is 
  * false when a key is released and true when a key is pressed. 
  */
 var KEYBOARD_STATE = {
@@ -12,7 +12,7 @@ var KEYBOARD_STATE = {
 /**
  * @method Handle all events.
  */
-function handleEvents() { // TODO: maybe canvas instead of document
+function handleEvents() {
   Util.on(document, "keydown", onKeydown);
   Util.on(document, "keyup",   onKeyup);
 }

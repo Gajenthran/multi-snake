@@ -3,8 +3,8 @@ var Snake = require('./snake');
 var Util = require("./global/util");
 
 /**
- * Class representing the game board. Here, we can the coordinates
- * of all objects in our game (Players, Items).
+ * Class representing the game board. Here, we can find 
+ * the coordinates of all objects in our game (Players, Items).
  */
 class World {
   /**
@@ -28,7 +28,7 @@ class World {
   }
 
   /**
-   * @method Draw all tiles of the game board to debug.
+   * @method Draw all tiles of the game board to debug (temporary).
    */
   DrawWorld() {
     var r, c, arr = [];
@@ -114,7 +114,7 @@ class World {
    * @method Check if the tile is already taken by another snake.
    *
    * @param snake: snake
-   * @return {boolean} true if the tile is already take by another snake (collision) and false otherwise.
+   * @return {boolean} True if the tile is already take by another snake (collision) and false otherwise.
    */
   checkSnakeTile(snake) {
     var x = snake.x + this.offset; 
@@ -129,7 +129,7 @@ class World {
    * @method Check if the tile is already taken by an item.
    *
    * @param snake: snake
-   * @return {Item|boolean} the Item if the tile is taken by an item and false otherwise.
+   * @return {Item|boolean} The Item if the tile is taken by an item and false otherwise.
    */
   checkItemTile(snake) {
     var x = snake.x + this.offset;
@@ -157,9 +157,9 @@ class World {
   }
 
   /**
-   * @method Get a random tile and check if the tile is empty
+   * @method Get a random empty tile.
    *
-   * @return {number} the number of the tile
+   * @return {number} The position of the tile.
    */
   getRandomTile() {
     var x, y;
@@ -198,7 +198,8 @@ class World {
 }
 
 /**
- * @const {Object} TILES_ID: the tiles id
+ * The tiles id.
+ * @const {Object}
  */
 World.TILES_ID = {
   "empty"  : 0,
@@ -207,12 +208,14 @@ World.TILES_ID = {
 };
 
 /**
- * @const {number} WORLD_WIDTH: the width of the world
+ * The width of the world
+ * @const {number}
  */
 World.WORLD_WIDTH = 40;
 
 /**
- * @const {number} WORLD_HEIGHT: the height of the world
+ * The height of the world
+ * @const {number}
  */
 World.WORLD_HEIGHT = 20;
 

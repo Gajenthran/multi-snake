@@ -10,15 +10,11 @@ var Util   = require('./global/util');
 class Game {
   /** 
    * @constructor
-   *
-   * @param {World} world: the location of all objects
-   * @param {Map} players: key = the socket ID of the player and value = player details
-   * @param {Array.<Item>} item: all items in the game
    */
   constructor() {
-    this.world   = null;
-    this.players = new Map();
-    this.items   = new Array();
+    this.world   = null;         // The location of all objets
+    this.players = new Map();    // key = socket ID of the player and value = player details
+    this.items   = new Array();  // all items in the game
   }
 
   /**
@@ -57,7 +53,8 @@ class Game {
     };
     socket.emit("generate-game", data)
     this.players.set(socket.id, new Player(data["player"].x, data["player"].y,
-                                           data["player"].dir, socket)); // Add for the color: Util.getRandomColor()
+                                           data["player"].dir, socket)); 
+    // Add for the color: Util.getRandomColor()
   }
 
 
@@ -127,7 +124,7 @@ class Game {
   }
 
   /**
-   * @method Remove all players from the game.
+   * @method Remove all players from the game (TO ADD). 
    */
   removeAllPlayer() {
     this.players.clear();
@@ -137,7 +134,7 @@ class Game {
    * @method Get all players in the game except the
    * player given as parameters.
    * 
-   * @param {Object} playerSocket: the socket of the Player
+   * @param {Object} playerSocket: the socket of the selected player
    */
   getEnemies(playerSocket) {
     var enemies = new Array();

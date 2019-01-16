@@ -71,7 +71,7 @@ class Item {
   /**
    * @method Check if it is time to spawn a new item.
    *
-   * @return {boolean} true if we exceed the respawn time and false otherwise.
+   * @return {boolean} True if we exceed the respawn time and false otherwise.
    */
   static endOfSpawnTime(itemsLength) {
     if(itemsLength < Item.MAX_ITEM_ON_SCREEN && 
@@ -85,7 +85,7 @@ class Item {
   /** 
    * @method Choose a random item from the list of items ITEMS_NAME.
    *
-   * @return {String} the name of an item
+   * @return {String} The name of an item.
    */
   static chooseRandomItem() {
     return Item.ITEMS_NAME[Util.getRandomFloor(Item.ITEMS_NAME.length)];
@@ -93,42 +93,49 @@ class Item {
 }
 
 /**
- * @const {String} COIN_ITEM: the name given for the coin item
+ * The name given for the coin item.
+ * @const {String}
  */
 Item.COIN_ITEM = "coin";
 
 /**
- * @const {String} APPLE_ITEM: the name given for the apple item
+ * The name given for the apple item.
+ * @const {String}
  */
 Item.APPLE_ITEM = "apple";
 
 /**
- * @const {String} POISON_ITEM: the name given for the poison item
+ * The name given for the poison item.
+ * @const {String}
  */
 Item.POISON_ITEM  = "poison";
 
 /**
- * @const {String} COIN_VALUE: the value of the coin (the number of points given to the snake)
+ * The value of the coin (the number of points given to the snake).
+ * @const {String}
  */
 Item.COIN_VALUE = 5;
 
 /**
- * @const {String} SPAWN_ITEM_DURATION: spawn time of an object
+ * Spawn time of an object.
+ * @const {String}
  */
 Item.SPAWN_ITEM_DURATION = 1500;
 
 /**
- * @const {String} SPAWN_ITEM_TIME_REM: remaining time for the spawn of an object
+ * SPAWN_ITEM_TIME_REM indicates the remaining time for the spawn of an object.
  */
 Item.SPAWN_ITEM_TIME_REM = 0;
 
 /**
- * @const {String} MAX_ITEM_ON_SCREEN: the maximum number of items on the screen
+ * The maximum number of items on the screen.
+ * @const {String}
  */
 Item.MAX_ITEM_ON_SCREEN = 30;
 
 /**
- * @const {Array.<String>} ITEMS_NAME: the list of all items
+ * The list of all items.
+ * @const {Array.<String>}
  */
 Item.ITEMS_NAME = [
   Item.APPLE_ITEM,

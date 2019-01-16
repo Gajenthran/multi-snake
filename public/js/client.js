@@ -1,3 +1,9 @@
+/**
+ * Initialization and lauch of the game (client side).
+ *
+ * @author PANCHALINGAMOORTHY Gajenthran
+ */
+
 "use strict"
 window.onload = main;
 

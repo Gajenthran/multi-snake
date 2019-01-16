@@ -1,3 +1,10 @@
+/**
+ * Initialization and lauch of the server and the game
+ * (server side).
+ *
+ * @author PANCHALINGAMOORTHY Gajenthran
+ */
+
 // Tools needed to create a server
 var socketIO = require('socket.io');
 var express  = require('express');
@@ -8,7 +15,7 @@ var app      = express();
 var server   = http.Server(app);
 var io       = socketIO(server);
 
-var DELAY = 1000/1;
+var DELAY = 1000/12;
 var PORT = 8080; 
 
 app.set('port', PORT);

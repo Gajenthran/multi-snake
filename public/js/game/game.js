@@ -62,7 +62,7 @@ class Game {
   }
 
   /**
-   * @method Start the game loop.
+   * @method Start the game loop (TO ADD).
    */
   start() {
     this.run(Date.now());
