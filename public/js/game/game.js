@@ -36,12 +36,15 @@ class Game {
    * @param {Object} data: data given by the server
    */
   initGameValues(data) {
-    if(this.player == null) {
-      this.player = new Player(data["player"].x, data["player"].y, 
+    if(this.player == null)
+      this.player = new Player({"x" : data["player"].x, "y" : data["player"].y},
                                data["player"].dir, 0, data["player"].size,
                                Util.getRandomColorRGB());
-    }
-    this.enemies = data["enemies"];
+
+    for(var i = 0; i < data["enemies"].length; i++)
+      this.enemies.push(new Player(data["enemies"][i].body,
+                                   data["enemies"][i].dir, 0, data["enemies"][i].size,
+                                   Util.getRandomColorRGB()));
     this.items = data["items"];
   }
 
@@ -53,11 +56,19 @@ class Game {
   setGameValues(data) {
     if(this.player.body[0].x != data["player"].body.x ||
        this.player.body[0].y != data["player"].body.y) {
-      this.player.update(data["player"].body.x, data["player"].body.y,
+      this.player.update(data["player"].body,
                          data["player"].dir, data["player"].score, 
                          data["player"].size);
     }
-    this.enemies = data["enemies"];
+    
+    // this.enemies = data["enemies"];
+    // TODO: When a player is removed from the game
+    for(var i = 0; i < data["enemies"].length; i++)
+      if(this.enemies[i].body[0].x != data["enemies"][i].body.x ||
+         this.enemies[i].body[0].y != data["enemies"][i].body.y)
+        this.enemies[i].update(data["enemies"][i].body,
+                               data["enemies"][i].dir, 0, data["enemies"][i].score,
+                               data["enemies"][i].size);
     this.items = data["items"];
   }
 

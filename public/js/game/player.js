@@ -13,9 +13,9 @@ class Player {
    * @param {number} size: size of the snake
    * @param {String} color: color of the snake
    */
-  constructor(x, y, dir, score, size, color) {
+  constructor(body, dir, score, size, color) {
     this.body = new Array();
-    this.body.unshift({"x" : x, "y" : y});
+    this.body.unshift(body);
     this.dir = new Array();
     this.dir.unshift(dir);
     this.score = score;
@@ -31,11 +31,11 @@ class Player {
    * @param {number} score: score of the snake
    * @param {number} size: the size of the snake
    */
-  update(x, y, dir, score, size) {
+  update(body, dir, score, size) {
     this.size = size || this.size;
     if(this.body.length == this.size)
       this.body.pop();
-    this.body.unshift({"x" : x, "y" : y});
+    this.body.unshift(body);
     this.updateDirection(dir);
     this.score = score || this.score;
   }

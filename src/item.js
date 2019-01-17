@@ -50,6 +50,15 @@ class Item {
   }
 
   /**
+   * @method Immobilize the snake.
+   *
+   * @param {Snake} snake: snake
+   */
+  lockSnake(snake) {
+    snake.dir.x = snake.dir.y = 0;
+  }
+
+  /**
    * @method Increase the size of the snake.
    *
    * @param {Snake} snake: snake

@@ -178,10 +178,11 @@ class World {
    */
   spawnSnake() {
     var tile = this.getRandomTile();
-    return { "x"    : Math.floor(tile%this.w),
-             "y"    : Math.floor(tile/this.w),
-             "dir"  : Snake.getRandomDirection(),
-             "size" : Snake.SNAKE_SIZE };
+    return { "x"     : Math.floor(tile%this.w),
+             "y"     : Math.floor(tile/this.w),
+             "score" : 0,
+             "dir"   : Snake.getRandomDirection(),
+             "size"  : Snake.SNAKE_SIZE };
             // "color" : Util.getRandomColor() };
   }
 

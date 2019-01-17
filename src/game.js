@@ -48,7 +48,7 @@ class Game {
   addNewPlayer(socket) {
     var data = {
       "player"  : this.world.spawnSnake(),
-      "enemies" : this.getEnemies(socket),
+      "enemies" : this.getEnemies(socket, true),
       "items"   : this.items
     };
     socket.emit("generate-game", data)
@@ -136,12 +136,16 @@ class Game {
    * 
    * @param {Object} playerSocket: the socket of the selected player
    */
-  getEnemies(playerSocket) {
+  getEnemies(playerSocket, isInit) {
     var enemies = new Array();
     for(let enemy of this.players.values()) {
       if(enemy.socket.id != playerSocket.id)
-        enemies.push({ "body" : enemy.body, "score" : enemy.score, 
-                       "dir"  : enemy.getDir()});
+        if(isInit)
+          enemies.push({ "body" : enemy.body, "score" : enemy.score, 
+                         "dir"  : enemy.getDir(), "size": enemy.size });
+        else
+          enemies.push({ "body" : enemy.body[0], "score" : enemy.score, 
+                         "dir"  : enemy.getDir(), "size": enemy.size });
     }
     return enemies;
   }
