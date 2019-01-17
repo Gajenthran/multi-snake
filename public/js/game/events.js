@@ -1,4 +1,4 @@
-/*
+/**
  * KEYBOARD_STATE defines all keyboard inputs. The value of an input is 
  * false when a key is released and true when a key is pressed. 
  */

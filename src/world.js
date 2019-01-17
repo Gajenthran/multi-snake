@@ -178,8 +178,7 @@ class World {
    */
   spawnSnake() {
     var tile = this.getRandomTile();
-    return { "x"     : Math.floor(tile%this.w),
-             "y"     : Math.floor(tile/this.w),
+    return { "body"  : {"x" : Math.floor(tile%this.w), "y" : Math.floor(tile/this.w) },
              "score" : 0,
              "dir"   : Snake.getRandomDirection(),
              "size"  : Snake.SNAKE_SIZE };
@@ -212,7 +211,7 @@ World.TILES_ID = {
  * The width of the world
  * @const {number}
  */
-World.WORLD_WIDTH = 40;
+World.WORLD_WIDTH = 20;
 
 /**
  * The height of the world

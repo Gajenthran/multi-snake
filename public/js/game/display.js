@@ -267,16 +267,18 @@ class Display {
       if(cell == 0) {
         sw = SNAKES_IMG_SRC["headw"];
         sh = SNAKES_IMG_SRC["headh"];
-        sx = SNAKES_IMG_SRC[player.dir[cell]] * sw;
-        sy = 0;
+        sx = SNAKES_IMG_SRC[imageName] == SNAKES_IMG_SRC["player"] ? SNAKES_IMG_SRC[player.dir[cell]] * sw :
+                                                                     SNAKES_IMG_SRC[player.dir] * sw;
+        sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"]);
       }
       
       // Draw the tail/body
       else {
         sw = SNAKES_IMG_SRC["bodyw"];
         sh = SNAKES_IMG_SRC["bodyh"];
-        sx = player.dir[cell] * sw;
-        sy = SNAKES_IMG_SRC["headh"];
+        sx = SNAKES_IMG_SRC[imageName] == SNAKES_IMG_SRC["player"] ? player.dir[cell] * sw :
+                                                                     0;
+        sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"]) + SNAKES_IMG_SRC["headh"];
       }
 
       this.context.drawImage(image, 

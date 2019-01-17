@@ -32,6 +32,10 @@ class Player {
    * @param {number} size: the size of the snake
    */
   update(body, dir, score, size) {
+    if(this.body[0].x == body.x &&
+       this.body[0].y == body.y)
+      return;
+
     this.size = size || this.size;
     if(this.body.length == this.size)
       this.body.pop();

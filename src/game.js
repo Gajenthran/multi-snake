@@ -48,13 +48,13 @@ class Game {
   addNewPlayer(socket) {
     var data = {
       "player"  : this.world.spawnSnake(),
-      "enemies" : this.getEnemies(socket, true),
+      "enemies" : this.getEnemies(socket),
       "items"   : this.items
     };
     socket.emit("generate-game", data)
-    this.players.set(socket.id, new Player(data["player"].x, data["player"].y,
-                                           data["player"].dir, socket)); 
-    // Add for the color: Util.getRandomColor()
+    this.players.set(socket.id, new Player(data["player"].body.x, data["player"].body.y,
+                                           data["player"].dir, 
+                                           socket));
   }
 
 
@@ -78,9 +78,8 @@ class Game {
       player.collision(this.world);
       this.world.insertSnakeHead(player);
       // this.world.enlargeWorld(player); 
-      if(!player.alive) {
+      if(!player.alive)
         this.removePlayer(player.socket);
-      }
     }
   }
 
@@ -118,9 +117,10 @@ class Game {
    * @param {Object} socket: socket of the player
    */
   removePlayer(socket) {
-    if(this.players.has(socket.id))
+    if(this.players.has(socket.id)) {
       this.world.clearSnake(this.players.get(socket.id));
       this.players.delete(socket.id);
+    }
   }
 
   /**
@@ -136,17 +136,14 @@ class Game {
    * 
    * @param {Object} playerSocket: the socket of the selected player
    */
-  getEnemies(playerSocket, isInit) {
+  getEnemies(playerSocket) {
     var enemies = new Array();
-    for(let enemy of this.players.values()) {
+    for(let enemy of this.players.values())
       if(enemy.socket.id != playerSocket.id)
-        if(isInit)
-          enemies.push({ "body" : enemy.body, "score" : enemy.score, 
-                         "dir"  : enemy.getDir(), "size": enemy.size });
-        else
-          enemies.push({ "body" : enemy.body[0], "score" : enemy.score, 
-                         "dir"  : enemy.getDir(), "size": enemy.size });
-    }
+        enemies.push({ "body"  : enemy.body, 
+                       "score" : enemy.score, 
+                       "dir"   : enemy.getDir(), 
+                       "size"  : enemy.size });
     return enemies;
   }
 
@@ -158,8 +155,10 @@ class Game {
     var data;
     for(let player of this.players.values()) {
       data = {
-        "player"  : { "body" : player.body[0], "score" : player.score, 
-                      "dir"  : player.getDir(), "size" : player.size },
+        "player"  : { "body"  : player.body[0], 
+                      "score" : player.score, 
+                      "dir"   : player.getDir(), 
+                      "size"  : player.size },
         "enemies" : this.getEnemies(player.socket),
         "items"   : this.items
       };
