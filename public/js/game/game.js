@@ -36,14 +36,8 @@ class Game {
    * @param {Object} data: data given by the server
    */
   initGameValues(data) {
-    console.log(data["player"].body);
     if(this.player == null)
-      this.player = new Player(data["player"].body,
-                               data["player"].dir, 
-                               data["player"].score, 
-                               data["player"].size,
-                               Util.getRandomColorRGB());
-
+      this.player = data["player"];
     this.enemies = data["enemies"];
     this.items = data["items"];
   }
@@ -54,12 +48,7 @@ class Game {
    * @param {Object} data: data given by the server
    */
   setGameValues(data) {
-    this.player.update(data["player"].body,
-                       data["player"].dir, 
-                       data["player"].score, 
-                       data["player"].size);
-
-    // this.enemies = data["enemies"];
+    this.player = data["player"];
     // TODO: When a player is removed from the game
     this.enemies = data["enemies"];
     this.items = data["items"];
@@ -99,7 +88,6 @@ class Game {
     this.display.clearScreen();
     this.display.background();
     if(this.player && this.player.body.length != 0) {
-      this.display.setCamera(this.player.body[0]);
       this.display.snakeOnScreen("player", this.player);
       this.display.playersOnScoreboard(this.player, this.enemies);
     }

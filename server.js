@@ -15,7 +15,7 @@ var app      = express();
 var server   = http.Server(app);
 var io       = socketIO(server);
 
-var DELAY = 1000/12;
+var DELAY = 1000/8;
 var PORT = 8080; 
 
 app.set('port', PORT);

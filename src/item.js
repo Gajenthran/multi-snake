@@ -30,51 +30,14 @@ class Item {
     this.use = true;
     switch(this.name) {
       case Item.APPLE_ITEM:
-        this.growSnake(snake);
+        snake.grow();
         break;
       case Item.POISON_ITEM:
-        this.killSnake(snake);
+        snake.dead();
       case Item.COIN_ITEM:
-        this.increaseScore(snake);
+        snake.increaseScore();
         break;
     }
-  }
-
-  /**
-   * @method Increase the score of the snake.
-   *
-   * @param {Snake} snake: snake
-   */
-  increaseScore(snake) {
-    snake.score += Item.COIN_VALUE;
-  }
-
-  /**
-   * @method Immobilize the snake.
-   *
-   * @param {Snake} snake: snake
-   */
-  lockSnake(snake) {
-    snake.dir.x = snake.dir.y = 0;
-  }
-
-  /**
-   * @method Increase the size of the snake.
-   *
-   * @param {Snake} snake: snake
-   */
-  growSnake(snake, size) {
-    snake.size += size || 1;
-    snake.score += Math.floor(size/2) || 1;
-  }
-
-  /**
-   * @method Kill the snake.
-   *
-   * @param {Snake} snake: snake
-   */
-  killSnake(player) {
-    player.alive = false;
   }
 
   /**
@@ -129,7 +92,7 @@ Item.COIN_VALUE = 5;
  * Spawn time of an object.
  * @const {String}
  */
-Item.SPAWN_ITEM_DURATION = 1500;
+Item.SPAWN_ITEM_DURATION = 10000;
 
 /**
  * SPAWN_ITEM_TIME_REM indicates the remaining time for the spawn of an object.

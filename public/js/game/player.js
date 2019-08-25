@@ -59,7 +59,6 @@ class Player {
       else
         updatedDir = SNAKES_IMG_SRC["ud_body"];
     }
-
     else {
       if(this.checkDirections(currentDir, nextDir, "left",  "down"))  updatedDir = SNAKES_IMG_SRC["ul_body"];
       if(this.checkDirections(currentDir, nextDir, "left",  "up"))    updatedDir = SNAKES_IMG_SRC["dr_body"];

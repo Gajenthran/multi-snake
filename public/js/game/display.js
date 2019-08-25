@@ -9,6 +9,17 @@ var TILES_FILE = {
 };
 
 /**
+ * Details of the source image (/public/img/background.png)
+ * to draw the snake for the player and the enemies.
+ * @const {Object}
+ */
+var BACKGROUND_IMG_SRC = {
+  "image"   : "background",
+  "w"       : "50",
+  "h"       : "50",
+};
+
+/**
  * Details of the source image (/public/img/snakes.png)
  * to draw the snake for the player and the enemies.
  * @const {Object}
@@ -31,7 +42,11 @@ var SNAKES_IMG_SRC = {
   "dr_body"           : 4,
   "dl_body"           : 5,
   "bodyw"             : 70,
-  "bodyh"             : 70
+  "bodyh"             : 70,
+  "ud_tailw"          : 52,
+  "ud_tailh"          : 59,
+  "lr_tailw"          : 68,
+  "lr_tailh"          : 59
 };
   
 /**
@@ -58,7 +73,7 @@ var CANVAS_WIDTH = 800;
  * The height of the canvas.
  * @const {number}
  */
-var CANVAS_HEIGHT = 600;
+var CANVAS_HEIGHT = 640;
 
 /**
  * The id of the canvas (important to create a canvas).
@@ -70,7 +85,7 @@ var CANVAS_ID = "Canvas_Curve-Fever";
  * Tthe size of a cell (a cell is an item or a player).
  * @const {number}
  */
-var CELL_SIZE = 30;
+var CELL_SIZE = 32;
 
 /**
  * The coordinate x of the scoreboard.
@@ -216,11 +231,18 @@ class Display {
    * @method Draw the background on the canvas.
    */
   background() {
-    var image = this.images["background"];
+    var w = Math.floor(CANVAS_WIDTH/CELL_SIZE), h = Math.floor(CANVAS_HEIGHT/CELL_SIZE);
+    var image = this.images[BACKGROUND_IMG_SRC["image"]]
+    var sw = BACKGROUND_IMG_SRC["w"];
+    var sh = BACKGROUND_IMG_SRC["h"];
+    var sy = 0, sx;
     this.context.beginPath();
-    for(let r = 0; r < Math.floor(CANVAS_WIDTH/CELL_SIZE); r++) {
-      for(let c = 0; c < Math.floor(CANVAS_HEIGHT/CELL_SIZE); c++) {
-        this.context.drawImage(image,
+    for(let r = 0; r < w; r++) {
+      for(let c = 0; c < h; c++) {
+        sx = (r * w + c) & 1 ? 0 : sw;
+        this.context.drawImage(image, 
+                               sx, sy, 
+                               sw, sh,
                                r * CELL_SIZE, c * CELL_SIZE, 
                                CELL_SIZE, CELL_SIZE);
       }
@@ -246,7 +268,7 @@ class Display {
       this.context.drawImage(image, 
                              sx, sy, 
                              sw, sh,
-                             items[i].x * CELL_SIZE - this.camera.x, items[i].y * CELL_SIZE - this.camera.y, 
+                             items[i].x * CELL_SIZE /* - this.camera.x */, items[i].y * CELL_SIZE /* - this.camera.y */, 
                              CELL_SIZE, CELL_SIZE);
     }
     this.context.closePath();
@@ -267,24 +289,51 @@ class Display {
       if(cell == 0) {
         sw = SNAKES_IMG_SRC["headw"];
         sh = SNAKES_IMG_SRC["headh"];
-        sx = SNAKES_IMG_SRC[imageName] == SNAKES_IMG_SRC["player"] ? SNAKES_IMG_SRC[player.dir[cell]] * sw :
-                                                                     SNAKES_IMG_SRC[player.dir] * sw;
-        sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"]);
-      }
-      
-      // Draw the tail/body
-      else {
+        sx = SNAKES_IMG_SRC[player.body[cell].dir] * sw;
+        sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"] + SNAKES_IMG_SRC["ud_tailh"]);
+      } else if(cell == player.body.length-1) { // Draw the tail
+        if(SNAKES_IMG_SRC[player.body[cell-1].dir] ==  SNAKES_IMG_SRC["left"] ||
+           SNAKES_IMG_SRC[player.body[cell-1].dir] ==  SNAKES_IMG_SRC["right"]) {
+          sw = SNAKES_IMG_SRC["lr_tailw"];
+          sh = SNAKES_IMG_SRC["lr_tailh"];
+          sx = SNAKES_IMG_SRC[player.body[cell-1].dir] == SNAKES_IMG_SRC["left"] ? SNAKES_IMG_SRC["ud_tailw"] : 
+                                                                                 SNAKES_IMG_SRC["ud_tailw"] + SNAKES_IMG_SRC["lr_tailw"];
+        } else {
+          sw = SNAKES_IMG_SRC["ud_tailw"];
+          sh = SNAKES_IMG_SRC["ud_tailh"];
+          sx = SNAKES_IMG_SRC[player.body[cell-1].dir] == SNAKES_IMG_SRC["up"] ? 0 : SNAKES_IMG_SRC["ud_tailw"] + SNAKES_IMG_SRC["lr_tailw"] * 2;
+        }
+        sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"] + SNAKES_IMG_SRC["ud_tailh"]) + SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"];
+        console.log(sx, sy, sw, sh)
+      } else { // Draw the body
         sw = SNAKES_IMG_SRC["bodyw"];
         sh = SNAKES_IMG_SRC["bodyh"];
-        sx = SNAKES_IMG_SRC[imageName] == SNAKES_IMG_SRC["player"] ? player.dir[cell] * sw :
-                                                                     0;
-        sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"]) + SNAKES_IMG_SRC["headh"];
+
+        var currentDir = player.body[cell].dir, nextDir = player.body[cell-1].dir, x;
+        if(currentDir == nextDir) {
+          if(SNAKES_IMG_SRC[currentDir] == SNAKES_IMG_SRC["left"] ||
+             SNAKES_IMG_SRC[currentDir] == SNAKES_IMG_SRC["right"])
+            x = SNAKES_IMG_SRC["lr_body"];
+          else
+            x = SNAKES_IMG_SRC["ud_body"];
+        } else {
+          if(this.checkDirections(currentDir, nextDir, "left",  "down"))       x = SNAKES_IMG_SRC["ul_body"];
+          else if(this.checkDirections(currentDir, nextDir, "left",  "up"))    x = SNAKES_IMG_SRC["dr_body"];
+          else if(this.checkDirections(currentDir, nextDir, "right", "up"))    x = SNAKES_IMG_SRC["dl_body"];
+          else if(this.checkDirections(currentDir, nextDir, "right", "down"))  x = SNAKES_IMG_SRC["ur_body"];
+          else if(this.checkDirections(currentDir, nextDir, "up",    "right")) x = SNAKES_IMG_SRC["ul_body"];
+          else if(this.checkDirections(currentDir, nextDir, "up",    "left"))  x = SNAKES_IMG_SRC["ur_body"];
+          else if(this.checkDirections(currentDir, nextDir, "down",  "right")) x = SNAKES_IMG_SRC["dr_body"];
+          else if(this.checkDirections(currentDir, nextDir, "down",  "left"))  x = SNAKES_IMG_SRC["dl_body"];
+        }
+        sx = x * sw; 
+        sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"] + SNAKES_IMG_SRC["ud_tailh"]) + SNAKES_IMG_SRC["headh"];
       }
 
       this.context.drawImage(image, 
                              sx, sy, 
                              sw, sh, 
-                             player.body[cell].x * CELL_SIZE - this.camera.x, player.body[cell].y * CELL_SIZE - this.camera.y, 
+                             player.body[cell].x * CELL_SIZE /* - this.camera.x */, player.body[cell].y * CELL_SIZE /* - this.camera.y */, 
                              CELL_SIZE, CELL_SIZE);
     }
     this.context.closePath();
@@ -319,5 +368,22 @@ class Display {
       score = Util.createText(text, element);
       i--;
     } 
+  }
+
+  /**
+   * @method Check if the directions of the snake are equal to the expected directions.
+   *
+   * @param {number} currentDir: the current direction of the snake
+   * @param {number} nextDir: the next direction of the snake
+   * @param {number} expectedCurrentDir: the expected current direction of the snake
+   * @param {number} expectedNextDir: the expected next direction of the snake
+   * @return {boolean} True if the expected directions are equal to the directions 
+   * of the snake, else otherwise.
+   */
+  checkDirections(currentDir, nextDir, expectedCurrentDir, expectedNextDir) {
+    if(SNAKES_IMG_SRC[currentDir] == SNAKES_IMG_SRC[expectedCurrentDir] &&
+       SNAKES_IMG_SRC[nextDir] == SNAKES_IMG_SRC[expectedNextDir])
+      return true;
+    return false;
   }
 }

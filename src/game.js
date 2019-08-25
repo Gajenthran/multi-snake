@@ -1,4 +1,5 @@
 var Player = require('./player');
+var Snake = require('./snake');
 var Item   = require('./item');
 var World  = require('./world');
 var Util   = require('./global/util');
@@ -77,7 +78,6 @@ class Game {
       player.move(this.world);
       player.collision(this.world);
       this.world.insertSnakeHead(player);
-      // this.world.enlargeWorld(player); 
       if(!player.alive)
         this.removePlayer(player.socket);
     }
@@ -142,7 +142,7 @@ class Game {
       if(enemy.socket.id != playerSocket.id)
         enemies.push({ "body"  : enemy.body, 
                        "score" : enemy.score, 
-                       "dir"   : enemy.getDir(), 
+                       "dir"   : Snake.getDir(enemy.dir), 
                        "size"  : enemy.size });
     return enemies;
   }
@@ -155,9 +155,9 @@ class Game {
     var data;
     for(let player of this.players.values()) {
       data = {
-        "player"  : { "body"  : player.body[0], 
+        "player"  : { "body"  : player.body, 
                       "score" : player.score, 
-                      "dir"   : player.getDir(), 
+                      "dir"   : Snake.getDir(player.dir), 
                       "size"  : player.size },
         "enemies" : this.getEnemies(player.socket),
         "items"   : this.items

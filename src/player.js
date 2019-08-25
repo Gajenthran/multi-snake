@@ -51,18 +51,6 @@ class Player extends Snake {
              (this.dir == Snake.DIRECTIONS["up"]    && keyboardState["down"])  ||
              (this.dir == Snake.DIRECTIONS["down"]  && keyboardState["up"]) );
   }
-
-  /**
-   * @method Get the name of the direction knowing the value of the direction.
-   *
-   * @return {String} The name of the direction.
-   */ 
-  getDir() {
-    for(var dir in Snake.DIRECTIONS) {
-      if(Util.isSameObjects(Snake.DIRECTIONS[dir], this.dir))
-        return dir;
-    }
-  }
 }
 
 module.exports = Player;

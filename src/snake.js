@@ -24,7 +24,7 @@ class Snake {
 
     this.size  = Snake.SNAKE_SIZE;
     this.body  = new Array();
-    this.body.unshift({"x" : x, "y" : y});
+    this.body.unshift({"x" : x, "y" : y, "dir": Snake.getDir(this.dir)});
   }
 
   /** 
@@ -58,7 +58,7 @@ class Snake {
     // Manage the body of the snake
     if(this.body.length == this.size)
       this.body.pop();
-    this.body.unshift({"x" : this.x, "y" : this.y});
+    this.body.unshift({"x" : this.x, "y" : this.y, "dir" : Snake.getDir(this.dir)});
   }
 
   /**
@@ -82,10 +82,59 @@ class Snake {
   }
 
   /**
+   * @method Increase the size of the snake.
+   *
+   * @param {Snake} snake: snake
+   */
+  grow(size) {
+    this.size += size || 1;
+    this.score += Math.floor(size/2) || 1;
+  }
+
+  /**
+   * @method Increase the score of the snake.
+   *
+   * @param {Snake} snake: snake
+   */
+  increaseScore(value) {
+    this.score += value;
+  }
+
+  /**
+   * @method Immobilize the snake.
+   *
+   * @param {Snake} snake: snake
+   */
+  lock() {
+    this.dir.x = this.dir.y = 0;
+  }
+
+  /**
+   * @method Kill the snake.
+   *
+   * @param {Snake} snake: snake
+   */
+  dead() {
+    this.alive = false;
+  }
+  
+  /**
    * @method getRandomDirection Get a random direction.
    */
   static getRandomDirection() {
     return Util.getRandomPropriety(Snake.DIRECTIONS);
+  }
+
+  /**
+   * @method Get the name of the direction knowing the value of the direction.
+   *
+   * @return {String} The name of the direction.
+   */ 
+  static getDir(direction) {
+    for(var dir in Snake.DIRECTIONS) {
+      if(Util.isSameObjects(Snake.DIRECTIONS[dir], direction))
+        return dir;
+    }
   }
 }
 
