@@ -5,7 +5,8 @@
 var TILES_FILE = {
   "snakes"     : "/public/img/snakes.png",
   "items"      : "/public/img/items.png",
-  "background" : "/public/img/background.png"
+  "background" : "/public/img/background.png",
+  "icons"      : "/public/img/icons.png"
 };
 
 /**
@@ -56,7 +57,7 @@ var SNAKES_IMG_SRC = {
  */
 var ITEMS_IMG_SRC = {
   "image"   : "items",
-  "coin"    : { "id" : 0, "actualSrc" : 0, "fullSrc" : 10},
+  "coin"    : { "id" : 0, "actualSrc" : 0, "fullSrc" : 1},
   "apple"   : { "id" : 1, "actualSrc" : 0, "fullSrc" : 1},
   "poison"  : { "id" : 2, "actualSrc" : 0, "fullSrc" : 1},
   "w"       : 60,
@@ -64,22 +65,34 @@ var ITEMS_IMG_SRC = {
 };
 
 /**
+ * The width of the window.
+ * @const {number}
+ */
+var WINDOW_WIDTH = window.innerWidth;
+
+/**
+ * The height of the window.
+ * @const {number}
+ */
+var WINDOW_HEIGHT = window.innerHeight;
+
+/**
  * The width of the canvas.
  * @const {number}
  */
-var CANVAS_WIDTH = 800;
+var CANVAS_WIDTH = 640;
 
 /**
  * The height of the canvas.
  * @const {number}
  */
-var CANVAS_HEIGHT = 640;
+var CANVAS_HEIGHT = 480;
 
 /**
  * The id of the canvas (important to create a canvas).
  * @const {number}
  */
-var CANVAS_ID = "Canvas_Curve-Fever";
+var CANVAS_ID = "Canvas_Multi-Snake";
 
 /**
  * Tthe size of a cell (a cell is an item or a player).
@@ -88,40 +101,88 @@ var CANVAS_ID = "Canvas_Curve-Fever";
 var CELL_SIZE = 32;
 
 /**
+ * The width of the score title.
+ * @const {number}
+ */
+var SCORE_TITLE_WIDTH = 200;
+
+/**
+ * The height of the score title.
+ * @const {number}
+ */
+var SCORE_TITLE_HEIGHT = 30;
+
+/**
+ * The coordinate x of the score title.
+ * @const {number}
+ */
+var SCORE_TITLE_X = WINDOW_WIDTH / 2 - (CANVAS_WIDTH + SCORE_TITLE_WIDTH + 50) / 2 + CANVAS_WIDTH + 50;
+
+/**
+ * The coordinate y of the score title.
+ * @const {number}
+ */
+var SCORE_TITLE_Y = WINDOW_HEIGHT / 2 - CANVAS_HEIGHT / 2 - 50;
+
+/**
+ * The coordinate x of the leaderboard title.
+ * @const {number}
+ */
+var LEADERBOARD_TITLE_X = WINDOW_WIDTH / 2 - (CANVAS_WIDTH + SCORE_TITLE_WIDTH + 50) / 2 + CANVAS_WIDTH + 50;
+
+/**
+ * The coordinate y of the leaderboard title.
+ * @const {number}
+ */
+var LEADERBOARD_TITLE_Y = WINDOW_HEIGHT / 2 - CANVAS_HEIGHT / 2 + 50;
+
+/**
+ * The width of the leaderboard title.
+ * @const {number}
+ */
+var LEADERBOARD_TITLE_WIDTH = 200;
+
+/**
+ * The height y of the leaderboard title.
+ * @const {number}
+ */
+var LEADERBOARD_TITLE_HEIGHT = 30;
+
+/**
  * The coordinate x of the scoreboard.
  * @const {number}
  */
-var SCOREBOARD_X = CANVAS_WIDTH + 10
+var LEADERBOARD_X = WINDOW_WIDTH / 2 - (CANVAS_WIDTH + SCORE_TITLE_WIDTH + 50) / 2 + CANVAS_WIDTH + 50;
 
 /**
  * The coordinate y of the scoreboard.
  * @const {number}
  */
-var SCOREBOARD_Y = 0;
+var LEADERBOARD_Y = WINDOW_HEIGHT / 2 - CANVAS_HEIGHT / 2 + 105;
 
 /**
  * The width of the scoreboard.
  * @const {number}
  */
-var SCOREBOARD_WIDTH = 400;
+var LEADERBOARD_WIDTH = 190;
 
 /**
  * The height of the scoreboard.
  * @const {number}
  */
-var SCOREBOARD_HEIGHT = 300;
+var LEADERBOARD_HEIGHT = 300;
 
 /**
- * The coordinate x of the score.
+ * The coordinate x of the leaderboard.
  * @const {number}
  */
-var SCORE_X = 50;
+var LEADERBOARD_TEXT_X = 0;
 
 /**
- * The coordinate y of the score.
+ * The coordinate y of the leaderboard.
  * @const {number}
  */
-var SCORE_Y = 50;
+var LEADERBOARD_TEXT_Y = 50;
 
 /**
  * The number of players (best scores) to show.
@@ -130,42 +191,107 @@ var SCORE_Y = 50;
 var TOP_SCORERS = 3;
 
 /**
+ * The coordinate x of the game title.
+ * @const {number}
+ */
+var GAME_TITLE_X = WINDOW_WIDTH / 2 - (CANVAS_WIDTH + SCORE_TITLE_WIDTH + 50) / 2;
+
+/**
+ * The coordinate y of the game title.
+ * @const {number}
+ */
+var GAME_TITLE_Y = WINDOW_HEIGHT / 2 - CANVAS_HEIGHT / 2 - 20;
+
+/**
+ * The width of the game title.
+ * @const {number}
+ */
+var GAME_TITLE_WIDTH = CANVAS_WIDTH + 20;
+
+/**
+ * The height of the game title.
+ * @const {number}
+ */
+var GAME_TITLE_HEIGHT = 30;
+
+/**
+ * The name of the game title.
+ * @const {number}
+ */
+var GAME_TITLE_NAME = "Multiplayer Snake";
+
+/**
+ * The name of the leaderboard.
+ * @const {number}
+ */
+var LEADERBOARD_TITLE_NAME = "Leaderboard";
+
+/**
+ * The style of the game title (<div>).
+ * @const {Object}
+ */
+var GAME_TITLE_STYLE = {
+  "backgroundColor" : "#547436",
+  "padding": "10px",
+  "textAlign": "center",
+  "fontFamily" : "OCR A Std, monospace",
+  "fontSize" : "30px",
+  "color" : "white"
+
+};
+
+/**
+ * The style of the leaderboard title (<div>).
+ * @const {Object}
+ */
+var LEADERBOARD_TITLE_STYLE = {
+  "backgroundColor" : "#547436",
+  "padding": "20px",
+  "fontFamily" : "OCR A Std, monospace",
+  "fontSize" : "30px",
+  "color" : "white"
+};
+
+/**
+ * The style of the score title (<div>).
+ * @const {Object}
+ */
+var SCORE_TITLE_STYLE = {
+  "backgroundColor" : "#547436",
+  "padding": "20px"
+};
+
+/**
+ * The style of the leaderboard (<ul>).
+ * @const {Object}
+ */
+var LEADERBOARD_STYLE = {
+  "backgroundColor" : "#547436",
+  "border"          : "5px solid #547F19"
+};
+
+
+/**
+ * Style for the element <li> representing the highest scores.
+ * @const {number}
+ */
+var LEADERBOARD_TEXT_STYLE = {
+  "backgroundColor" : "#547436",
+  "padding": "20px",
+  "fontFamily" : "OCR A Std, monospace",
+  "fontSize" : "25px",
+  "color" : "white"
+};
+
+/**
  * The style of the canvas (<canvas>).
  * @const {Object}
  */
 var CANVAS_STYLE = {
-  "border" : "solid #d3d3d3"
-};
-
-/**
- * The style of the scoreboard (<ul>).
- * @const {Object}
- */
-var SCOREBOARD_STYLE = {
-  "border" : "solid #d3d3d3"
-};
-
-/**
- * Style for the element <li> representing the player's score). 
- * We do that using a css file but we choose this method.
- * @const {number}
- */
-var PLAYER_TEXT_STYLE = {
-  "fontSize"      : "20px",
-  "fontFamily"    : "Gill Sans",
-  "paddingBottom" : "10px",
-  "borderBottom"  : "0.5px solid",
-  "listStyleType" : "none"
-};
-
-/**
- * Style for the element <li> representing the enemies' score.
- * @const {number}
- */
-var ENEMY_TEXT_STYLE = {
-  "fontSize"      : "20px",
-  "fontFamily"    : "Gill Sans",
-  "listStyleType" : "none"
+  "border" : "solid #547436 20px",
+  "position" : "absolute",
+  "left" : WINDOW_WIDTH / 2 - (CANVAS_WIDTH + SCORE_TITLE_WIDTH + 50) / 2 + "px",
+  "top"  : WINDOW_HEIGHT / 2 - CANVAS_HEIGHT / 2 + "px",
 };
 
 /**
@@ -176,6 +302,9 @@ class Display {
     this.canvas  = null;
     this.context = null;
     this.scoreboard = null;
+    this.gTitle = null;
+    this.lTitle = null;
+    this.sTitle = null;
     this.images  = [];
     this.camera = {"x" : 0, "y" : 0};
   }
@@ -192,12 +321,47 @@ class Display {
     this.canvas.width = CANVAS_WIDTH;
     this.canvas.height = CANVAS_HEIGHT;
     this.context = this.canvas.getContext("2d");
-    this.scoreboard = Util.createElement("ul", null, SCOREBOARD_STYLE, 
-                                    SCOREBOARD_X, SCOREBOARD_Y,
-                                    SCOREBOARD_WIDTH, SCOREBOARD_HEIGHT);
+    this.scoreboard = Util.createElement("ul", null, LEADERBOARD_STYLE, 
+                                         LEADERBOARD_X, LEADERBOARD_Y,
+                                         LEADERBOARD_WIDTH, LEADERBOARD_HEIGHT);
+
+    this.gTitle = Util.createElement("div", null, GAME_TITLE_STYLE, 
+                                     GAME_TITLE_X, GAME_TITLE_Y - GAME_TITLE_HEIGHT, 
+                                     GAME_TITLE_WIDTH, GAME_TITLE_HEIGHT);
+    Util.createText(GAME_TITLE_NAME, this.gTitle);
+
+    this.sTitle = Util.createElement("div", null, SCORE_TITLE_STYLE, 
+                                     SCORE_TITLE_X, SCORE_TITLE_Y,
+                                     SCORE_TITLE_WIDTH, SCORE_TITLE_HEIGHT);
+
+    this.lTitle = Util.createElement("div", null, LEADERBOARD_TITLE_STYLE, 
+                                     LEADERBOARD_TITLE_X, LEADERBOARD_TITLE_Y, 
+                                     LEADERBOARD_TITLE_WIDTH, LEADERBOARD_TITLE_HEIGHT);
+    Util.createText(LEADERBOARD_TITLE_NAME, this.lTitle);
+    this.initIcons();
     this.loadImages();
   }
-  
+
+  /**
+   * @method Initialize all icons of the game.
+   */
+  initIcons() {
+    var img, score, bestScore, style;
+
+    style = {
+      "src" : TILES_FILE["icons"],
+      "objectFit" : "cover",
+      "objectPosition": "100% 0",
+    };
+
+    img = Util.createElement("IMG", this.sTitle, style, 0, 15, 40, 40);
+    img.setAttribute("src", TILES_FILE["icons"]);
+
+    style.objectPosition = "0% 0";
+    img = Util.createElement("IMG", this.sTitle, style, 50, 15, 40, 40);
+    img.setAttribute("src", TILES_FILE["icons"]);
+  }
+
   /**
    * @method Load all images and put them in a list.
    */
@@ -223,7 +387,7 @@ class Display {
   /**
    * @method Clear the canvas.
    */
-  clearScreen() {
+  clear() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
@@ -233,13 +397,12 @@ class Display {
   background() {
     var w = Math.floor(CANVAS_WIDTH/CELL_SIZE), h = Math.floor(CANVAS_HEIGHT/CELL_SIZE);
     var image = this.images[BACKGROUND_IMG_SRC["image"]]
-    var sw = BACKGROUND_IMG_SRC["w"];
-    var sh = BACKGROUND_IMG_SRC["h"];
+    var sw = BACKGROUND_IMG_SRC["w"], sh = BACKGROUND_IMG_SRC["h"];
     var sy = 0, sx;
     this.context.beginPath();
     for(let r = 0; r < w; r++) {
       for(let c = 0; c < h; c++) {
-        sx = (r * w + c) & 1 ? 0 : sw;
+        sx = (r * h + c) & 1 ? 0 : sw;
         this.context.drawImage(image, 
                                sx, sy, 
                                sw, sh,
@@ -255,15 +418,13 @@ class Display {
    *
    * @param {Array.<Item>} items: the items of the game 
    */
-  itemOnScreen(items) {
+  item(items) {
     var image = this.images[ITEMS_IMG_SRC["image"]]
-    var sw = ITEMS_IMG_SRC["w"];
-    var sh = ITEMS_IMG_SRC["h"];
+    var sw = ITEMS_IMG_SRC["w"], sh = ITEMS_IMG_SRC["h"];
     var sy, sx;
     this.context.beginPath();
     for(let i = 0; i < items.length; i++) {
       sy = ITEMS_IMG_SRC[items[i].name].id * sh;
-      ITEMS_IMG_SRC[items[i].name].actualSrc = (ITEMS_IMG_SRC[items[i].name].actualSrc + 1) % ITEMS_IMG_SRC[items[i].name].fullSrc;
       sx = ITEMS_IMG_SRC[items[i].name].actualSrc;
       this.context.drawImage(image, 
                              sx, sy, 
@@ -280,7 +441,7 @@ class Display {
    * @param {String} imageName: name of the image, to know if it is the player or the enemies
    * @param {Array.<Object>} body: the body of the snake
    */
-  snakeOnScreen(imageName, player) {
+  snake(imageName, player) {
     var image = this.images[SNAKES_IMG_SRC["image"]];
     var sw, sh, sy, sx;
     this.context.beginPath();
@@ -304,7 +465,6 @@ class Display {
           sx = SNAKES_IMG_SRC[player.body[cell-1].dir] == SNAKES_IMG_SRC["up"] ? 0 : SNAKES_IMG_SRC["ud_tailw"] + SNAKES_IMG_SRC["lr_tailw"] * 2;
         }
         sy = SNAKES_IMG_SRC[imageName] * (SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"] + SNAKES_IMG_SRC["ud_tailh"]) + SNAKES_IMG_SRC["headh"] + SNAKES_IMG_SRC["bodyh"];
-        console.log(sx, sy, sw, sh)
       } else { // Draw the body
         sw = SNAKES_IMG_SRC["bodyw"];
         sh = SNAKES_IMG_SRC["bodyh"];
@@ -340,34 +500,72 @@ class Display {
   }
 
   /**
-   * @method Drawn the score of the player (client) and the highest scores
-   * of the ennemies in the scoreboard (<ul>).
+   * @method Drawn the score of the player.
    *
    * @param {Player} player: the player (client)
    * @param {Object} enemies: the enemies (other players) 
    */
-  playersOnScoreboard(player, enemies) {
-    // Remove the scoreboard
-    while (this.scoreboard.firstChild)
+  score(player, enemies) {
+    while(this.sTitle.firstChild)
+      this.sTitle.removeChild(this.sTitle.firstChild);
+
+    var img, score, bestScore;
+
+    var style = {
+      "src" : TILES_FILE["icons"],
+      "objectFit" : "cover",
+      "objectPosition": "100% 0",
+    };
+
+    img = Util.createElement("IMG", this.sTitle, style, 10, 15, 40, 40);
+    img.setAttribute("src", TILES_FILE["icons"]);
+
+    style.objectPosition = "0% 0";
+    img = Util.createElement("IMG", this.sTitle, style, 140, 15, 40, 40);
+    img.setAttribute("src", TILES_FILE["icons"]);
+
+    var pstyle = {
+      "fontFamily" : "OCR A Std, monospace",
+      "fontSize" : "30px",
+      "color" : "white"
+    };
+
+    var p = Util.createElement("p", this.sTitle, pstyle, 60, -10);
+    var text = player["score"];
+    score = Util.createText(text, p);
+
+    var players = [...enemies];
+    players.push(player);
+    players.sort(Util.compare);
+    var p1 = Util.createElement("p", this.sTitle, pstyle, 190, -10);
+    var text = players[players.length-1]["score"];
+    console.log(text);
+    score = Util.createText(text, p1);
+  }
+
+  /**
+   * @method Draw the highest scores in the scoreboard (<ul>).
+   *
+   * @param {Player} player: the player (client)
+   * @param {Object} enemies: the enemies (other players) 
+   */
+  leaderboard(player, enemies) {
+    while(this.scoreboard.firstChild)
       this.scoreboard.removeChild(this.scoreboard.firstChild);
     
-    enemies.sort(Util.compare);
-    var element, text, score;
+    var players = [...enemies];
+    players.push(player);
+    players.sort(Util.compare);
+    var element, text, score, high = 0;
 
-    // Show the score of the player (client)
-    element = Util.createElement("li", this.scoreboard, PLAYER_TEXT_STYLE, 
-                            SCORE_X, SCORE_Y);
-    text = "Your snake : " + player["score"] + " points."
-    score = Util.createText(text, element);  
-
-    // Show the highest scores of the game (enemies)
-    for(var i = enemies.length-1, j = 1; i >= 0 && j <= TOP_SCORERS; j++) {
-      element = Util.createElement("li", this.scoreboard, ENEMY_TEXT_STYLE, 
-                              SCORE_X, SCORE_Y * j + 50);
-      text = "#" + j + " Enemy: " + enemies[i]["score"] + " points."
+    // Show the highest scores of the game
+    for(var i = players.length-1, j = 1; i >= 0 && j <= TOP_SCORERS; j++) {
+      element = Util.createElement("li", this.scoreboard, LEADERBOARD_TEXT_STYLE, 
+                              LEADERBOARD_TEXT_X, LEADERBOARD_TEXT_Y * (j - 1));
+      text = "User0" + j + " : " + players[i]["score"];
       score = Util.createText(text, element);
       i--;
-    } 
+    }
   }
 
   /**

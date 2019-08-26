@@ -1,13 +1,13 @@
-# Curve-Fever-DWA
+# Multi-Snake
 
 ## Introduction
 Le groupe composé de PANCHALINGAMOORTHY Gajenthran et MOTAMED
-Amin fera le projet Curve Fever (Agario like).
+Amin fera le projet d'un Snake en multijoueur d'où le nom de Multi-Snake.
 
 ## Description
-Crée en 1995 par Filip Oščádal et Kamil Doležal, le jeu Curve Fever
-(également connu sous le "Achtung, die Kurve") est un jeu de stratégie en
-multijoueur qui peut-être joué jusqu’à 8 joueurs (source Wikipedia).
+Le snake, de l'anglais signifiant « serpent », est un genre de jeu vidéo dans lequel le joueur dirige une ligne qui grandit et constitue ainsi elle-même un obstacle. Bien que le concept tire son origine du jeu vidéo d'arcade Blockade, il n'existe pas de version standard. Son concept simple l'a amené à être porté sur l'ensemble des plates-formes de jeu existantes sous des noms de clone.
+
+Le jeu a connu un regain de popularité à partir de 1998 quand Nokia, une entreprise de télécommunications, l'a intégré dans ses produits. Avec l'émergence du nouveau support de jeu qu'est le téléphone mobile, il est devenu un classique du jeu sur appareil mobile. (source Wikipedia).
 
 ## Règles du jeu
 Chaque joueur contrôle un point qui correspond la tête du serpent (appelé
@@ -28,6 +28,5 @@ node server.js
 Voici la liste des ajouts possibles pour notre projet:
 - Nom des joueurs à afficher
 - Création d'une base de données pour stocker les meilleurs scores
-- Couleurs pour les serpents
 - Nouveaux items
-- Map de plus grande taille
+- Map de plus en plus grande taille

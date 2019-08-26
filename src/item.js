@@ -34,8 +34,9 @@ class Item {
         break;
       case Item.POISON_ITEM:
         snake.dead();
+        break;
       case Item.COIN_ITEM:
-        snake.increaseScore();
+        snake.grow(5);
         break;
     }
   }

@@ -85,17 +85,18 @@ class Game {
    * the Players and Items.
    */
   render() {
-    this.display.clearScreen();
+    this.display.clear();
     this.display.background();
     if(this.player && this.player.body.length != 0) {
-      this.display.snakeOnScreen("player", this.player);
-      this.display.playersOnScoreboard(this.player, this.enemies);
+      this.display.snake("player", this.player);
+      this.display.score(this.player, this.enemies);
+      this.display.leaderboard(this.player, this.enemies);
     }
 
     for(var i = 0; i < this.enemies.length; i++)
-      this.display.snakeOnScreen("enemies", this.enemies[i]);
+      this.display.snake("enemies", this.enemies[i]);
 
     if(this.items.length != 0) 
-      this.display.itemOnScreen(this.items);
+      this.display.item(this.items);
   }
 }

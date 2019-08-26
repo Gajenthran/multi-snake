@@ -211,12 +211,12 @@ World.TILES_ID = {
  * The width of the world
  * @const {number}
  */
-World.WORLD_WIDTH = 25;
+World.WORLD_WIDTH = 20;
 
 /**
  * The height of the world
  * @const {number}
  */
-World.WORLD_HEIGHT = 20;
+World.WORLD_HEIGHT = 15;
 
 module.exports = World;
