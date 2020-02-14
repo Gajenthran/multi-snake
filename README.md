@@ -3,6 +3,7 @@
 ## Introduction
 Le groupe composé de PANCHALINGAMOORTHY Gajenthran et MOTAMED
 Amin fera le projet d'un Snake en multijoueur d'où le nom de Multi-Snake.
+![Alt text](public/img/game_gui.png?raw=true "Game_GUI")
 
 ## Description
 Le snake, de l'anglais signifiant « serpent », est un genre de jeu vidéo dans lequel le joueur dirige une ligne qui grandit et constitue ainsi elle-même un obstacle. Bien que le concept tire son origine du jeu vidéo d'arcade Blockade, il n'existe pas de version standard. Son concept simple l'a amené à être porté sur l'ensemble des plates-formes de jeu existantes sous des noms de clone.
